@@ -3,7 +3,7 @@
 # Local: `npm run cms` en otra terminal y abrir http://localhost:3000/admin/ (usa local_backend).
 backend:
   name: github
-  repo: PENDIENTE-ORGANIZACION/lexpertise-web # ← reemplazar por el repositorio real
+  repo: segmentamkt/lexpertise-web # repositorio privado; cambiar si pasa a una cuenta de LEXPERTISE
   branch: main
   base_url: https://PENDIENTE-DOMINIO # ← URL del sitio donde corre /api/cms/auth
   auth_endpoint: api/cms/auth

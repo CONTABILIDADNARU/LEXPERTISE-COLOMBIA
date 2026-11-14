@@ -64,9 +64,19 @@ docs/                    Documentación del proyecto
 | Equipo sin perfiles verificados | aviso | la página devuelve 404 y sale del menú |
 | Build con bloqueantes | permitido | **detenido** por `prebuild` |
 
+## Repositorio
+
+`https://github.com/segmentamkt/lexpertise-web` (privado, rama `main`). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.
+
+```bash
+git clone https://github.com/segmentamkt/lexpertise-web.git
+```
+
 ## Despliegue
 
 Ver [docs/PASO-A-PRODUCCION.md](docs/PASO-A-PRODUCCION.md).
+
+El proyecto de Vercel **no está conectado** al repositorio: subir cambios a GitHub no despliega nada. El staging se despliega con la CLI.
 
 **Staging actual:** `https://lexpertise-web.vercel.app` (proyecto `lexpertise-web`, equipo Segmenta en Vercel). Exige iniciar sesión con una cuenta de Vercel con acceso al equipo. Las solicitudes se guardan en Supabase (proyecto «Segmenta web», esquema privado `lexpertise`).
 

@@ -9,9 +9,9 @@
 
 ## 1. Repositorio
 
-1. Crear el repositorio privado (p. ej. `lexpertise-web`) e invitar solo a las personas autorizadas.
+1. ~~Crear el repositorio privado~~ Hecho: `https://github.com/segmentamkt/lexpertise-web`. Invitar solo a las personas autorizadas o transferirlo a una cuenta de LEXPERTISE (si se transfiere, actualizar `repo` en `public/admin/config.yml`).
 2. Proteger la rama `main` (revisión obligatoria de cambios de código).
-3. Actualizar `repo`, `base_url` y `site_url` en `public/admin/config.yml`.
+3. Actualizar `base_url` y `site_url` en `public/admin/config.yml` (`repo` ya apunta al repositorio).
 
 ## 2. Base de datos de solicitudes
 
