@@ -66,10 +66,10 @@ docs/                    Documentación del proyecto
 
 ## Repositorio
 
-`https://github.com/segmentamkt/lexpertise-web` (privado, rama `main`). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.
+`https://github.com/segmentamkt/LEXPERTISE` (**público**, rama `main`: cualquiera puede leerlo; solo quienes tengan permiso de escritura pueden modificarlo). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.
 
 ```bash
-git clone https://github.com/segmentamkt/lexpertise-web.git
+git clone https://github.com/segmentamkt/LEXPERTISE.git
 ```
 
 ## Despliegue

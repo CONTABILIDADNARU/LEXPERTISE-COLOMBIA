@@ -26,7 +26,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A5 | Precio, duración, alcance y condiciones de la consulta (la cifra preliminar de COP 200.000–300.000 **no** se publicó). Política de cancelación y reprogramación. |
 | A6 | Perfiles verificados del equipo con fotografías reales (la página /equipo no se publica sin ellos). |
 | A7 | Confirmar si la firma presta **asuntos societarios** y un modelo de **acompañamiento recurrente** a empresas. |
-| A8 | Repositorio creado: `segmentamkt/lexpertise-web` (privado). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |
+| A8 | Repositorio creado: `segmentamkt/LEXPERTISE` (público). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |
 | A9 | Límite de envíos global en Vercel (Upstash Redis) para que el límite por IP no dependa de una sola instancia. |
 | A11 | Pruebas automáticas sobre el staging protegido: requieren un token de omisión para automatización que debe crear una persona del equipo en Vercel (Settings → Deployment Protection). Mientras tanto, revisar el staging con sesión de Vercel. |
 | A10 | Cuentas de medición: GA4 o GTM, Píxel de Meta, Search Console y, si se aprueba, API de Conversiones. |
