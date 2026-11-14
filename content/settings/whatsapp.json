@@ -1,0 +1,12 @@
+{
+  "numero": "",
+  "mensajes": {
+    "general": "Hola, conocí LEXPERTISE a través de su página web y quisiera información sobre sus servicios jurídicos.",
+    "divorcios": "Hola, consulté la información sobre divorcios de LEXPERTISE y quisiera conocer cómo solicitar una consulta.",
+    "empresas": "Hola, quisiera conocer los servicios jurídicos disponibles para empresas.",
+    "familia": "Hola, consulté la información sobre derecho de familia de LEXPERTISE y quisiera conocer cómo solicitar una consulta.",
+    "laboral": "Hola, consulté la información sobre derecho laboral de LEXPERTISE y quisiera conocer cómo solicitar una consulta.",
+    "contratos": "Hola, quisiera información sobre la revisión o elaboración de contratos con LEXPERTISE.",
+    "agendar": "Hola, quisiera conocer cómo solicitar una consulta jurídica con LEXPERTISE."
+  }
+}

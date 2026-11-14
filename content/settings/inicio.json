@@ -1,0 +1,95 @@
+{
+  "hero": {
+    "antetitulo": "Servicios jurídicos en Colombia",
+    "titulo": "Cada decisión jurídica merece un análisis cuidadoso.",
+    "subtitulo": "LEXPERTISE presta servicios jurídicos para personas y organizaciones en distintas áreas del derecho. Conoce nuestros servicios y canales de atención.",
+    "ctaPrimario": "Conocer áreas de práctica",
+    "ctaSecundario": "Solicitar información"
+  },
+  "publico": {
+    "titulo": "¿Qué tipo de orientación jurídica necesitas?",
+    "personas": {
+      "titulo": "Para personas",
+      "texto": "Información y servicios en asuntos familiares, laborales, civiles y sucesorales.",
+      "cta": "Explorar áreas para personas"
+    },
+    "empresas": {
+      "titulo": "Para empresas",
+      "texto": "Información y servicios jurídicos relacionados con contratos, actividades comerciales, relaciones laborales y otros asuntos empresariales.",
+      "cta": "Explorar áreas para empresas"
+    }
+  },
+  "areas": {
+    "titulo": "Áreas de práctica",
+    "texto": "Cada área reúne asuntos frecuentes y explica, en términos generales, cómo se estudian. La viabilidad de cada caso depende de sus hechos y documentos."
+  },
+  "proceso": {
+    "titulo": "Un proceso que comienza por comprender tu situación.",
+    "texto": "No partimos de respuestas prefabricadas. Antes de proponer una alternativa, revisamos los hechos, los documentos, las fechas y las normas aplicables.",
+    "pasos": [
+      { "titulo": "Contacto inicial", "texto": "Identificación general de la materia de consulta y del canal de atención." },
+      { "titulo": "Evaluación del asunto", "texto": "Revisión de hechos, fechas y documentación pertinente." },
+      { "titulo": "Definición del alcance", "texto": "Información sobre alternativas, honorarios y pasos aplicables antes de cualquier contratación." },
+      { "titulo": "Desarrollo del servicio", "texto": "Acompañamiento según las condiciones contratadas." }
+    ]
+  },
+  "destacados": {
+    "titulo": "Servicios destacados",
+    "texto": "Algunos de los asuntos sobre los que más nos consultan.",
+    "items": [
+      { "titulo": "Consultas jurídicas", "texto": "Un espacio para exponer tu asunto, ordenar la información y conocer las alternativas generales.", "href": "/agendar-consulta" },
+      { "titulo": "Revisión y elaboración de contratos", "texto": "Lectura cuidadosa de obligaciones, plazos, pagos y mecanismos de terminación antes de firmar.", "href": "/derecho-civil-y-contratos" },
+      { "titulo": "Asuntos de familia", "texto": "Divorcios, alimentos, custodia, visitas, sociedad conyugal y sucesiones, con un enfoque discreto.", "href": "/derecho-de-familia" },
+      { "titulo": "Derecho laboral", "texto": "Orientación para trabajadores y empleadores sobre contratos, terminaciones, liquidaciones y seguridad social.", "href": "/derecho-laboral" },
+      { "titulo": "Asesoría a empresas", "texto": "Contratos comerciales, documentos laborales, marcas y asuntos tributarios y administrativos.", "href": "/empresas" }
+    ]
+  },
+  "recursos": {
+    "titulo": "Recursos jurídicos",
+    "texto": "Explicaciones generales para entender conceptos antes de tomar decisiones."
+  },
+  "faq": {
+    "titulo": "Preguntas frecuentes",
+    "items": [
+      {
+        "pregunta": "¿Qué asuntos jurídicos atiende LEXPERTISE?",
+        "respuesta": "LEXPERTISE presta servicios en derecho de familia y sucesiones, derecho laboral y seguridad social, derecho civil y contratos, derecho comercial y empresarial, derecho tributario, derecho administrativo, y propiedad intelectual y registro de marcas. La firma no presta servicios de derecho penal.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Cómo puedo solicitar información de una consulta?",
+        "respuesta": "Puedes diligenciar el formulario de solicitud o usar los canales publicados en la página de contacto. Basta con indicar, de forma general, el tipo de asunto. No es necesario enviar documentos en esta etapa.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Qué información debo preparar?",
+        "respuesta": "Ayuda tener una cronología breve de los hechos, las fechas relevantes y la lista de documentos disponibles, como contratos, comunicaciones o comprobantes. En la consulta se determina cuáles son pertinentes.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Cómo conozco los honorarios?",
+        "respuesta": "Los honorarios dependen de la materia y del alcance del servicio. Se informan antes de cualquier contratación, una vez se conoce el asunto de forma general.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Qué ocurre después de enviar mi solicitud?",
+        "respuesta": "Un integrante del equipo revisa la solicitud y te contacta por el medio que elegiste para conocer la materia de forma general e informarte las alternativas de atención. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
+        "pendiente": "Tiempo de respuesta comprometido por la firma"
+      },
+      {
+        "pregunta": "¿La información que comparto es confidencial?",
+        "respuesta": "Los datos que envías se tratan conforme a la Política de Tratamiento de Datos Personales. Te pedimos no incluir detalles íntimos ni documentos en los formularios generales: esa información se aborda en la consulta, por un canal adecuado.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Cuáles son las modalidades de atención?",
+        "respuesta": "Las modalidades disponibles se informan al momento de programar la consulta.",
+        "pendiente": "Modalidades de atención confirmadas (virtual, presencial, telefónica) y ciudades"
+      }
+    ]
+  },
+  "contacto": {
+    "titulo": "Conoce nuestros canales de atención jurídica.",
+    "texto": "Cuéntanos de forma general qué asunto necesitas revisar. Te contactaremos por el medio que prefieras."
+  }
+}

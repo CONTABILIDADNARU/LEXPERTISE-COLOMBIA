@@ -1,0 +1,35 @@
+{
+  "marca": "LEXPERTISE",
+  "descripcion": "Servicios jurídicos para personas y organizaciones en Colombia.",
+  "verificado": false,
+  "empresa": {
+    "razonSocial": "",
+    "nit": "",
+    "direccion": "",
+    "ciudad": "",
+    "correo": "",
+    "correoDatos": "",
+    "telefono": "",
+    "horario": ""
+  },
+  "cobertura": "Colombia",
+  "redes": {
+    "instagram": "",
+    "tiktok": "",
+    "facebook": "",
+    "linkedin": "",
+    "youtube": ""
+  },
+  "consulta": {
+    "confirmada": false,
+    "precio": "",
+    "duracion": "",
+    "modalidades": [],
+    "condiciones": ""
+  },
+  "agendamiento": {
+    "proveedor": "solicitud",
+    "calendlyUrl": ""
+  },
+  "comoNosConocio": ["Instagram", "TikTok", "Google", "Recomendación de un conocido", "Otro"]
+}

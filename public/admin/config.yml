@@ -1,0 +1,314 @@
+# Panel de contenidos de LEXPERTISE (Decap CMS).
+# Producción: autenticación con GitHub (solo cuentas con permiso de escritura en el repositorio).
+# Local: `npm run cms` en otra terminal y abrir http://localhost:3000/admin/ (usa local_backend).
+backend:
+  name: github
+  repo: PENDIENTE-ORGANIZACION/lexpertise-web # ← reemplazar por el repositorio real
+  branch: main
+  base_url: https://PENDIENTE-DOMINIO # ← URL del sitio donde corre /api/cms/auth
+  auth_endpoint: api/cms/auth
+local_backend: true
+publish_mode: editorial_workflow
+locale: es
+site_url: https://PENDIENTE-DOMINIO
+media_folder: public/uploads
+public_folder: /uploads
+
+x-revision: &revision
+  label: Revisión jurídica
+  name: revision
+  widget: object
+  collapsed: false
+  fields:
+    - { label: Estado, name: estado, widget: select, options: [pendiente, aprobado], default: pendiente, hint: "Solo un abogado de la firma cambia a «aprobado». En producción no se publican páginas pendientes." }
+    - { label: Abogado que aprueba, name: abogado, widget: string, required: false }
+    - { label: Fecha de aprobación, name: fecha, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD, required: false }
+
+x-seo: &seo
+  label: SEO
+  name: seo
+  widget: object
+  fields:
+    - { label: Título SEO (máx. 60), name: title, widget: string }
+    - { label: Meta description (120–155), name: description, widget: text }
+
+x-faqs: &faqs
+  label: Preguntas frecuentes
+  name: faqs
+  widget: list
+  required: false
+  fields:
+    - { label: Pregunta, name: pregunta, widget: string }
+    - { label: Respuesta, name: respuesta, widget: text }
+
+x-fuentes: &fuentes
+  label: Fuentes normativas (oficiales)
+  name: fuentes
+  widget: list
+  required: false
+  fields:
+    - { label: Nombre, name: nombre, widget: string }
+    - { label: URL, name: url, widget: string }
+
+x-notas: &notas
+  label: Notas para la revisión
+  name: notasRevision
+  widget: list
+  required: false
+  field: { label: Nota, name: nota, widget: string }
+
+x-areas: &areas
+  - { label: Familia y sucesiones, value: familia }
+  - { label: Laboral y seguridad social, value: laboral }
+  - { label: Civil y contratos, value: civil }
+  - { label: Comercial y empresarial, value: comercial }
+  - { label: Tributario, value: tributario }
+  - { label: Administrativo, value: administrativo }
+  - { label: Propiedad intelectual y marcas, value: propiedad-intelectual }
+
+collections:
+  - name: servicios
+    label: Áreas y servicios
+    label_singular: Página de servicio
+    folder: content/servicios
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{titulo}} · {{estado}} · revisión: {{revision.estado}}"
+    fields:
+      - { label: Slug (URL), name: slug, widget: string, pattern: ["^[a-z0-9-]+$", "Solo minúsculas, números y guiones"] }
+      - { label: Tipo, name: tipo, widget: select, options: [area, servicio, landing] }
+      - { label: Área, name: area, widget: select, options: *areas }
+      - { label: Audiencia, name: audiencia, widget: select, multiple: true, options: [personas, empresas] }
+      - { label: Disponibilidad comercial, name: estado, widget: select, options: [activo, por-confirmar, oculto], default: por-confirmar }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 100 }
+      - { label: Título corto, name: titulo, widget: string }
+      - { label: Titular (H1), name: h1, widget: string }
+      - { label: Subtítulo, name: subtitulo, widget: text }
+      - { label: Resumen para tarjetas, name: resumen, widget: text }
+      - *seo
+      - label: Procedimiento general
+        name: pasos
+        widget: list
+        required: false
+        fields:
+          - { label: Título, name: titulo, widget: string }
+          - { label: Texto, name: texto, widget: text }
+      - { label: Documentación que podría requerirse, name: documentos, widget: list, required: false }
+      - *faqs
+      - { label: Servicios relacionados (slugs), name: relacionados, widget: list, required: false }
+      - { label: Mensaje de WhatsApp, name: whatsapp, widget: select, options: [general, divorcios, familia, laboral, contratos, empresas, agendar], default: general }
+      - *fuentes
+      - *notas
+      - *revision
+      - { label: Actualizado, name: actualizado, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD }
+      - { label: Contenido, name: body, widget: markdown, buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list], editor_components: [] }
+
+  - name: recursos
+    label: Recursos y artículos
+    label_singular: Recurso
+    folder: content/recursos
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: Slug (URL), name: slug, widget: string, pattern: ["^[a-z0-9-]+$", "Solo minúsculas, números y guiones"] }
+      - { label: Extracto, name: extracto, widget: text }
+      - { label: Categoría, name: categoria, widget: select, options: *areas }
+      - { label: Autor verificado, name: autor, widget: string, required: false, hint: "Nombre del abogado. Vacío = «Equipo LEXPERTISE»." }
+      - { label: Fecha de publicación, name: fechaPublicacion, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD, required: false }
+      - { label: Fecha de revisión jurídica, name: fechaRevisionJuridica, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD, required: false }
+      - { label: Imagen, name: imagen, widget: image, required: false, hint: "Fotografía real o ilustración. No usar imágenes generadas presentadas como reales." }
+      - label: Video del equipo
+        name: video
+        widget: object
+        required: false
+        fields:
+          - { label: Plataforma, name: plataforma, widget: select, options: ["", youtube, instagram, tiktok], required: false }
+          - { label: URL del video, name: url, widget: string, required: false }
+      - { label: Pregunta principal (si viene de un video), name: preguntaPrincipal, widget: string, required: false }
+      - *seo
+      - { label: Estado, name: estado, widget: select, options: [borrador, revision, publicado], default: borrador, hint: "Publicar solo después de la revisión de un abogado." }
+      - { label: Servicios relacionados (slugs), name: relacionados, widget: list, required: false }
+      - *faqs
+      - *fuentes
+      - *notas
+      - { label: Actualizado, name: actualizado, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD }
+      - { label: Contenido, name: body, widget: markdown, buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote], editor_components: [] }
+
+  - name: equipo
+    label: Equipo
+    label_singular: Profesional
+    folder: content/equipo
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.nombre}}"
+    fields:
+      - { label: Nombre, name: nombre, widget: string }
+      - { label: Cargo, name: cargo, widget: string }
+      - { label: Tarjeta profesional, name: tarjetaProfesional, widget: string, required: false }
+      - { label: Áreas, name: areas, widget: select, multiple: true, options: *areas, required: false }
+      - { label: Formación, name: formacion, widget: list, required: false }
+      - { label: Perfil breve, name: perfil, widget: text, required: false }
+      - { label: Fotografía real, name: foto, widget: image, required: false }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 100 }
+      - { label: Información verificada por la firma, name: verificado, widget: boolean, default: false }
+
+  - name: legal
+    label: Documentos legales
+    folder: content/legal
+    extension: md
+    format: frontmatter
+    create: false
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: Slug, name: slug, widget: hidden }
+      - { label: Versión, name: version, widget: string }
+      - { label: Vigente desde, name: vigenteDesde, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD, required: false }
+      - *seo
+      - *notas
+      - *revision
+      - { label: Contenido, name: body, widget: markdown, hint: "Variables disponibles: {{marca}} {{razonSocial}} {{nit}} {{direccion}} {{ciudad}} {{correo}} {{correoDatos}} {{telefono}} {{sitioUrl}} {{fechaVigencia}}" }
+
+  - name: configuracion
+    label: Configuración del sitio
+    editor: { preview: false }
+    files:
+      - name: sitio
+        label: Datos de la firma y consulta
+        file: content/settings/sitio.json
+        fields:
+          - { label: Marca, name: marca, widget: string }
+          - { label: Descripción, name: descripcion, widget: text }
+          - { label: Datos verificados por la firma (activa el marcado estructurado), name: verificado, widget: boolean }
+          - label: Empresa
+            name: empresa
+            widget: object
+            fields:
+              - { label: Razón social, name: razonSocial, widget: string, required: false }
+              - { label: NIT, name: nit, widget: string, required: false }
+              - { label: Dirección, name: direccion, widget: string, required: false }
+              - { label: Ciudad, name: ciudad, widget: string, required: false }
+              - { label: Correo de contacto, name: correo, widget: string, required: false }
+              - { label: Correo para datos personales, name: correoDatos, widget: string, required: false }
+              - { label: Teléfono, name: telefono, widget: string, required: false }
+              - { label: Horario de atención, name: horario, widget: string, required: false }
+          - { label: Cobertura, name: cobertura, widget: string }
+          - label: Redes sociales
+            name: redes
+            widget: object
+            fields:
+              - { label: Instagram, name: instagram, widget: string, required: false }
+              - { label: TikTok, name: tiktok, widget: string, required: false }
+              - { label: Facebook, name: facebook, widget: string, required: false }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: YouTube, name: youtube, widget: string, required: false }
+          - label: Consulta (publicar solo información aprobada)
+            name: consulta
+            widget: object
+            fields:
+              - { label: Precio y condiciones confirmados, name: confirmada, widget: boolean }
+              - { label: Precio, name: precio, widget: string, required: false }
+              - { label: Duración, name: duracion, widget: string, required: false }
+              - { label: Modalidades, name: modalidades, widget: select, multiple: true, options: [Virtual, Presencial, Telefónica], required: false }
+              - { label: Condiciones, name: condiciones, widget: text, required: false }
+          - label: Agendamiento
+            name: agendamiento
+            widget: object
+            fields:
+              - { label: Proveedor, name: proveedor, widget: select, options: [solicitud, calendly] }
+              - { label: URL de Calendly, name: calendlyUrl, widget: string, required: false }
+          - { label: Opciones de «¿Dónde nos conociste?», name: comoNosConocio, widget: list }
+      - name: whatsapp
+        label: WhatsApp
+        file: content/settings/whatsapp.json
+        fields:
+          - { label: Número oficial (formato internacional, p. ej. 573001234567), name: numero, widget: string, required: false }
+          - label: Mensajes por página
+            name: mensajes
+            widget: object
+            fields:
+              - { label: General, name: general, widget: text }
+              - { label: Divorcios, name: divorcios, widget: text }
+              - { label: Empresas, name: empresas, widget: text }
+              - { label: Familia, name: familia, widget: text }
+              - { label: Laboral, name: laboral, widget: text }
+              - { label: Contratos, name: contratos, widget: text }
+              - { label: Agendar consulta, name: agendar, widget: text }
+      - name: inicio
+        label: Página de inicio
+        file: content/settings/inicio.json
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Antetítulo, name: antetitulo, widget: string }
+              - { label: Titular, name: titulo, widget: string }
+              - { label: Subtítulo, name: subtitulo, widget: text }
+              - { label: Botón principal, name: ctaPrimario, widget: string }
+              - { label: Botón secundario, name: ctaSecundario, widget: string }
+          - label: Público
+            name: publico
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Personas, name: personas, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }, { label: Botón, name: cta, widget: string }] }
+              - { label: Empresas, name: empresas, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }, { label: Botón, name: cta, widget: string }] }
+          - { label: Áreas, name: areas, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }] }
+          - label: Proceso (4 pasos)
+            name: proceso
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Texto, name: texto, widget: text }
+              - { label: Pasos, name: pasos, widget: list, min: 4, max: 4, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }] }
+          - label: Servicios destacados
+            name: destacados
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Texto, name: texto, widget: text }
+              - { label: Elementos, name: items, widget: list, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }, { label: Enlace interno (/ruta), name: href, widget: string }] }
+          - { label: Recursos, name: recursos, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }] }
+          - label: Preguntas frecuentes
+            name: faq
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Preguntas, name: items, widget: list, fields: [{ label: Pregunta, name: pregunta, widget: string }, { label: Respuesta (solo datos verificados), name: respuesta, widget: text }, { label: Dato pendiente de confirmar, name: pendiente, widget: string, required: false }] }
+          - { label: Contacto final, name: contacto, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }] }
+      - name: consentimientos
+        label: Textos de autorización (versionados)
+        file: content/legal/consentimientos.json
+        fields:
+          - { label: Versión (cambiarla cada vez que se modifique un texto), name: version, widget: string }
+          - { label: Autorización de tratamiento de datos, name: tratamientoDatos, widget: text }
+          - { label: Comunicaciones comerciales (opcional), name: comunicacionesComerciales, widget: text }
+          - { label: Aviso del formulario, name: avisoFormulario, widget: text }
+      - name: redirecciones
+        label: Redirecciones 301
+        file: content/settings/redirecciones.json
+        fields:
+          - { label: Nota, name: nota, widget: hidden }
+          - { label: Redirecciones, name: redirecciones, widget: list, required: false, fields: [{ label: Ruta anterior, name: origen, widget: string }, { label: Ruta nueva, name: destino, widget: string }] }
+
+  - name: paginas
+    label: Páginas institucionales
+    files:
+      - name: nosotros
+        label: La firma
+        file: content/paginas/nosotros.md
+        fields:
+          - { label: Título, name: titulo, widget: string }
+          - { label: Titular (H1), name: h1, widget: string }
+          - { label: Subtítulo, name: subtitulo, widget: text }
+          - *seo
+          - *revision
+          - { label: Actualizado, name: actualizado, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD }
+          - { label: Contenido, name: body, widget: markdown }

@@ -1,0 +1,22 @@
+# Dependencias y compilaciones
+node_modules
+.next
+.next-*
+out
+*.tsbuildinfo
+next-env.d.ts
+
+# Secretos y variables de entorno (solo se versiona la plantilla)
+.env
+.env*
+!.env.example
+
+# Solicitudes guardadas en local (datos personales)
+data/*
+!data/.gitkeep
+
+# Herramientas locales
+.vercel
+.claude
+lighthouse-*.json
+.DS_Store
