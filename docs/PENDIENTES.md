@@ -28,7 +28,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A7 | Confirmar si la firma presta **asuntos societarios** y un modelo de **acompañamiento recurrente** a empresas. |
 | A8 | Repositorio creado: `segmentamkt/LEXPERTISE-COLOMBIA` (público). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |
 | A9 | Límite de envíos global en Vercel (Upstash Redis) para que el límite por IP no dependa de una sola instancia. |
-| A11 | Pruebas automáticas sobre el staging protegido: requieren un token de omisión para automatización que debe crear una persona del equipo en Vercel (Settings → Deployment Protection). Mientras tanto, revisar el staging con sesión de Vercel. |
+| A11 | ~~Token para pruebas automáticas~~: ya no hace falta, porque el staging es público desde el 14-nov. Si se vuelve a proteger, lo debe crear una persona del equipo en Vercel. |
 | A10 | Cuentas de medición: GA4 o GTM, Píxel de Meta, Search Console y, si se aprueba, API de Conversiones. |
 | A12 | **Agenda de citas de Google Calendar:** crear la agenda en la cuenta de la firma y pegar el enlace de inserción en Configuración → Agendamiento (ver `MANUAL-EQUIPO.md` §7b). Sin ella, los casos de prioridad alta no pueden agendar al terminar y el formulario pide fechas posibles. |
 | A13 | Áreas o asuntos prioritarios para la firma, para ajustar la regla de prioridad alta (`src/lib/leads/prioridad.ts`). |

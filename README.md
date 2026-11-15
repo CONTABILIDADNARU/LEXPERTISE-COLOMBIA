@@ -78,7 +78,7 @@ Ver [docs/PASO-A-PRODUCCION.md](docs/PASO-A-PRODUCCION.md).
 
 El proyecto de Vercel **no está conectado** al repositorio: subir cambios a GitHub no despliega nada. El staging se despliega con la CLI.
 
-**Staging actual:** `https://lexpertise-web.vercel.app` (proyecto `lexpertise-web`, equipo Segmenta en Vercel). Exige iniciar sesión con una cuenta de Vercel con acceso al equipo. Las solicitudes se guardan en Supabase (proyecto «Segmenta web», esquema privado `lexpertise`).
+**Staging actual:** `https://lexpertise-web.vercel.app` (proyecto `lexpertise-web`, equipo Segmenta en Vercel). **Acceso público** desde el 14-nov-2026, por decisión de la agencia, para que la firma y terceros lo revisen sin cuenta. Sigue sin indexarse (noindex y robots.txt). Las solicitudes se guardan en Supabase (proyecto «Segmenta web», esquema privado `lexpertise`).
 
 Para volver a desplegar el staging desde esta carpeta (ya vinculada con `.vercel/`):
 

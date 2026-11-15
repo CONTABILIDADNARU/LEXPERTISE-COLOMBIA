@@ -23,7 +23,8 @@
 ## 3. Staging (Vercel) — ya desplegado
 
 - URL: `https://lexpertise-web.vercel.app` (proyecto `lexpertise-web`, equipo Segmenta, plan Hobby).
-- Protección: **Vercel Authentication en todos los despliegues** (`ssoProtection: all`). Sin sesión, todas las URL redirigen al login (302) y la API responde 401.
+- Acceso: **público** desde el 14-nov-2026 por decisión de la agencia (`ssoProtection: null`), para que cualquier persona con la dirección pueda revisarlo. Sigue sin indexarse: `noindex` en la meta y en la cabecera, y `robots.txt` bloquea todo. Quedan a la vista los textos sin aprobar y los avisos «Pendiente», y el formulario guarda solicitudes reales en Supabase.
+- Para volver a protegerlo: Vercel → proyecto → Settings → Deployment Protection → Vercel Authentication → «All Deployments» (o `PATCH /v9/projects/<id>` con `{"ssoProtection":{"deploymentType":"all"}}`).
 - Para dar acceso a revisores de LEXPERTISE: invitarlos al equipo de Vercel o generar un enlace para compartir desde el panel del despliegue (expira).
 - **Plan Hobby:** Vercel lo limita a uso no comercial. Sirve para revisión interna; la producción debe ir en un plan Pro o en la cuenta de LEXPERTISE.
 
