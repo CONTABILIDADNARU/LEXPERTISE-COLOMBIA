@@ -96,6 +96,12 @@ if (!sitio.verificado) add("IMPORTANTE", "settings/sitio.json: datos no marcados
 if (!sitio.consulta.confirmada) add("INFORMATIVO", "settings/sitio.json: precio/duración de la consulta sin confirmar (no se publican).");
 if (!sitio.consulta.modalidades.length) add("IMPORTANTE", "settings/sitio.json: modalidades de atención sin confirmar.");
 if (!Object.values(sitio.redes).some(Boolean)) add("INFORMATIVO", "settings/sitio.json: redes sociales oficiales sin verificar.");
+const ag = sitio.agendamiento;
+const agendaOk =
+  (ag.proveedor === "google" && /^https:\/\/(calendar\.google\.com\/calendar\/appointments\/schedules\/|calendar\.app\.google\/)/.test(ag.googleCalendarUrl ?? "")) ||
+  (ag.proveedor === "calendly" && /^https:\/\/calendly\.com\//.test(ag.calendlyUrl ?? ""));
+if (!agendaOk)
+  add("IMPORTANTE", "settings/sitio.json: sin agenda en línea (Google Calendar o Calendly). Los casos de prioridad alta no pueden agendar al terminar el formulario: se piden fechas posibles.");
 const wa = json("settings/whatsapp.json");
 if (wa.numero.replace(/\D/g, "").length < 10) add("BLOQUEANTE", "settings/whatsapp.json: falta el número oficial de WhatsApp.");
 const inicio = json("settings/inicio.json");

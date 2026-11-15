@@ -15,7 +15,7 @@ const csp = [
   "img-src 'self' data: blob: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://www.facebook.com",
   "font-src 'self'",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net",
-  "frame-src https://www.youtube-nocookie.com https://www.instagram.com https://www.tiktok.com https://calendly.com https://www.googletagmanager.com",
+  "frame-src https://www.youtube-nocookie.com https://www.instagram.com https://www.tiktok.com https://calendly.com https://calendar.google.com https://www.googletagmanager.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

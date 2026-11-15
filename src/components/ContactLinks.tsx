@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageCircle, Phone, FileText } from "lucide-react";
+import { useEffect, useState } from "react";
+import { CalendarCheck, MessageCircle, Phone } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { IS_PRODUCTION } from "@/lib/env";
 import { buttonClasses, cx } from "./ui";
@@ -76,51 +77,26 @@ export function CallButton({
 }
 
 /**
- * Barra de contacto fija en móviles: WhatsApp, llamada y solicitud.
- * El mensaje de WhatsApp cambia según la página (mapa ruta → contexto configurado en cada servicio).
+ * Barra fija en celulares con una sola acción: «Agendar consulta».
+ * Si la página tiene formulario, baja hasta él (conserva el área de la página); si no, abre /agendar-consulta.
+ * WhatsApp no aparece aquí: se ofrece después del formulario, con el resumen ya escrito.
  */
-export function MobileContactBar({
-  enlaces,
-  rutas,
-  telHref,
-}: {
-  enlaces: Record<string, string | null>;
-  rutas: Record<string, string>;
-  telHref: string | null;
-}) {
+export function MobileContactBar() {
   const pathname = usePathname();
-  const contexto = rutas[pathname] ?? "general";
-  const whatsappHref = enlaces[contexto] ?? enlaces.general ?? null;
-  const item = "flex flex-1 flex-col items-center justify-center gap-1 py-2 text-[0.72rem] font-semibold";
+  const [destino, setDestino] = useState("/agendar-consulta");
+
+  useEffect(() => {
+    setDestino(document.getElementById("solicitud") ? "#solicitud" : "/agendar-consulta");
+  }, [pathname]);
+
+  if (pathname === "/gracias") return null;
   return (
     <nav
-      aria-label="Contacto rápido"
-      className="fixed inset-x-0 bottom-0 z-30 flex border-t border-line bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+      aria-label="Acción principal"
+      className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 px-4 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur lg:hidden"
     >
-      {whatsappHref ? (
-        <a
-          href={whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track("click_whatsapp", { contexto, ubicacion: "barra_movil" })}
-          className={cx(item, "text-navy")}
-        >
-          <MessageCircle aria-hidden className="size-5" /> WhatsApp
-        </a>
-      ) : (
-        !IS_PRODUCTION && (
-          <span aria-disabled="true" className={cx(item, "text-slate/60")} title="Número de WhatsApp pendiente">
-            <MessageCircle aria-hidden className="size-5" /> WhatsApp (pend.)
-          </span>
-        )
-      )}
-      {telHref && (
-        <a href={telHref} onClick={() => track("click_call", { ubicacion: "barra_movil" })} className={cx(item, "border-l border-line text-navy")}>
-          <Phone aria-hidden className="size-5" /> Llamar
-        </a>
-      )}
-      <Link href="/contacto" className={cx(item, "border-l border-line bg-navy text-ivory")}>
-        <FileText aria-hidden className="size-5" /> Solicitar información
+      <Link href={destino} className={buttonClasses("primary", "min-h-12 w-full")}>
+        <CalendarCheck aria-hidden className="size-5" /> Agendar consulta
       </Link>
     </nav>
   );

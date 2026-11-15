@@ -8,7 +8,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 |---|---|---|
 | C1 | Razón social y NIT verificados (atención: existen organizaciones con nombres parecidos). | Configuración → Datos de la firma |
 | C2 | Correo oficial, correo para datos personales y teléfono oficial. | Configuración → Datos de la firma |
-| C3 | Número oficial de WhatsApp. | Configuración → WhatsApp |
+| C3 | Número oficial de WhatsApp (la ruta «escríbenos tu pregunta» de `/gracias` depende de él). | Configuración → WhatsApp |
 | C4 | **Aprobación jurídica** de las 12 páginas de servicio (cada una con sus `notasRevision`) y de «La firma». | Áreas y servicios / Páginas institucionales |
 | C5 | Aprobación y fecha de vigencia de las 4 políticas legales. | Documentos legales |
 | C6 | Almacenamiento de producción: proyecto Supabase **dedicado** de LEXPERTISE + migración `001_solicitudes.sql`. El staging usa un esquema aislado dentro de «Segmenta web» por el límite de 2 proyectos gratuitos. | Supabase + variables de entorno |
@@ -30,6 +30,9 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A9 | Límite de envíos global en Vercel (Upstash Redis) para que el límite por IP no dependa de una sola instancia. |
 | A11 | Pruebas automáticas sobre el staging protegido: requieren un token de omisión para automatización que debe crear una persona del equipo en Vercel (Settings → Deployment Protection). Mientras tanto, revisar el staging con sesión de Vercel. |
 | A10 | Cuentas de medición: GA4 o GTM, Píxel de Meta, Search Console y, si se aprueba, API de Conversiones. |
+| A12 | **Agenda de citas de Google Calendar:** crear la agenda en la cuenta de la firma y pegar el enlace de inserción en Configuración → Agendamiento (ver `MANUAL-EQUIPO.md` §7b). Sin ella, los casos de prioridad alta no pueden agendar al terminar y el formulario pide fechas posibles. |
+| A13 | Áreas o asuntos prioritarios para la firma, para ajustar la regla de prioridad alta (`src/lib/leads/prioridad.ts`). |
+| A14 | Si se aprueba: evento «lead calificado» para Meta y Google (prioridad alta) y pregunta de disposición a pagar con el valor de la consulta (requiere A5). |
 
 ## Medio: validaciones jurídicas señaladas en la redacción
 
@@ -41,7 +44,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | M4 | Laboral: vigencia del nuevo Código Procesal del Trabajo (Ley 2452 de 2025) y de la reforma laboral (Ley 2466 de 2025) en los textos; prescripción en seguridad social. |
 | M5 | Tributario: alcance exacto del servicio (orientación, respuesta a requerimientos, recursos, representación; tributos nacionales y/o territoriales). |
 | M6 | Propiedad intelectual: si la firma radica ante la SIC, atiende oposiciones o cancelaciones, y otros derechos (autor, patentes). |
-| M7 | Datos personales: canal y responsable de peticiones, inscripción en el RNBD, lista de proveedores (encargados) y países, plazos de conservación, alcance de la política frente a clientes/empleados/proveedores. |
+| M7 | Datos personales: canal y responsable de peticiones, inscripción en el RNBD, lista de proveedores (encargados) y países —incluye Google si se usa la agenda de Google Calendar—, plazos de conservación, alcance de la política frente a clientes/empleados/proveedores. |
 | M8 | Medición: la URL de la página (p. ej. `/divorcio-unilateral`) llega a Google/Meta con el consentimiento de la persona. La atribución se adjunta a la solicitud enviada aunque no se acepten cookies funcionales (no se guarda en el navegador). Confirmar ambos criterios. |
 | M9 | Revisión deontológica (Ley 1123 de 2007, art. 31) de todos los textos publicitarios y de cualquier campaña. |
 

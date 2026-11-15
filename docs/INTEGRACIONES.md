@@ -2,7 +2,28 @@
 
 ## 1. Solicitudes (formularios)
 
-**Flujo:** formulario por pasos → `POST /api/solicitudes` → validación en servidor → almacenamiento → CRM → respuesta.
+**Flujo:** formulario por pasos → `POST /api/solicitudes` → validación en servidor → **prioridad** → almacenamiento → CRM → respuesta con el siguiente paso → `/gracias` (agenda, WhatsApp o recursos).
+
+**Todo pasa por el formulario.** Los botones directos de WhatsApp y llamada se retiraron de las páginas. El único llamado del sitio es «Agendar consulta», que lleva al formulario de la página o a `/agendar-consulta`. WhatsApp aparece después de enviar, con el resumen ya escrito.
+
+### Pasos del formulario (4 como máximo; 3 en landings y páginas de servicio)
+
+| Paso | Campos |
+|---|---|
+| Tu consulta | Persona o empresa y área (se salta si la página ya los define) |
+| Tu situación | Tipo de asunto · **¿En qué punto está?** (aún no inicia / proceso en curso / fecha límite o audiencia próxima / solo informarse) · **¿Cuándo quieres avanzar?** (lo antes posible / este mes / próximos meses / aún no lo sé) |
+| Atención | Ciudad · modalidad · medio de contacto preferido · fechas posibles y franja (**solo si no hay agenda en línea**) |
+| Datos de contacto | Nombre, celular, correo, empresa (opcional), cómo nos conoció (opcional), autorizaciones |
+
+### Prioridad y siguiente paso (`src/lib/leads/prioridad.ts`)
+
+| Prioridad | Regla | Siguiente paso en `/gracias` |
+|---|---|---|
+| Alta | Área atendida, tipo de asunto definido y (fecha límite **o** quiere avanzar lo antes posible o este mes) | Agenda en línea; alternativa, WhatsApp |
+| Media | Área «otro» (no sabe cuál), tipo de asunto «otro», o sin urgencia inmediata | WhatsApp con el resumen y «Mi pregunta es:»; alternativa, agenda |
+| Baja | «Solo quiero informarme» | Recursos jurídicos; alternativa, WhatsApp |
+
+Nadie se rechaza: todas las solicitudes se guardan con `prioridad`, `ruta` y `motivoPrioridad`. La regla no usa datos económicos ni personales. El resumen para WhatsApp (referencia, tema, etapa y urgencia, sin nombre ni contacto) pasa a `/gracias` por `sessionStorage` (`lx_siguiente_paso`) y se borra al cerrar la pestaña.
 
 | Control | Implementación |
 |---|---|
@@ -15,7 +36,7 @@
 | Fallos | Sin almacenamiento → 503; error de escritura → 500. El formulario conserva los datos y ofrece WhatsApp si está configurado. |
 | Registros del servidor | Solo referencia y estado; nunca nombre, teléfono ni correo. |
 
-**Campos registrados** (`SolicitudRegistro` en `src/lib/leads/schema.ts`): referencia `LX-AAAAMMDD-XXXXXX`, tipo (contacto/agendamiento), público, área, subcategoría, ciudad, preferencia de contacto, nombre, teléfono, correo, empresa (opcional), cómo nos conoció (opcional), preferencias de agendamiento, consentimiento, atribución (UTM, gclid/fbclid, landing, referencia), canal derivado, página de origen, estado `solicitud_recibida`, `requiereRevisionHumana` (área «otro»), responsable, estado de sincronización con el CRM.
+**Campos registrados** (`SolicitudRegistro` en `src/lib/leads/schema.ts`): referencia `LX-AAAAMMDD-XXXXXX`, tipo (contacto/agendamiento), público, área, subcategoría, **etapa, urgencia, modalidad, prioridad, ruta y motivo de la prioridad**, ciudad, preferencia de contacto, nombre, teléfono, correo, empresa (opcional), cómo nos conoció (opcional), preferencias de agendamiento, consentimiento, atribución (UTM, gclid/fbclid, landing, referencia), canal derivado, página de origen, estado `solicitud_recibida`, `requiereRevisionHumana` (área «otro»), responsable, estado de sincronización con el CRM.
 
 No se solicitan documentos, números de identificación, NIT ni detalles del caso.
 
@@ -28,7 +49,11 @@ No se solicitan documentos, números de identificación, NIT ni detalles del cas
   - Basta la clave publicable (`SUPABASE_KEY`); no hace falta la `service_role`.
   - Las duplicadas se resuelven en la base (restricción única de `idempotency_key`): un reintento devuelve la referencia original.
   - El asesor de seguridad de Supabase marca dos avisos esperados: tablas con RLS sin políticas (intencional) y funciones `SECURITY DEFINER` ejecutables por `anon` (protegidas por el secreto).
-- **Staging actual:** proyecto «Segmenta web» (esquema `lexpertise`), por el límite de proyectos gratuitos de la organización. Para producción, crear un proyecto dedicado de LEXPERTISE.
+- `supabase/migrations/002_prioridad_y_reporte.sql`: columnas consultables `etapa`, `urgencia`, `modalidad`, `prioridad` y `ruta`, y la vista **`lexpertise.resumen_embudo`** («qué vende»): solicitudes por semana, canal, campaña, página de entrada, área y prioridad, sin datos personales. Se consulta en el editor SQL de Supabase:
+  ```sql
+  select * from lexpertise.resumen_embudo order by semana desc, prioridad_alta desc;
+  ```
+- **Staging actual:** proyecto «Segmenta web» (esquema `lexpertise`, migraciones 001 y 002 aplicadas), por el límite de proyectos gratuitos de la organización. Para producción, crear un proyecto dedicado de LEXPERTISE.
 
 ## 3. CRM
 
@@ -39,9 +64,9 @@ No se solicitan documentos, números de identificación, NIT ni detalles del cas
 ```json
 {
   "evento": "solicitud.creada",
-  "version": 1,
+  "version": 2,
   "solicitud": { "...registro completo..." },
-  "oportunidad": { "pipeline": "Solicitudes web", "etapa": "Solicitud recibida", "titulo": "Solicitud · familia · persona", "requiereRevisionHumana": false }
+  "oportunidad": { "pipeline": "Solicitudes web", "etapa": "Solicitud recibida", "titulo": "[ALTA] Solicitud · familia · persona", "prioridad": "alta", "siguientePaso": "agendar", "motivoPrioridad": "Necesidad definida y quiere avanzar pronto", "requiereRevisionHumana": false }
 }
 ```
 
@@ -50,7 +75,7 @@ El receptor (webhook del CRM o un orquestador como Make, Zapier o n8n) debe veri
 
 **Pipeline sugerido** (adaptar al real): Solicitud recibida → Pendiente de contacto → Contactado → En evaluación → Consulta por programar → Consulta programada → Consulta realizada → Propuesta de servicios → Contratado → No contratado / cerrado.
 
-**Campos a crear en el CRM:** público, área general, subcategoría, ciudad, canal de origen, landing, utm_source/medium/campaign/content/term, preferencia de contacto, agendamiento (fechas/franja/modalidad), referencia LX, versión de consentimiento, consentimiento comercial (sí/no), responsable asignado, requiere revisión humana.
+**Campos a crear en el CRM:** **prioridad (alta/media/baja), siguiente paso, etapa, urgencia, modalidad**, público, área general, subcategoría, ciudad, canal de origen, landing, utm_source/medium/campaign/content/term, preferencia de contacto, agendamiento (fechas/franja/modalidad), referencia LX, versión de consentimiento, consentimiento comercial (sí/no), responsable asignado, requiere revisión humana.
 
 **Reglas:** no rechazar automáticamente por condición económica, características personales u otra información sensible. Las solicitudes «otro» van a revisión humana con respuesta informativa.
 
@@ -59,9 +84,9 @@ El receptor (webhook del CRM o un orquestador como Make, Zapier o n8n) debe veri
 ## 4. WhatsApp
 
 - Número oficial en `content/settings/whatsapp.json` (formato internacional sin signos, p. ej. `573001234567`).
-- Mensajes por contexto (general, divorcios, empresas, familia, laboral, contratos, agendar), editables desde el panel.
-- Cada página de servicio define su contexto (`whatsapp:` en el frontmatter). La barra móvil cambia el mensaje según la ruta.
-- Sin número: en revisión se muestra un botón deshabilitado «Pendiente»; en producción no se muestra.
+- **Se ofrece solo después del formulario**, en `/gracias`, con el mensaje: «Hola, envié la solicitud LX-… desde la página web. Tema: … Situación: …; … Mi pregunta es: ». La persona solo escribe su pregunta.
+- Los mensajes por contexto de `whatsapp.json` quedan para el aviso de error del formulario (si el servidor no responde).
+- Sin número: en revisión se muestra un botón deshabilitado «Pendiente»; en producción no se muestra y la página indica que el equipo contactará por el medio elegido.
 
 ## 5. Medición y publicidad
 
@@ -84,8 +109,10 @@ Las etiquetas **no se cargan** hasta que la persona acepta la categoría corresp
 | `click_whatsapp` | Clic en WhatsApp | `contexto`, `ubicacion` | `Contact` |
 | `click_call` | Clic en llamar | `ubicacion` | `Contact` |
 | `form_start` | Primera interacción con un formulario | `formulario` | — |
-| `generate_lead` | **Después** de que el servidor confirma el registro | `formulario`, `area`, `publico` + `event_id` | `Lead` + `eventID` |
+| `form_step` | Paso completado (para ver dónde abandonan) | `formulario`, `paso` (`consulta`, `situacion`, `atencion`) | — |
+| `generate_lead` | **Después** de que el servidor confirma el registro | `formulario`, `area`, `publico`, `prioridad`, `ruta` + `event_id` | `Lead` + `eventID` |
 | `schedule_request` | Solicitud de consulta confirmada por el servidor | ídem | `Schedule` + `eventID` |
+| `open_calendar` | Abre la agenda de Google Calendar en `/gracias` | `ubicacion`, `ruta` | — |
 | `appointment_confirmed` | Calendly confirma una reserva (si se activa) | `formulario` | `Schedule` |
 
 - **Deduplicación:** el `event_id` del navegador y el de la API de Conversiones es la referencia de la solicitud (`LX-…`).
@@ -100,9 +127,11 @@ Las etiquetas **no se cargan** hasta que la persona acepta la categoría corresp
 
 ## 7. Agendamiento
 
-- **Estado actual:** solicitud de consulta pendiente de confirmación (modalidad preferida, hasta 3 fechas entre mañana y 90 días, franja). Sin horarios ficticios, sin cobro, sin precio publicado.
-- **Calendly (opcional):** `sitio.json → agendamiento.proveedor = "calendly"` y `calendlyUrl`. Se carga bajo demanda y registra `appointment_confirmed` solo con el evento de reserva de Calendly.
-- **Google Calendar:** recomendado a través del CRM o de Calendly. No se conectó porque no hay calendario confirmado de la firma.
+- **La agenda se ofrece al terminar el formulario**, nunca antes: primero se filtra. Prioridad alta → agenda como primera opción; media → como alternativa; baja → no se ofrece.
+- **Google Calendar (elegido):** la firma crea una «agenda de citas» (*appointment schedule*) en su Google Calendar y copia el enlace de inserción (`https://calendar.google.com/calendar/appointments/schedules/…`) en Configuración → Agendamiento (`proveedor: google`, `googleCalendarUrl`). El sitio la muestra dentro de `/gracias` (se carga al pulsar «Ver horarios disponibles»; la política de seguridad permite `calendar.google.com`). El enlace corto `https://calendar.app.google/…` también sirve, pero se abre en otra pestaña. Solo se aceptan direcciones de Google.
+  - Limitación: Google no avisa al sitio cuando se reserva. Las reservas se cuentan en el propio Calendar o con Zapier/Make hacia el CRM. La persona confirma su nombre y correo dentro de la agenda.
+- **Calendly (alternativa):** `proveedor: calendly` y `calendlyUrl`. Sí avisa la reserva (`appointment_confirmed`).
+- **Sin agenda configurada (estado actual):** el formulario de `/agendar-consulta` pide modalidad, hasta 3 fechas (mañana a 90 días) y franja; `/gracias` indica que el equipo contactará para acordar la fecha. Sin horarios ficticios, sin cobro, sin precio publicado.
 
 ## 8. Panel de contenidos
 

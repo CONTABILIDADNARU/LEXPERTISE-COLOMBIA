@@ -55,7 +55,18 @@ Si se modifica cualquier texto en **Configuración → Textos de autorización**
 
 ## 7. WhatsApp
 
-**Configuración → WhatsApp:** número oficial en formato internacional (`57` + número, sin espacios ni signos) y un mensaje por tipo de página. El cambio se refleja en todos los botones del sitio.
+**Configuración → WhatsApp:** número oficial en formato internacional (`57` + número, sin espacios ni signos).
+
+WhatsApp ya no aparece como botón directo en las páginas: se ofrece **después del formulario**, con un mensaje que trae escrito el número de referencia, el tema, la etapa y la urgencia. La persona solo agrega su pregunta. Los mensajes por tipo de página se usan únicamente si el formulario falla.
+
+## 7b. Agenda de citas (Google Calendar)
+
+1. En Google Calendar (la cuenta de la firma): **Crear → Agenda de citas**. Define duración, días y horas disponibles, anticipación mínima, tiempo entre citas y recordatorios.
+2. Abre la agenda → **Compartir** → **Insertar en el sitio web** y copia la dirección que empieza por `https://calendar.google.com/calendar/appointments/schedules/` (solo la dirección, sin `<iframe>`).
+3. En el panel: **Configuración → Datos del sitio → Agendamiento**: Proveedor = `google` y pega la dirección en «Enlace de la agenda de Google Calendar». Publica el cambio.
+4. Desde ese momento, el formulario deja de pedir fechas posibles y, al terminar, las personas de prioridad alta eligen día y hora en la agenda (las de prioridad media la ven como alternativa).
+
+Las reservas llegan al Google Calendar de la firma. El sitio no se entera de la reserva: para verlas en el CRM, conecta Calendar con Zapier o Make.
 
 ## 8. Redirecciones del sitio anterior
 
@@ -63,10 +74,30 @@ Si se modifica cualquier texto en **Configuración → Textos de autorización**
 
 ## 9. Solicitudes recibidas
 
-Las solicitudes no se ven en el panel de contenidos. Llegan al CRM (cuando esté conectado) y quedan en la base de datos. Cada una tiene una referencia `LX-AAAAMMDD-XXXXXX`, que la persona ve en la pantalla de confirmación.
+Las solicitudes no se ven en el panel de contenidos. Llegan al CRM (cuando esté conectado) y quedan en la base de datos. Cada una tiene una referencia `LX-AAAAMMDD-XXXXXX`, que la persona ve en la pantalla de confirmación y que viene en su mensaje de WhatsApp.
+
+Cada solicitud llega con una **prioridad** calculada a partir de sus respuestas:
+
+| Prioridad | Qué significa | Qué hacer |
+|---|---|---|
+| Alta | Necesidad clara y quiere avanzar ya o este mes, o tiene una fecha límite | Revisar si ya agendó en Google Calendar; si no, contactarla primero |
+| Media | No sabe qué área corresponde o no tiene urgencia inmediata | Responder su pregunta de WhatsApp y orientar |
+| Baja | Por ahora solo quiere informarse | Responder con información general cuando haya espacio |
+
+La prioridad ordena la atención; **no** descarta a nadie.
 
 Para atenderlas:
 
 - Responder por el medio que eligió la persona.
 - Las marcadas como **requiere revisión humana** (asunto fuera del portafolio) reciben una respuesta informativa.
 - No pedir documentos por WhatsApp sin antes informar el tratamiento de datos.
+
+## 10. Qué campañas traen consultas («qué vende»)
+
+En Supabase → SQL Editor:
+
+```sql
+select * from lexpertise.resumen_embudo order by semana desc, prioridad_alta desc;
+```
+
+Muestra, por semana, cuántas solicitudes llegaron por canal, campaña, página de entrada, área y prioridad (sin datos personales). Una campaña con muchas solicitudes de prioridad baja trae curiosos; una con prioridad alta trae casos listos para agendar.

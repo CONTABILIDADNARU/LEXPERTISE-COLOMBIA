@@ -8,6 +8,7 @@ import { track } from "@/lib/analytics";
 import { leerAtribucion } from "@/lib/attribution";
 import { CIUDADES_SUGERIDAS, type Publico } from "@/lib/areas";
 import type { RespuestaApi } from "@/lib/leads/schema";
+import { CLAVE_SIGUIENTE_PASO, ETAPAS, MODALIDADES, URGENCIAS, type SiguientePaso } from "@/lib/leads/opciones";
 import { hoyEnBogota, sumarDias, validarCiudad, validarCorreo, validarFechaPreferida, validarNombre, validarTelefono } from "@/lib/leads/validators";
 import { buttonClasses, cx } from "./ui";
 
@@ -18,11 +19,11 @@ export type AreaOpcion = {
   subcategorias: Record<Publico, { valor: string; etiqueta: string }[]>;
 };
 
-type Paso = "publico" | "area" | "contexto" | "datos";
+type Paso = "consulta" | "situacion" | "atencion" | "datos";
 const NOMBRE_PASO: Record<Paso, string> = {
-  publico: "Tipo de consulta",
-  area: "Materia",
-  contexto: "Contexto general",
+  consulta: "Tu consulta",
+  situacion: "Tu situación",
+  atencion: "Atención",
   datos: "Datos de contacto",
 };
 
@@ -30,6 +31,8 @@ type Valores = {
   publico: Publico | "";
   area: string;
   subcategoria: string;
+  etapa: "" | (typeof ETAPAS)[number]["valor"];
+  urgencia: "" | (typeof URGENCIAS)[number]["valor"];
   ciudad: string;
   preferenciaContacto: "" | "whatsapp" | "llamada" | "correo";
   modalidad: "" | "virtual" | "presencial" | "telefonica" | "sin-preferencia";
@@ -51,20 +54,24 @@ type Props = {
   consent: { version: string; tratamientoDatos: string; comunicacionesComerciales: string; avisoFormulario: string };
   comoNosConocio: string[];
   whatsappHref: string | null;
+  /** Hay agenda en línea: no se piden fechas posibles (la cita se elige en /gracias). */
+  conAgenda: boolean;
   titulo?: string;
   descripcion?: string;
   className?: string;
 };
 
 const CAMPO_A_PASO: Record<string, Paso> = {
-  publico: "publico",
-  area: "area",
-  subcategoria: "contexto",
-  ciudad: "contexto",
-  preferenciaContacto: "contexto",
-  modalidad: "contexto",
-  fechasPreferidas: "contexto",
-  franja: "contexto",
+  publico: "consulta",
+  area: "consulta",
+  subcategoria: "situacion",
+  etapa: "situacion",
+  urgencia: "situacion",
+  ciudad: "atencion",
+  preferenciaContacto: "atencion",
+  modalidad: "atencion",
+  fechasPreferidas: "atencion",
+  franja: "atencion",
   nombre: "datos",
   telefono: "datos",
   correo: "datos",
@@ -72,7 +79,7 @@ const CAMPO_A_PASO: Record<string, Paso> = {
   consentimientoDatos: "datos",
 };
 
-export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, titulo, descripcion, className }: Props) {
+export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, conAgenda, titulo, descripcion, className }: Props) {
   const router = useRouter();
   const uid = useId();
   const id = (n: string) => `${uid}-${n}`;
@@ -91,6 +98,8 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
     publico: preset?.publico ?? "",
     area: preset?.area ?? "",
     subcategoria: preset?.subcategoria ?? "",
+    etapa: "",
+    urgencia: "",
     ciudad: "",
     preferenciaContacto: "",
     modalidad: "",
@@ -110,11 +119,11 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
 
   const pasos = useMemo<Paso[]>(() => {
     const p: Paso[] = [];
-    if (!preset?.publico) p.push("publico");
-    if (!preset?.area) p.push("area");
-    p.push("contexto", "datos");
+    if (!preset?.publico || !preset?.area) p.push("consulta");
+    p.push("situacion", "atencion", "datos");
     return p;
   }, [preset?.publico, preset?.area]);
+  const pideFechas = tipo === "agendamiento" && !conAgenda;
   const [indice, setIndice] = useState(0);
   const paso = pasos[indice];
 
@@ -151,15 +160,21 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
 
   function validarPaso(p: Paso): Record<string, string> {
     const e: Record<string, string> = {};
-    if (p === "publico" && !v.publico) e.publico = "Indica si consultas como persona o como empresa.";
-    if (p === "area" && !v.area) e.area = "Elige el área de tu consulta.";
-    if (p === "contexto") {
+    if (p === "consulta") {
+      if (!v.publico) e.publico = "Indica si consultas como persona o como empresa.";
+      if (!v.area) e.area = "Elige el área de tu consulta.";
+    }
+    if (p === "situacion") {
       if (subcats.length > 0 && !v.subcategoria) e.subcategoria = "Elige la opción que mejor describa tu asunto.";
+      if (!v.etapa) e.etapa = "Indica en qué punto está tu asunto.";
+      if (!v.urgencia) e.urgencia = "Indica cuándo quieres avanzar.";
+    }
+    if (p === "atencion") {
       const c = validarCiudad(v.ciudad);
       if (c) e.ciudad = c;
+      if (!v.modalidad) e.modalidad = "Elige tu preferencia de modalidad.";
       if (!v.preferenciaContacto) e.preferenciaContacto = "Elige cómo prefieres que te contactemos.";
-      if (tipo === "agendamiento") {
-        if (!v.modalidad) e.modalidad = "Elige tu preferencia de modalidad.";
+      if (pideFechas) {
         if (!v.franja) e.franja = "Elige una franja horaria.";
         const fechas = v.fechas.filter(Boolean);
         if (fechas.length === 0) e.fechasPreferidas = "Indica al menos una fecha posible.";
@@ -201,6 +216,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       enfocarPrimerError(e);
       return;
     }
+    track("form_step", { formulario: tipo, paso: paso });
     irA(indice + 1);
   }
 
@@ -223,6 +239,9 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       publico: v.publico,
       area: v.area,
       subcategoria: v.subcategoria,
+      etapa: v.etapa,
+      urgencia: v.urgencia,
+      modalidad: v.modalidad,
       ciudad: v.ciudad,
       preferenciaContacto: v.preferenciaContacto,
       nombre: v.nombre,
@@ -230,7 +249,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       correo: v.correo,
       empresa: v.publico === "empresa" ? v.empresa : "",
       comoNosConocio: v.comoNosConocio,
-      ...(tipo === "agendamiento" ? { modalidad: v.modalidad, fechasPreferidas: v.fechas.filter(Boolean), franja: v.franja } : {}),
+      ...(pideFechas ? { fechasPreferidas: v.fechas.filter(Boolean), franja: v.franja } : {}),
       consentimientoDatos: v.consentimientoDatos,
       consentimientoComercial: v.consentimientoComercial,
       versionConsentimiento: consent.version,
@@ -252,8 +271,13 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       });
       const data = (await res.json().catch(() => null)) as RespuestaApi | null;
       if (res.ok && data?.ok) {
-        track(tipo === "agendamiento" ? "schedule_request" : "generate_lead", { formulario: tipo, area: v.area, publico: v.publico }, { eventId: data.id });
-        router.push(`/gracias?ref=${encodeURIComponent(data.id)}&tipo=${tipo}`);
+        track(
+          tipo === "agendamiento" ? "schedule_request" : "generate_lead",
+          { formulario: tipo, area: v.area, publico: v.publico, prioridad: data.prioridad, ruta: data.ruta },
+          { eventId: data.id },
+        );
+        guardarSiguientePaso(data.id);
+        router.push(`/gracias?ref=${encodeURIComponent(data.id)}&tipo=${tipo}&ruta=${data.ruta}`);
         return;
       }
       if (data && !data.ok && data.campos) {
@@ -269,6 +293,23 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       setMensajeError("No pudimos conectar con el servidor. Revisa tu conexión: tus datos siguen en el formulario y puedes intentarlo de nuevo.");
     } finally {
       clearTimeout(timer);
+    }
+  }
+
+  /** Resumen para el mensaje de WhatsApp de /gracias. Solo vive en esta pestaña (sessionStorage). */
+  function guardarSiguientePaso(ref: string) {
+    const sub = subcats.find((x) => x.valor === v.subcategoria);
+    const tema = sub && sub.valor !== "otro" ? sub.etiqueta : areaActual?.nombre ?? "otro asunto";
+    const datos: SiguientePaso = {
+      ref,
+      tema: tema.toLowerCase(),
+      etapa: ETAPAS.find((x) => x.valor === v.etapa)?.resumen ?? "",
+      urgencia: URGENCIAS.find((x) => x.valor === v.urgencia)?.resumen ?? "",
+    };
+    try {
+      sessionStorage.setItem(CLAVE_SIGUIENTE_PASO, JSON.stringify(datos));
+    } catch {
+      // Sin almacenamiento (modo privado estricto): /gracias usa un mensaje sin resumen.
     }
   }
 
@@ -313,44 +354,50 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
 
         <fieldset>
           <legend data-titulo-paso tabIndex={-1} className="text-lg font-bold text-navy outline-none">
-            {paso === "publico" && "¿Consultas como persona o como empresa?"}
-            {paso === "area" && "¿Sobre qué área es tu consulta?"}
-            {paso === "contexto" && (tipo === "agendamiento" ? "Cuéntanos tus preferencias" : "Algunos datos generales")}
+            {paso === "consulta" && (preset?.publico ? "¿Sobre qué área es tu consulta?" : "¿Sobre qué es tu consulta?")}
+            {paso === "situacion" && "Cuéntanos tu situación"}
+            {paso === "atencion" && (pideFechas ? "Cuéntanos tus preferencias" : "¿Cómo prefieres que te atendamos?")}
             {paso === "datos" && "¿Cómo te contactamos?"}
           </legend>
 
-          {paso === "publico" && (
-            <Opciones
-              nombre="publico"
-              error={err("publico")}
-              errorId={id("e-publico")}
-              columnas={2}
-              valor={v.publico}
-              onChange={(x) => set("publico", x as Publico)}
-              opciones={[
-                { valor: "persona", etiqueta: "Persona natural", detalle: "Asuntos personales o familiares" },
-                { valor: "empresa", etiqueta: "Empresa u organización", detalle: "Asuntos de un negocio o entidad" },
-              ]}
-            />
+          {paso === "consulta" && (
+            <div className="mt-5 grid gap-6">
+              {!preset?.publico && (
+                <Opciones
+                  nombre="publico"
+                  legend="Consultas como"
+                  error={err("publico")}
+                  errorId={id("e-publico")}
+                  columnas={2}
+                  valor={v.publico}
+                  onChange={(x) => set("publico", x as Publico)}
+                  opciones={[
+                    { valor: "persona", etiqueta: "Persona natural", detalle: "Asuntos personales o familiares" },
+                    { valor: "empresa", etiqueta: "Empresa u organización", detalle: "Asuntos de un negocio o entidad" },
+                  ]}
+                />
+              )}
+              {!preset?.area && (
+                <Opciones
+                  nombre="area"
+                  legend="Área"
+                  error={err("area")}
+                  errorId={id("e-area")}
+                  columnas={2}
+                  denso
+                  valor={v.area}
+                  onChange={(x) => set("area", x)}
+                  opciones={[
+                    ...areasDelPublico.map((a) => ({ valor: a.key, etiqueta: a.nombre })),
+                    { valor: "otro", etiqueta: "Otro asunto / no estoy seguro" },
+                  ]}
+                />
+              )}
+            </div>
           )}
 
-          {paso === "area" && (
-            <Opciones
-              nombre="area"
-              error={err("area")}
-              errorId={id("e-area")}
-              columnas={2}
-              valor={v.area}
-              onChange={(x) => set("area", x)}
-              opciones={[
-                ...areasDelPublico.map((a) => ({ valor: a.key, etiqueta: a.nombre })),
-                { valor: "otro", etiqueta: "Otro asunto / no estoy seguro" },
-              ]}
-            />
-          )}
-
-          {paso === "contexto" && (
-            <div className="mt-5 grid gap-5">
+          {paso === "situacion" && (
+            <div className="mt-5 grid gap-6">
               {preset?.area && areaActual && (
                 <p className="text-sm text-slate">
                   Área: <strong className="text-navy">{areaActual.nombre}</strong>
@@ -376,6 +423,32 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                   </select>
                 </Campo>
               )}
+              <Opciones
+                nombre="etapa"
+                legend="¿En qué punto está tu asunto?"
+                error={err("etapa")}
+                errorId={id("e-etapa")}
+                denso
+                valor={v.etapa}
+                onChange={(x) => set("etapa", x as Valores["etapa"])}
+                opciones={ETAPAS.map((e) => ({ valor: e.valor, etiqueta: e.etiqueta }))}
+              />
+              <Opciones
+                nombre="urgencia"
+                legend="¿Cuándo quieres avanzar?"
+                error={err("urgencia")}
+                errorId={id("e-urgencia")}
+                columnas={4}
+                compacto
+                valor={v.urgencia}
+                onChange={(x) => set("urgencia", x as Valores["urgencia"])}
+                opciones={URGENCIAS.map((u) => ({ valor: u.valor, etiqueta: u.etiqueta }))}
+              />
+            </div>
+          )}
+
+          {paso === "atencion" && (
+            <div className="mt-5 grid gap-5">
               <Campo label="Ciudad" htmlFor={id("ciudad")} error={err("ciudad")} errorId={id("e-ciudad")} ayuda="Ciudad desde la que consultas.">
                 <input
                   id={id("ciudad")}
@@ -397,25 +470,21 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                 </datalist>
               </Campo>
 
-              {tipo === "agendamiento" && (
+              <Opciones
+                nombre="modalidad"
+                legend="Modalidad preferida"
+                ayuda="La firma confirmará las modalidades disponibles."
+                error={err("modalidad")}
+                errorId={id("e-modalidad")}
+                columnas={4}
+                compacto
+                valor={v.modalidad}
+                onChange={(x) => set("modalidad", x as Valores["modalidad"])}
+                opciones={MODALIDADES.map((m) => ({ valor: m.valor, etiqueta: m.etiqueta }))}
+              />
+
+              {pideFechas && (
                 <>
-                  <Opciones
-                    nombre="modalidad"
-                    legend="Modalidad preferida"
-                    ayuda="La firma confirmará las modalidades disponibles al responder."
-                    error={err("modalidad")}
-                    errorId={id("e-modalidad")}
-                    columnas={2}
-                    compacto
-                    valor={v.modalidad}
-                    onChange={(x) => set("modalidad", x as Valores["modalidad"])}
-                    opciones={[
-                      { valor: "virtual", etiqueta: "Virtual" },
-                      { valor: "presencial", etiqueta: "Presencial" },
-                      { valor: "telefonica", etiqueta: "Telefónica" },
-                      { valor: "sin-preferencia", etiqueta: "Sin preferencia" },
-                    ]}
-                  />
                   <fieldset>
                     <legend className="text-sm font-semibold text-navy">Fechas posibles (hora de Colombia)</legend>
                     <p className="mt-1 text-sm text-slate">Indica hasta tres fechas. No son citas confirmadas: te contactaremos para acordar el horario.</p>
@@ -701,6 +770,7 @@ function Opciones({
   errorId,
   columnas = 1,
   compacto,
+  denso,
 }: {
   nombre: string;
   legend?: string;
@@ -710,10 +780,11 @@ function Opciones({
   onChange: (v: string) => void;
   error?: string;
   errorId: string;
-  columnas?: 1 | 2 | 3;
+  columnas?: 1 | 2 | 3 | 4;
   compacto?: boolean;
+  denso?: boolean;
 }) {
-  const grid = columnas === 3 ? "grid-cols-3" : columnas === 2 ? "sm:grid-cols-2" : "";
+  const grid = columnas === 4 ? "grid-cols-2" : columnas === 3 ? "grid-cols-3" : columnas === 2 ? "sm:grid-cols-2" : "";
   const contenido = (
     <>
       <div role="radiogroup" aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} className={cx("grid gap-2.5", legend || ayuda ? "mt-2" : "mt-5", grid)}>
@@ -724,7 +795,7 @@ function Opciones({
               key={o.valor}
               className={cx(
                 "relative flex cursor-pointer items-start gap-3 rounded-[3px] border transition-colors",
-                compacto ? "min-h-12 items-center justify-center px-3 py-2 text-center text-sm" : "p-4",
+                compacto ? "min-h-12 items-center justify-center px-3 py-2 text-center text-sm" : denso ? "px-3.5 py-3 text-[0.95rem]" : "p-4",
                 sel ? "border-navy bg-navy/[0.04] ring-1 ring-navy" : "border-line hover:border-navy/40",
                 "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-bronze",
               )}

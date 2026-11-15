@@ -23,6 +23,9 @@ const base = (extra = {}) => ({
   publico: "persona",
   area: "familia",
   subcategoria: "divorcio-mutuo-acuerdo",
+  etapa: "sin-iniciar",
+  urgencia: "este-mes",
+  modalidad: "virtual",
   ciudad: "Bogotá",
   preferenciaContacto: "whatsapp",
   nombre: "Prueba Automática",
@@ -65,16 +68,37 @@ const esperar = (cond, msg) => {
 
 const valida = base();
 let idCreado = "";
-await caso("Envío válido (contacto)", async () => {
+await caso("Envío válido (contacto) → prioridad alta, ruta agendar", async () => {
   const r = await enviar(valida);
   esperar(r.status === 201 && r.data?.ok && /^LX-\d{8}-[A-Z0-9]{6}$/.test(r.data.id), `status ${r.status} ${JSON.stringify(r.data)}`);
+  esperar(r.data.prioridad === "alta" && r.data.ruta === "agendar", `prioridad ${r.data.prioridad} / ruta ${r.data.ruta}`);
   idCreado = r.data.id;
-  return `201 · ${r.data.id}`;
+  return `201 · ${r.data.id} · alta → agendar`;
 });
 await caso("Reenvío con la misma clave (doble clic / reintento)", async () => {
   const r = await enviar(valida);
-  esperar(r.status === 200 && r.data?.duplicada && r.data.id === idCreado, `status ${r.status} ${JSON.stringify(r.data)}`);
+  esperar(r.status === 200 && r.data?.duplicada && r.data.id === idCreado && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
   return `200 · misma referencia ${r.data.id}, sin duplicar`;
+});
+await caso("Sin etapa ni urgencia (filtro obligatorio)", async () => {
+  const r = await enviar(base({ etapa: undefined, urgencia: undefined }));
+  esperar(r.status === 422 && r.data?.campos?.etapa && r.data?.campos?.urgencia, `status ${r.status} ${JSON.stringify(r.data?.campos)}`);
+  return `422 · «${r.data.campos.etapa}» / «${r.data.campos.urgencia}»`;
+});
+await caso("Fecha límite próxima → prioridad alta aunque no sepa cuándo avanzar", async () => {
+  const r = await enviar(base({ etapa: "fecha-limite", urgencia: "no-se" }));
+  esperar(r.status === 201 && r.data.prioridad === "alta" && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} · alta → agendar`;
+});
+await caso("Sin urgencia (próximos meses) → prioridad media, ruta WhatsApp", async () => {
+  const r = await enviar(base({ urgencia: "proximos-meses" }));
+  esperar(r.status === 201 && r.data.prioridad === "media" && r.data.ruta === "conversar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} · media → conversar`;
+});
+await caso("Solo quiere informarse → prioridad baja, se guarda igual", async () => {
+  const r = await enviar(base({ etapa: "informarse", urgencia: "inmediata" }));
+  esperar(r.status === 201 && r.data.prioridad === "baja" && r.data.ruta === "informar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} · baja → informar`;
 });
 await caso("Correo inválido", async () => {
   const r = await enviar(base({ correo: "correo-sin-arroba" }));
@@ -136,10 +160,10 @@ await caso("Agendamiento con fecha pasada", async () => {
   esperar(r.status === 422 && r.data?.campos?.fechasPreferidas, `status ${r.status}`);
   return `422 · «${r.data.campos.fechasPreferidas}»`;
 });
-await caso("Fuera del portafolio (área «otro») → revisión humana", async () => {
+await caso("Fuera del portafolio (área «otro») → revisión humana, ruta WhatsApp", async () => {
   const r = await enviar(base({ area: "otro", subcategoria: "" }));
-  esperar(r.status === 201, `status ${r.status} ${JSON.stringify(r.data)}`);
-  return `201 · ${r.data.id} (requiereRevisionHumana)`;
+  esperar(r.status === 201 && r.data.ruta === "conversar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} (requiereRevisionHumana) · media → conversar`;
 });
 await caso("Empresa (B2B) sin NIT", async () => {
   const r = await enviar(base({ publico: "empresa", area: "comercial", subcategoria: "contratos-comerciales", empresa: "Empresa de Prueba SAS", paginaOrigen: "/empresas" }));

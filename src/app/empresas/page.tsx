@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, BriefcaseBusiness, Building2, Calculator, FileSearch, Tag, Users } from "lucide-react";
 import { ProcessSteps } from "@/components/blocks";
-import { WhatsAppButton } from "@/components/ContactLinks";
 import { PageHero } from "@/components/PageHero";
 import { Pending } from "@/components/Pending";
 import { ContactCTA } from "@/components/sections";
@@ -9,7 +8,6 @@ import { buttonClasses, Section, SectionHeading } from "@/components/ui";
 import { getServicio, servicioVisible } from "@/lib/content";
 import { IS_PRODUCTION } from "@/lib/env";
 import { buildMetadata } from "@/lib/seo";
-import { enlaceWhatsApp } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Asesoría jurídica para empresas",
@@ -86,9 +84,8 @@ export default function EmpresasPage() {
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href="#solicitud" className={buttonClasses("bronze")}>
-            Solicitar información <ArrowRight aria-hidden className="size-4" />
+            Agendar consulta <ArrowRight aria-hidden className="size-4" />
           </a>
-          <WhatsAppButton href={enlaceWhatsApp("empresas")} contexto="empresas" ubicacion="hero_empresas" variante="ghost-dark" />
         </div>
       </PageHero>
 

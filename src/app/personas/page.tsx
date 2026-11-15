@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ProcessSteps, ServiceCard } from "@/components/blocks";
 import { PageHero } from "@/components/PageHero";
@@ -34,11 +33,8 @@ export default function PersonasPage() {
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a href="#solicitud" className={buttonClasses("bronze")}>
-            Solicitar información <ArrowRight aria-hidden className="size-4" />
+            Agendar consulta <ArrowRight aria-hidden className="size-4" />
           </a>
-          <Link href="/agendar-consulta" className={buttonClasses("ghost-dark")}>
-            Solicitar una consulta
-          </Link>
         </div>
       </PageHero>
 

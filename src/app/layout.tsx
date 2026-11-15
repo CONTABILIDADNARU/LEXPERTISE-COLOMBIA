@@ -9,8 +9,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { IS_PRODUCTION, SITE_URL } from "@/lib/env";
 import { legalServiceJsonLd } from "@/lib/seo";
-import { getServicios } from "@/lib/content";
-import { enlaceTelefono, enlaceWhatsApp, sitio, WHATSAPP_CONTEXTOS } from "@/lib/settings";
+import { sitio } from "@/lib/settings";
 
 const serif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--font-dm-serif", display: "swap" });
 const sans = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
@@ -32,12 +31,6 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const enlaces = Object.fromEntries(WHATSAPP_CONTEXTOS.map((c) => [c, enlaceWhatsApp(c)]));
-  const rutas: Record<string, string> = {
-    ...Object.fromEntries(getServicios().map((s) => [`/${s.slug}`, s.whatsapp])),
-    "/empresas": "empresas",
-    "/agendar-consulta": "agendar",
-  };
   return (
     <html lang="es-CO" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
@@ -59,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
-        <MobileContactBar enlaces={enlaces} rutas={rutas} telHref={enlaceTelefono()} />
+        <MobileContactBar />
         <CookiePreferences />
         <AnalyticsScripts />
         <JsonLd data={legalServiceJsonLd()} />

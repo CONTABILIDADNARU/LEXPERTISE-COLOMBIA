@@ -1,8 +1,7 @@
 import { AREAS, type Publico } from "@/lib/areas";
 import { getServiciosVisibles } from "@/lib/content";
-import { consentimientos, enlaceTelefono, enlaceWhatsApp, sitio, type WhatsAppContexto } from "@/lib/settings";
+import { agendaReserva, consentimientos, enlaceWhatsApp, sitio, type WhatsAppContexto } from "@/lib/settings";
 import { ContactChannels } from "./ContactChannels";
-import { CallButton, WhatsAppButton } from "./ContactLinks";
 import { LeadForm, type AreaOpcion } from "./LeadForm";
 import { Eyebrow, Section } from "./ui";
 
@@ -35,11 +34,28 @@ export function LeadFormServer({
       consent={consentimientos}
       comoNosConocio={sitio.comoNosConocio}
       whatsappHref={enlaceWhatsApp(contexto)}
+      conAgenda={agendaReserva() !== null}
       titulo={titulo}
       descripcion={descripcion}
       className={className}
     />
   );
+}
+
+export const DESCRIPCION_FORMULARIO = "Responde unas preguntas breves (1 minuto). No incluyas detalles íntimos ni documentos.";
+
+/** Cómo funciona: todo pasa por el formulario y, según el caso, se agenda o se continúa por WhatsApp. */
+function pasosAgenda(): string[] {
+  const agenda = agendaReserva() !== null;
+  const whatsapp = enlaceWhatsApp() !== null;
+  const segundo = agenda
+    ? `Según tu caso, eliges el día y la hora de tu consulta${whatsapp ? " o nos escribes tu pregunta por WhatsApp" : ""}.`
+    : `Según tu caso, te contactamos para acordar la consulta${whatsapp ? " o nos escribes tu pregunta por WhatsApp" : ""}.`;
+  return [
+    "Respondes unas preguntas breves sobre tu asunto.",
+    segundo,
+    "Te informamos el alcance y los honorarios antes de cualquier contratación.",
+  ];
 }
 
 /** Bloque de cierre de alto contraste con canales y formulario compacto. */
@@ -67,15 +83,19 @@ export function ContactCTA({
             {titulo}
           </h2>
           <p className="mt-4 max-w-md text-ivory/75">{texto}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <WhatsAppButton href={enlaceWhatsApp(contexto)} contexto={contexto} ubicacion="cta_final" variante="bronze" />
-            <CallButton href={enlaceTelefono()} ubicacion="cta_final" variante="ghost-dark" />
-          </div>
+          <ol className="mt-8 max-w-md space-y-3 text-[0.95rem] text-ivory/80">
+            {pasosAgenda().map((p, i) => (
+              <li key={p} className="flex gap-3">
+                <span className="font-serif text-bronze">{String(i + 1).padStart(2, "0")}</span>
+                {p}
+              </li>
+            ))}
+          </ol>
           <div className="mt-10 border-t border-ivory/10 pt-8">
             <ContactChannels dark contexto={contexto} />
           </div>
         </div>
-        {conFormulario && <LeadFormServer preset={preset} contexto={contexto} titulo="Solicitar información" descripcion="Toma menos de un minuto. No necesitas enviar documentos." />}
+        {conFormulario && <LeadFormServer preset={preset} contexto={contexto} titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />}
       </div>
     </Section>
   );

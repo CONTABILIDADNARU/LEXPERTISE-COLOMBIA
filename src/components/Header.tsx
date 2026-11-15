@@ -1,6 +1,5 @@
 import { equipoPublicable, getRecursosVisibles } from "@/lib/content";
 import { IS_PRODUCTION } from "@/lib/env";
-import { enlaceWhatsApp } from "@/lib/settings";
 import { Logo } from "./Logo";
 import { DesktopNav, MobileMenu, type NavItem } from "./Navigation";
 import { ButtonLink, Container } from "./ui";
@@ -26,17 +25,12 @@ export function Header() {
         <Logo />
         <DesktopNav items={items} />
         <div className="flex items-center gap-2">
-          <div className="hidden xl:block">
-            <ButtonLink href="/agendar-consulta" variante="link" className="min-h-10 whitespace-nowrap px-2 text-sm">
+          <div className="hidden lg:block">
+            <ButtonLink href="/agendar-consulta" className="min-h-10 whitespace-nowrap px-4 py-2 text-sm">
               Agendar consulta
             </ButtonLink>
           </div>
-          <div className="hidden lg:block">
-            <ButtonLink href="/contacto" className="min-h-10 whitespace-nowrap px-4 py-2 text-sm">
-              Solicitar información
-            </ButtonLink>
-          </div>
-          <MobileMenu items={items} whatsappHref={enlaceWhatsApp("general")} />
+          <MobileMenu items={items} />
         </div>
       </Container>
     </header>

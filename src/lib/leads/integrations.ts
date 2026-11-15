@@ -11,12 +11,15 @@ export async function enviarAlCrm(r: SolicitudRegistro): Promise<EstadoCrm> {
   if (!url || !secreto) return "no_configurado";
   const cuerpo = JSON.stringify({
     evento: "solicitud.creada",
-    version: 1,
+    version: 2,
     solicitud: r,
     oportunidad: {
       pipeline: "Solicitudes web",
       etapa: "Solicitud recibida",
-      titulo: `${r.tipo === "agendamiento" ? "Agendamiento" : "Solicitud"} · ${r.area} · ${r.publico}`,
+      titulo: `[${r.prioridad.toUpperCase()}] ${r.tipo === "agendamiento" ? "Agendamiento" : "Solicitud"} · ${r.area} · ${r.publico}`,
+      prioridad: r.prioridad,
+      siguientePaso: r.ruta,
+      motivoPrioridad: r.motivoPrioridad,
       requiereRevisionHumana: r.requiereRevisionHumana,
     },
   });

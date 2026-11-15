@@ -4,8 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Menu, MessageCircle, X } from "lucide-react";
-import { track } from "@/lib/analytics";
+import { Menu, X } from "lucide-react";
 import { buttonClasses, cx } from "./ui";
 
 export type NavItem = { href: string; label: string };
@@ -43,7 +42,7 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
   );
 }
 
-export function MobileMenu({ items, whatsappHref }: { items: NavItem[]; whatsappHref: string | null }) {
+export function MobileMenu({ items }: { items: NavItem[] }) {
   const [abierto, setAbierto] = useState(false);
   const [top, setTop] = useState(72);
   const pathname = usePathname();
@@ -126,23 +125,9 @@ export function MobileMenu({ items, whatsappHref }: { items: NavItem[]; whatsapp
               ))}
             </ul>
             <div className="mt-8 grid gap-3">
-              <Link href="/contacto" className={buttonClasses("primary")}>
-                Solicitar información
+              <Link href="/agendar-consulta" className={buttonClasses("primary")}>
+                Agendar consulta
               </Link>
-              <Link href="/agendar-consulta" className={buttonClasses("secondary")}>
-                Solicitar una consulta
-              </Link>
-              {whatsappHref && (
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => track("click_whatsapp", { ubicacion: "menu_movil", contexto: "general" })}
-                  className={buttonClasses("secondary")}
-                >
-                  <MessageCircle aria-hidden className="size-4" /> Escribir por WhatsApp
-                </a>
-              )}
             </div>
           </nav>
         </div>,

@@ -29,6 +29,7 @@
   },
   "agendamiento": {
     "proveedor": "solicitud",
+    "googleCalendarUrl": "",
     "calendlyUrl": ""
   },
   "comoNosConocio": ["Instagram", "TikTok", "Google", "Recomendación de un conocido", "Otro"]

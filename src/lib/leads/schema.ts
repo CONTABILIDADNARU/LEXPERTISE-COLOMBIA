@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { AREA_KEYS, getArea, subcategoriasValidas } from "../areas";
+import { agendaReserva } from "../settings";
+import { ETAPA_VALORES, MODALIDAD_VALORES, URGENCIA_VALORES, type Etapa, type Modalidad, type Prioridad, type Ruta, type Urgencia } from "./opciones";
 import {
   hoyEnBogota,
   normalizarTelefono,
@@ -37,6 +39,8 @@ export const SolicitudSchema = z
     publico: z.enum(["persona", "empresa"], { message: "Indica si consultas como persona o como empresa." }),
     area: z.enum([...AREA_KEYS, "otro"], { message: "Elige el área de tu consulta." }),
     subcategoria: texto(40).default(""),
+    etapa: z.enum(ETAPA_VALORES, { message: "Indica en qué punto está tu asunto." }),
+    urgencia: z.enum(URGENCIA_VALORES, { message: "Indica cuándo quieres avanzar." }),
     ciudad: z.string().superRefine(conMensaje(validarCiudad)).transform((v) => v.trim()),
     preferenciaContacto: z.enum(["whatsapp", "llamada", "correo"], { message: "Elige cómo prefieres que te contactemos." }),
     nombre: z.string().superRefine(conMensaje(validarNombre)).transform((v) => v.trim().replace(/\s+/g, " ")),
@@ -44,7 +48,7 @@ export const SolicitudSchema = z
     correo: z.string().superRefine(conMensaje(validarCorreo)).transform((v) => v.trim().toLowerCase()),
     empresa: texto(120).default(""),
     comoNosConocio: texto(60).default(""),
-    modalidad: z.enum(["virtual", "presencial", "telefonica", "sin-preferencia"]).optional(),
+    modalidad: z.enum(MODALIDAD_VALORES, { message: "Elige tu preferencia de modalidad." }),
     fechasPreferidas: z.array(z.string()).max(3).default([]),
     franja: z.enum(["manana", "tarde", "indiferente"]).optional(),
     consentimientoDatos: z.literal(true, { message: "Debes autorizar el tratamiento de datos para que podamos responder tu solicitud." }),
@@ -67,8 +71,8 @@ export const SolicitudSchema = z
         ctx.addIssue({ code: "custom", path: ["subcategoria"], message: "Elige una opción de la lista." });
       }
     }
-    if (d.tipo === "agendamiento") {
-      if (!d.modalidad) ctx.addIssue({ code: "custom", path: ["modalidad"], message: "Elige tu preferencia de modalidad." });
+    // Con agenda en línea, la fecha se elige en la agenda: el formulario ya no pide fechas posibles.
+    if (d.tipo === "agendamiento" && !agendaReserva()) {
       if (!d.franja) ctx.addIssue({ code: "custom", path: ["franja"], message: "Elige una franja horaria." });
       if (d.fechasPreferidas.length === 0) ctx.addIssue({ code: "custom", path: ["fechasPreferidas"], message: "Indica al menos una fecha posible." });
       const hoy = hoyEnBogota();
@@ -98,6 +102,13 @@ export type SolicitudRegistro = {
   subcategoria: string;
   ciudad: string;
   preferenciaContacto: SolicitudValida["preferenciaContacto"];
+  etapa: Etapa;
+  urgencia: Urgencia;
+  modalidad: Modalidad;
+  /** Clasificación automática: ordena la atención y define el siguiente paso. Nunca descarta solicitudes. */
+  prioridad: Prioridad;
+  ruta: Ruta;
+  motivoPrioridad: string;
   nombre: string;
   telefono: string;
   correo: string;
@@ -117,5 +128,5 @@ export type SolicitudRegistro = {
 
 /** Respuesta estándar de la API. */
 export type RespuestaApi =
-  | { ok: true; id: string; duplicada?: boolean }
+  | { ok: true; id: string; prioridad: Prioridad; ruta: Ruta; duplicada?: boolean }
   | { ok: false; codigo: string; mensaje: string; campos?: Record<string, string> };

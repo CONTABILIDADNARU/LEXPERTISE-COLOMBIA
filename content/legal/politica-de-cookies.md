@@ -36,6 +36,8 @@ Algunas cookies las instala {{marca}} (cookies propias) y otras las instalan ser
 
 Permiten que el sitio funcione y recuerde tu elección sobre las cookies. Usamos la cookie `lx_consent`, que guarda tus preferencias durante 180 días. No se puede desactivar desde el panel, porque sin ella el sitio no podría recordar lo que elegiste.
 
+Cuando envías una solicitud, el sitio guarda en el almacenamiento de la sesión del navegador (`lx_siguiente_paso`) el número de referencia y un resumen general del asunto (tema, etapa y cuándo quieres avanzar). Sirve solo para escribir el mensaje de WhatsApp de la página de confirmación y se borra al cerrar la pestaña. No incluye tu nombre, teléfono ni correo.
+
 ### Funcionales
 
 Usamos el almacenamiento local del navegador (no una cookie) con el elemento `lx_attr`, que guarda el origen de tu visita: parámetros UTM de las campañas, identificadores de clic de anuncios (gclid de Google y fbclid de Meta), la página por la que entraste al sitio y el sitio desde el que llegaste.
@@ -60,7 +62,7 @@ Los videos de YouTube (que se cargan desde el dominio youtube-nocookie.com), Ins
 
 ### Herramientas de agendamiento
 
-Actualmente el sitio no usa herramientas de agendamiento de terceros. Si en el futuro {{marca}} habilita una (por ejemplo, Calendly), actualizaremos esta política antes de activarla. Esa herramienta podría instalar sus propias cookies cuando la abras.
+Después de enviar una solicitud, el sitio puede ofrecerte una agenda en línea de Google Calendar (o de Calendly, si {{marca}} la habilita) para elegir la fecha de tu consulta. La agenda no se carga hasta que pulsas «Ver horarios disponibles». Desde ese momento, el proveedor puede instalar sus propias cookies según su política.
 
 ## Tabla de cookies y almacenamiento local
 
@@ -72,7 +74,9 @@ Actualmente el sitio no usa herramientas de agendamiento de terceros. Si en el f
 | `_ga_<ID>` | Google (Google Analytics 4) | Mantener el estado de la sesión | Analítica | 2 años |
 | `_fbp` | Meta (Píxel de Meta) | Identificar el navegador para medir y optimizar anuncios | Publicidad | 90 días |
 | `_fbc` | Meta (Píxel de Meta) | Guardar el identificador de clic (fbclid) cuando llegas desde un anuncio de Meta | Publicidad | 90 días |
+| `lx_siguiente_paso` (almacenamiento de sesión) | {{marca}} (propia) | Escribir el mensaje de WhatsApp de la página de confirmación | Necesaria | Hasta cerrar la pestaña |
 | Cookies de YouTube, Instagram o TikTok | Google, Meta o TikTok | Reproducir el contenido incrustado que activas | Contenido incrustado | Según cada proveedor |
+| Cookies de Google Calendar o Calendly | Google o Calendly | Mostrar la agenda y registrar la cita que reservas | Contenido incrustado | Según cada proveedor |
 
 Las duraciones de las cookies de terceros son las que informa cada proveedor y pueden cambiar.
 

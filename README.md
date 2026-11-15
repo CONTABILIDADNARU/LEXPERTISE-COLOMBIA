@@ -23,7 +23,7 @@ npm run dev                  # http://localhost:3000
 | `npm run start` | Sirve la compilación. |
 | `npm run check:contenido` | Informe de datos pendientes, revisiones jurídicas y expresiones publicitarias a revisar. |
 | `npm run test:enlaces` | Rastrea el sitio y verifica enlaces, H1, títulos, descripciones y canonical (`BASE_URL=...`). |
-| `npm run test:formularios` | 18 pruebas de la API de solicitudes (`BASE_URL=...`). |
+| `npm run test:formularios` | 22 pruebas de la API de solicitudes, incluidas la prioridad y el siguiente paso (`BASE_URL=...`). |
 | `npm run cms` | Proxy local del panel de contenidos (abrir `http://localhost:3000/admin`). |
 
 ## Estructura

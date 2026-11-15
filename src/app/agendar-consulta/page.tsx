@@ -1,11 +1,10 @@
 import { CalendarDays, CircleHelp, Clock, ShieldCheck } from "lucide-react";
-import { CalendlyEmbed } from "@/components/CalendlyEmbed";
 import { PageHero } from "@/components/PageHero";
 import { Pending } from "@/components/Pending";
-import { LeadFormServer } from "@/components/sections";
+import { DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
-import { sitio } from "@/lib/settings";
+import { agendaReserva, sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitar una consulta jurídica",
@@ -15,8 +14,9 @@ export const metadata = buildMetadata({
 });
 
 export default function AgendarPage() {
-  const { consulta, agendamiento } = sitio;
-  const calendly = agendamiento.proveedor === "calendly" && agendamiento.calendlyUrl.startsWith("https://calendly.com/");
+  const { consulta } = sitio;
+  // Todo pasa por el formulario: la agenda en línea (si existe) se ofrece al terminar, en /gracias.
+  const agenda = agendaReserva();
   return (
     <>
       <PageHero
@@ -25,8 +25,12 @@ export default function AgendarPage() {
           { nombre: "Solicitar una consulta", href: "/agendar-consulta" },
         ]}
         eyebrow="Consulta jurídica"
-        titulo="Solicita una consulta jurídica."
-        texto="Indica el área, tu modalidad preferida y algunas fechas posibles. Un integrante del equipo te contactará para confirmar disponibilidad, alcance y honorarios."
+        titulo="Agenda tu consulta jurídica."
+        texto={
+          agenda
+            ? "Responde unas preguntas breves sobre tu asunto. Según tu caso, al terminar podrás elegir el día y la hora de tu consulta."
+            : "Responde unas preguntas breves e indica algunas fechas posibles. Un integrante del equipo te contactará para confirmar disponibilidad, alcance y honorarios."
+        }
       />
       <Section tono="ivory">
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
@@ -36,10 +40,17 @@ export default function AgendarPage() {
               <ul className="mt-6 space-y-5 text-[0.95rem]">
                 <li className="flex gap-3">
                   <CalendarDays aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
-                  <span>
-                    <strong className="text-navy">Es una solicitud, no una cita confirmada.</strong> La fecha y la hora se acuerdan contigo después de revisar la
-                    disponibilidad.
-                  </span>
+                  {agenda ? (
+                    <span>
+                      <strong className="text-navy">Primero, unas preguntas breves.</strong> Nos permiten preparar tu consulta. Al terminar, según tu caso, eliges la
+                      fecha y la hora en la agenda o nos escribes tu pregunta.
+                    </span>
+                  ) : (
+                    <span>
+                      <strong className="text-navy">Es una solicitud, no una cita confirmada.</strong> La fecha y la hora se acuerdan contigo después de revisar la
+                      disponibilidad.
+                    </span>
+                  )}
                 </li>
                 <li className="flex gap-3">
                   <Clock aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
@@ -78,16 +89,12 @@ export default function AgendarPage() {
             )}
           </aside>
           <div id="solicitud" className="scroll-mt-24">
-            {calendly ? (
-              <CalendlyEmbed url={agendamiento.calendlyUrl} />
-            ) : (
-              <LeadFormServer
-                tipo="agendamiento"
-                contexto="agendar"
-                titulo="Solicitud de consulta"
-                descripcion="Las fechas se registran en hora de Colombia (GMT-5)."
-              />
-            )}
+            <LeadFormServer
+              tipo="agendamiento"
+              contexto="agendar"
+              titulo="Agenda tu consulta"
+              descripcion={agenda ? DESCRIPCION_FORMULARIO : `${DESCRIPCION_FORMULARIO} Las fechas se registran en hora de Colombia (GMT-5).`}
+            />
           </div>
         </div>
       </Section>

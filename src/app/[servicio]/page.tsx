@@ -15,14 +15,12 @@ import {
   ServiceCard,
 } from "@/components/blocks";
 import { TrackView } from "@/components/client-utils";
-import { WhatsAppButton } from "@/components/ContactLinks";
-import { ContactCTA, LeadFormServer } from "@/components/sections";
-import { ButtonLink, Container, Eyebrow, Section, buttonClasses } from "@/components/ui";
+import { ContactCTA, DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
+import { ButtonLink, Container, Eyebrow, Section, buttonClasses, cx } from "@/components/ui";
 import { getArea, type Publico } from "@/lib/areas";
 import { getServicio, getServicios, getServiciosVisibles, servicioVisible, type Servicio } from "@/lib/content";
 import { renderMarkdown } from "@/lib/markdown";
 import { buildMetadata, type Miga } from "@/lib/seo";
-import { enlaceWhatsApp } from "@/lib/settings";
 
 export const dynamicParams = false;
 
@@ -86,7 +84,6 @@ export default async function ServicioPage({ params }: Props) {
       ? getServicios().filter((x) => x.area === s.area && x.tipo === "servicio" && servicioVisible(x) && !s.relacionados.includes(x.slug))
       : [];
   const preset = presetDe(s);
-  const whatsapp = enlaceWhatsApp(s.whatsapp);
   const esLanding = s.tipo === "landing";
   const area = getArea(s.area);
 
@@ -97,44 +94,53 @@ export default async function ServicioPage({ params }: Props) {
 
       {/* Hero específico */}
       <section aria-labelledby="titulo-servicio" className="bg-ledger text-ivory">
-        <Container className={esLanding ? "grid gap-10 py-12 sm:py-16 lg:grid-cols-[1fr_minmax(0,25rem)] lg:gap-10 lg:py-20 xl:grid-cols-[1fr_minmax(0,30rem)] xl:gap-14" : "py-14 sm:py-20"}>
-          <div>
-            <Breadcrumbs migas={migasDe(s)} dark />
-            <div className="mt-8 flex items-center gap-4">
+        <Container
+          className={
+            esLanding
+              ? "grid gap-6 py-6 sm:gap-10 sm:py-16 lg:grid-cols-[1fr_minmax(0,25rem)] lg:gap-x-10 lg:gap-y-0 lg:py-20 xl:grid-cols-[1fr_minmax(0,30rem)] xl:gap-x-14"
+              : "py-14 sm:py-20"
+          }
+        >
+          <div className={esLanding ? "lg:col-start-1 lg:row-start-1" : undefined}>
+            {/* En celular las landings van directo al título y al formulario (tráfico de anuncios). */}
+            <div className={esLanding ? "hidden sm:block" : undefined}>
+              <Breadcrumbs migas={migasDe(s)} dark />
+            </div>
+            <div className={cx("mt-8 items-center gap-4", esLanding ? "hidden sm:flex" : "flex")}>
               <span className="inline-flex size-12 items-center justify-center border border-bronze/60 text-bronze">
                 <AreaIcon slug={s.slug} area={s.area} className="size-6" />
               </span>
               <Eyebrow dark>{area?.nombre ?? "Servicios jurídicos"}</Eyebrow>
             </div>
-            <h1 id="titulo-servicio" className="mt-6 max-w-3xl text-4xl leading-[1.06] sm:text-5xl lg:text-[3.6rem]">
+            <h1 id="titulo-servicio" className={cx("max-w-3xl leading-[1.06] sm:text-5xl lg:text-[3.6rem]", esLanding ? "text-[2rem] sm:mt-6" : "mt-6 text-4xl")}>
               {s.h1}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg text-ivory/75">{s.subtitulo}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              {!esLanding && (
-                <a href="#solicitud" className={buttonClasses("bronze")}>
-                  Solicitar información <ArrowRight aria-hidden className="size-4" />
-                </a>
-              )}
-              <WhatsAppButton href={whatsapp} contexto={s.whatsapp} ubicacion="hero_servicio" variante={esLanding ? "bronze" : "ghost-dark"} />
-              {esLanding && (
+            <p className={cx("max-w-2xl text-ivory/75", esLanding ? "mt-3 text-base sm:mt-6 sm:text-lg" : "mt-6 text-lg")}>{s.subtitulo}</p>
+            {esLanding ? (
+              <div className="mt-8 hidden lg:flex">
                 <a href="#informacion" className={buttonClasses("ghost-dark", "whitespace-nowrap")}>
                   Leer la información
                 </a>
-              )}
-            </div>
-            {esLanding && (
-              <ul className="mt-10 grid gap-3 border-t border-ivory/10 pt-6 text-sm text-ivory/75 sm:grid-cols-3">
-                <li>Información general y verificable</li>
-                <li>Revisión del caso antes de recomendar una vía</li>
-                <li>Honorarios y alcance informados antes de contratar</li>
-              </ul>
+              </div>
+            ) : (
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a href="#solicitud" className={buttonClasses("bronze")}>
+                  Agendar consulta <ArrowRight aria-hidden className="size-4" />
+                </a>
+              </div>
             )}
           </div>
           {esLanding && (
-            <div id="solicitud" className="scroll-mt-24">
-              <LeadFormServer preset={preset} contexto={s.whatsapp} titulo="Solicitar información" descripcion="Cuéntanos lo general. No incluyas detalles íntimos ni documentos." />
+            <div id="solicitud" className="scroll-mt-24 lg:col-start-2 lg:row-span-2 lg:row-start-1">
+              <LeadFormServer preset={preset} contexto={s.whatsapp} titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />
             </div>
+          )}
+          {esLanding && (
+            <ul className="grid gap-3 border-t border-ivory/10 pt-6 text-sm text-ivory/75 sm:grid-cols-3 lg:col-start-1 lg:row-start-2 lg:mt-10 lg:self-start">
+              <li>Información general y verificable</li>
+              <li>Revisión del caso antes de recomendar una vía</li>
+              <li>Honorarios y alcance informados antes de contratar</li>
+            </ul>
           )}
         </Container>
       </section>
@@ -152,9 +158,8 @@ export default async function ServicioPage({ params }: Props) {
               <p className="mt-3 text-[0.95rem] text-slate">Cuéntanos el asunto de forma general y te informamos las alternativas de atención.</p>
               <div className="mt-5 grid gap-2">
                 <a href="#solicitud" className={buttonClasses("primary", "min-h-11 text-sm")}>
-                  Solicitar información
+                  Agendar consulta
                 </a>
-                <WhatsAppButton href={whatsapp} contexto={s.whatsapp} ubicacion="lateral_servicio" className="min-h-11 text-sm" label="WhatsApp" />
               </div>
             </div>
             {relacionados.length > 0 && (
@@ -230,21 +235,20 @@ export default async function ServicioPage({ params }: Props) {
             <div className="max-w-2xl">
               <h2 className="text-3xl text-ivory sm:text-4xl">¿Quieres que revisemos tu situación?</h2>
               <p className="mt-3 text-ivory/75">
-                Cada caso tiene particularidades. Solicita información y te explicaremos las alternativas de atención, el alcance y los honorarios antes de cualquier contratación.
+                Cada caso tiene particularidades. Responde unas preguntas breves y te explicaremos las alternativas de atención, el alcance y los honorarios antes de cualquier contratación.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a href="#solicitud" className={buttonClasses("bronze")}>
-                <FileText aria-hidden className="size-4" /> Ir al formulario
+                <FileText aria-hidden className="size-4" /> Agendar consulta
               </a>
-              <WhatsAppButton href={whatsapp} contexto={s.whatsapp} ubicacion="cierre_landing" variante="ghost-dark" />
             </div>
           </div>
         </Section>
       ) : (
         <ContactCTA
-          titulo="Conoce cómo solicitar una consulta."
-          texto="Cuéntanos de forma general qué asunto necesitas revisar y te contactaremos por el medio que prefieras."
+          titulo="¿Quieres que revisemos tu caso?"
+          texto="Cuéntanos de forma general qué asunto necesitas revisar. Según tu situación, te mostraremos el siguiente paso."
           preset={preset}
           contexto={s.whatsapp}
         />

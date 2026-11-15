@@ -1,25 +1,16 @@
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { IS_PRODUCTION } from "@/lib/env";
-import { enlaceTelefono, enlaceWhatsApp, numeroWhatsApp, sitio, type WhatsAppContexto } from "@/lib/settings";
+import { enlaceTelefono, sitio, type WhatsAppContexto } from "@/lib/settings";
 import { Pending } from "./Pending";
 import { cx } from "./ui";
 
 /** Lista de canales oficiales. Solo muestra datos confirmados; los faltantes quedan marcados en revisión. */
 export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean; contexto?: WhatsAppContexto }) {
   const e = sitio.empresa;
-  const wa = enlaceWhatsApp(contexto);
+  // WhatsApp no se lista aquí: se ofrece después del formulario, con el resumen de la solicitud ya escrito.
+  void contexto;
   const tel = enlaceTelefono();
   const filas = [
-    {
-      icon: MessageCircle,
-      label: "WhatsApp",
-      valor: wa ? (
-        <a href={wa} target="_blank" rel="noopener noreferrer" className="underline decoration-bronze underline-offset-4">
-          +{numeroWhatsApp()}
-        </a>
-      ) : null,
-      pendiente: "Número oficial de WhatsApp",
-    },
     {
       icon: Phone,
       label: "Teléfono",

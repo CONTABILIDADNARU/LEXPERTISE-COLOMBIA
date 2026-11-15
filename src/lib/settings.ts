@@ -29,7 +29,7 @@ const SitioSchema = z.object({
     modalidades: z.array(z.string()),
     condiciones: str,
   }),
-  agendamiento: z.object({ proveedor: z.enum(["solicitud", "calendly"]), calendlyUrl: str }),
+  agendamiento: z.object({ proveedor: z.enum(["solicitud", "google", "calendly"]), googleCalendarUrl: str, calendlyUrl: str }),
   comoNosConocio: z.array(z.string()),
 });
 
@@ -102,4 +102,37 @@ export function enlaceWhatsApp(contexto: WhatsAppContexto = "general"): string |
 export function enlaceTelefono(): string | null {
   const tel = sitio.empresa.telefono.replace(/[^\d+]/g, "");
   return tel.length >= 7 ? `tel:${tel}` : null;
+}
+
+/**
+ * Agenda en línea que se ofrece después del formulario (página /gracias).
+ * - Google Calendar: «agenda de citas» (appointment schedule). Solo se aceptan direcciones de Google:
+ *   la de incrustar (calendar.google.com/calendar/appointments/schedules/…) se muestra dentro del sitio;
+ *   el enlace corto (calendar.app.google/…) se abre en una pestaña nueva.
+ * - Calendly: se incrusta y avisa al sitio cuando hay una reserva.
+ * Devuelve null si no hay agenda configurada (entonces el formulario pide fechas posibles).
+ */
+export type AgendaReserva =
+  | { proveedor: "google"; url: string; incrustable: boolean }
+  | { proveedor: "calendly"; url: string; incrustable: true };
+
+const GOOGLE_INCRUSTABLE = /^https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\/[A-Za-z0-9_-]+/;
+const GOOGLE_CORTO = /^https:\/\/calendar\.app\.google\/[A-Za-z0-9]+\/?$/;
+
+export function agendaReserva(): AgendaReserva | null {
+  const a = sitio.agendamiento;
+  if (a.proveedor === "google") {
+    const url = a.googleCalendarUrl.trim();
+    if (GOOGLE_INCRUSTABLE.test(url)) {
+      const u = new URL(url);
+      u.searchParams.set("gv", "true");
+      return { proveedor: "google", url: u.toString(), incrustable: true };
+    }
+    if (GOOGLE_CORTO.test(url)) return { proveedor: "google", url, incrustable: false };
+    return null;
+  }
+  if (a.proveedor === "calendly" && /^https:\/\/calendly\.com\/[\w-]+(\/[\w-]+)?\/?$/.test(a.calendlyUrl.trim())) {
+    return { proveedor: "calendly", url: a.calendlyUrl.trim(), incrustable: true };
+  }
+  return null;
 }

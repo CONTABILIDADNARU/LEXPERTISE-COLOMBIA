@@ -4,6 +4,7 @@ import { SITE_URL } from "@/lib/env";
 import { consentimientos } from "@/lib/settings";
 import { SolicitudSchema, type RespuestaApi, type SolicitudRegistro } from "@/lib/leads/schema";
 import { getLeadStore } from "@/lib/leads/store";
+import { clasificar } from "@/lib/leads/prioridad";
 import { enviarAlCrm, enviarConversionMeta, limiteExcedido, sha256 } from "@/lib/leads/integrations";
 import { hoyEnBogota } from "@/lib/leads/validators";
 
@@ -105,6 +106,8 @@ export async function POST(req: NextRequest) {
     return error("CONSENTIMIENTO", "El texto de autorización se actualizó. Recarga la página y vuelve a enviar.", 409);
   }
 
+  const clasificacion = clasificar(d);
+
   const store = getLeadStore();
   if (!store) {
     console.error("[solicitudes] Almacenamiento no configurado: la solicitud no se registró.");
@@ -124,14 +127,21 @@ export async function POST(req: NextRequest) {
       subcategoria: d.subcategoria,
       ciudad: d.ciudad,
       preferenciaContacto: d.preferenciaContacto,
+      etapa: d.etapa,
+      urgencia: d.urgencia,
+      modalidad: d.modalidad,
+      prioridad: clasificacion.prioridad,
+      ruta: clasificacion.ruta,
+      motivoPrioridad: clasificacion.motivo,
       nombre: d.nombre,
       telefono: d.telefono,
       correo: d.correo,
       empresa: d.publico === "empresa" ? d.empresa : "",
       comoNosConocio: d.comoNosConocio,
+      // Fechas posibles: solo cuando no hay agenda en línea (con agenda, la persona elige la cita en /gracias).
       agendamiento:
-        d.tipo === "agendamiento"
-          ? { modalidad: d.modalidad ?? "sin-preferencia", fechasPreferidas: [...d.fechasPreferidas].sort(), franja: d.franja ?? "indiferente" }
+        d.tipo === "agendamiento" && d.fechasPreferidas.length > 0
+          ? { modalidad: d.modalidad, fechasPreferidas: [...d.fechasPreferidas].sort(), franja: d.franja ?? "indiferente" }
           : null,
       consentimiento: {
         datos: true,
@@ -152,7 +162,8 @@ export async function POST(req: NextRequest) {
 
     // Doble clic o reintento: la base devuelve la referencia original y no se registra de nuevo.
     const resultado = await store.guardar(registro);
-    if (resultado.estado === "duplicada") return responder({ ok: true, id: resultado.id, duplicada: true }, 200);
+    const siguiente = { prioridad: clasificacion.prioridad, ruta: clasificacion.ruta };
+    if (resultado.estado === "duplicada") return responder({ ok: true, id: resultado.id, ...siguiente, duplicada: true }, 200);
 
     // La solicitud ya está guardada. El CRM y Meta son complementarios: si fallan, quedan para reintento.
     const estadoCrm = await enviarAlCrm(registro);
@@ -170,7 +181,7 @@ export async function POST(req: NextRequest) {
     }
 
     console.info(`[solicitudes] ${registro.id} registrada (${store.nombre}); CRM: ${estadoCrm}`);
-    return responder({ ok: true, id: registro.id }, 201);
+    return responder({ ok: true, id: registro.id, ...siguiente }, 201);
   } catch (e) {
     // Sin datos personales en los registros del servidor.
     console.error("[solicitudes] Error al registrar:", e instanceof Error ? e.message : "desconocido");

@@ -31,18 +31,18 @@ export default function InicioPage() {
     <>
       {/* 1 · Hero tipográfico */}
       <section aria-labelledby="hero-titulo" className="bg-ledger relative overflow-hidden text-ivory">
-        <Container className="grid items-center gap-14 py-16 sm:py-20 lg:min-h-[calc(88dvh-4.5rem)] lg:grid-cols-[1.15fr_0.85fr] lg:py-24">
+        <Container className="grid items-center gap-14 py-16 sm:py-20 lg:min-h-[calc(88dvh-4.5rem)] lg:grid-cols-[1.15fr_0.85fr] lg:py-14">
           <div>
             <Eyebrow dark>{inicio.hero.antetitulo}</Eyebrow>
             <h1 id="hero-titulo" className="mt-6 text-[2.6rem] leading-[1.04] sm:text-6xl lg:text-[4.4rem]">
               {inicio.hero.titulo}
             </h1>
             <p className="mt-6 max-w-xl text-lg text-ivory/75 sm:text-xl">{inicio.hero.subtitulo}</p>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/servicios" variante="bronze" flecha>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <ButtonLink href="/agendar-consulta" variante="bronze" flecha>
                 {inicio.hero.ctaPrimario}
               </ButtonLink>
-              <ButtonLink href="/contacto" variante="ghost-dark">
+              <ButtonLink href="/servicios" variante="ghost-dark">
                 {inicio.hero.ctaSecundario}
               </ButtonLink>
             </div>
@@ -111,7 +111,7 @@ export default function InicioPage() {
             <ServiceCard key={a.slug} servicio={a} />
           ))}
           <Link
-            href="/contacto"
+            href="/agendar-consulta"
             className="group flex flex-col justify-between bg-navy p-6 text-ivory transition-colors hover:bg-navy-700 sm:p-7"
           >
             <CircleHelp aria-hidden strokeWidth={1.3} className="size-8 text-bronze" />
@@ -119,7 +119,7 @@ export default function InicioPage() {
               <h3 className="text-2xl">¿No sabes qué área corresponde?</h3>
               <p className="mt-3 text-[0.95rem] text-ivory/70">Cuéntanos el asunto de forma general y te orientamos.</p>
               <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
-                Solicitar información <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
+                Agendar consulta <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
               </span>
             </div>
           </Link>

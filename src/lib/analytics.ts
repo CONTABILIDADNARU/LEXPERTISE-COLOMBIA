@@ -14,11 +14,13 @@ export type EventName =
   | "click_whatsapp"
   | "click_call"
   | "form_start"
+  | "form_step"
   | "generate_lead"
   | "schedule_request"
-  | "appointment_confirmed";
+  | "appointment_confirmed"
+  | "open_calendar";
 
-const PARAMS_PERMITIDOS = ["area", "publico", "formulario", "ubicacion", "contexto", "servicio", "pagina"] as const;
+const PARAMS_PERMITIDOS = ["area", "publico", "formulario", "ubicacion", "contexto", "servicio", "pagina", "paso", "prioridad", "ruta"] as const;
 type Param = (typeof PARAMS_PERMITIDOS)[number];
 export type EventParams = Partial<Record<Param, string>>;
 

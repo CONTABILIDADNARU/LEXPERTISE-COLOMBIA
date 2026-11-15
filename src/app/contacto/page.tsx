@@ -1,10 +1,8 @@
 import { ContactChannels } from "@/components/ContactChannels";
-import { CallButton, WhatsAppButton } from "@/components/ContactLinks";
 import { PageHero } from "@/components/PageHero";
-import { LeadFormServer } from "@/components/sections";
+import { DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
-import { enlaceTelefono, enlaceWhatsApp } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Contacto y canales de atención",
@@ -29,16 +27,12 @@ export default function ContactoPage() {
           <div>
             <h2 className="text-3xl text-navy">Canales oficiales</h2>
             <p className="mt-3 text-slate">Usa solo los canales publicados en este sitio. No compartas documentos ni detalles íntimos por redes sociales.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <WhatsAppButton href={enlaceWhatsApp("general")} contexto="general" ubicacion="contacto" variante="primary" />
-              <CallButton href={enlaceTelefono()} ubicacion="contacto" />
-            </div>
-            <div className="mt-10 border-t border-line pt-8">
+            <div className="mt-8 border-t border-line pt-8">
               <ContactChannels />
             </div>
           </div>
           <div id="solicitud" className="scroll-mt-24">
-            <LeadFormServer titulo="Formulario de solicitud" descripcion="Cuatro pasos breves. No necesitas enviar documentos." />
+            <LeadFormServer titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />
           </div>
         </div>
       </Section>

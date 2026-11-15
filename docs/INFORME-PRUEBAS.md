@@ -9,7 +9,7 @@ Entorno: compilación de producción de Next.js 16.4.6 (`next build` + `next sta
 | Compilación y tipos | Probada | `npm run build`, `npm run typecheck` | Sin errores; 40 rutas | — |
 | Navegación y enlaces | Probada | `scripts/test-enlaces.mjs` | Staging: 35 URL, 0 enlaces rotos. Producción: 13 URL, 0 enlaces rotos | — |
 | SEO técnico por página | Probada | `scripts/test-enlaces.mjs` | 1 H1, título, descripción y canonical únicos en todas las páginas | — |
-| Formularios: API | Probada | `scripts/test-formularios.mjs` | **18/18**: válido, duplicado, correo/teléfono inválidos, sin consentimiento, área no disponible, campo trampa, envío instantáneo, CSRF, versión de consentimiento, tamaño, JSON malformado, agendamiento válido y con fecha pasada, área «otro», B2B sin NIT, límite por IP (429), método GET | Repetir en staging con Supabase |
+| Formularios: API | Probada | `scripts/test-formularios.mjs` | **22/22** (14-nov; ver «Embudo de filtrado»). Base: válido, duplicado, correo/teléfono inválidos, sin consentimiento, área no disponible, campo trampa, envío instantáneo, CSRF, versión de consentimiento, tamaño, JSON malformado, agendamiento válido y con fecha pasada, área «otro», B2B sin NIT, límite por IP (429), método GET | — |
 | Formularios: navegador | Probada | `/divorcio-unilateral` | Validación por paso con mensajes específicos y foco en el primer error; envío real registrado; redirección a `/gracias` con referencia | — |
 | Persistencia real | Probada (archivo y Supabase) | `data/solicitudes.jsonl`; esquema `lexpertise` en Supabase | Archivo: registro completo. Supabase: **18/18** pruebas de la API con el código de staging; 4 registros válidos sin duplicados, estado CRM actualizado, canal y campaña guardados; datos de prueba eliminados | Proyecto dedicado para producción |
 | Seguridad de la base | Probada | funciones `lx_*` | Secreto incorrecto → 401; tabla inaccesible con la clave pública (esquema no expuesto); duplicado devuelve la referencia original | — |
@@ -56,6 +56,21 @@ INP no se mide en laboratorio; TBT (su indicador de laboratorio) fue de 0–20 m
 6. Faltaba el favicon (error 404 en consola). Agregado.
 7. `/admin` devolvía 404. Se agregó una reescritura.
 8. La atribución se guardaba sin consentimiento, en contra de la política de cookies. Ahora se guarda solo con «Funcionales».
+
+## Embudo de filtrado y CRO (2026-11-14)
+
+Cambios: preguntas de etapa, urgencia y modalidad; prioridad automática (alta/media/baja) con siguiente paso en `/gracias` (agenda, WhatsApp con resumen o recursos); un solo llamado «Agendar consulta»; WhatsApp y llamada directos retirados; formulario en la primera pantalla del celular en las landings; eventos `form_step` y `open_calendar`; columnas nuevas y vista `resumen_embudo` en Supabase.
+
+| Prueba | Resultado |
+|---|---|
+| API (archivo local) | **22/22**: las 18 anteriores (actualizadas) + filtro obligatorio, fecha límite → alta, próximos meses → media, solo informarse → baja |
+| API contra Supabase (staging) | **22/22**. En la base: etapa, urgencia, modalidad, prioridad, ruta y motivo guardados; la vista `resumen_embudo` agrupa por campaña y prioridad. 7 registros de prueba borrados |
+| Enlaces y SEO técnico | 35 URL, 0 enlaces rotos; H1, título, descripción y canonical únicos |
+| Recorrido en navegador (375×812) | Landing de divorcio → 3 pasos → `/gracias?ruta=agendar` con el resumen guardado en la sesión |
+| Agenda y WhatsApp habilitados (valores de prueba, sin guardar) | Mensaje de WhatsApp con referencia, tema, etapa y urgencia; la agenda de Google se incrusta con `?gv=true` y la política de seguridad la permite; sin errores de consola |
+| Primera pantalla | Landing en celular: el formulario empieza en 487 px (antes 1.222 px) con las barras de revisión; Inicio en 1366×650: botones del hero en 623 px (antes 667 px) |
+
+**Lighthouse (móvil, 12.8.2, simulación):** Inicio 97, landing de divorcio unilateral 97, agendar consulta 98; accesibilidad y buenas prácticas 100; CLS 0; TBT 0–10 ms. El LCP simulado da 2,5–2,6 s, **igual que la versión anterior** medida con la misma herramienta (2,4–2,6 s); el LCP observado en la carga real fue de 58–108 ms. El 0,8–0,9 s de la tabla anterior se midió con otra configuración de Lighthouse, así que las cifras no son comparables. El LCP simulado depende de la fuente del título (DM Serif): se propone `display: "optional"` como mejora aparte.
 
 ## Incidencia durante el despliegue (2026-11-14)
 
