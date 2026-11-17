@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "LEXPERTISE · Servicios jurídicos en Colombia";
+export const alt = "LEXPERTISE Colombia · Servicios jurídicos";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -23,9 +23,12 @@ export default function OpengraphImage() {
           backgroundSize: "72px 72px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 34, letterSpacing: 8 }}>
-          LEXPERTISE
-          <div style={{ width: 12, height: 12, borderRadius: 12, background: "#B39A70" }} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 34, letterSpacing: 8 }}>
+            LEXPERTISE
+            <div style={{ width: 12, height: 12, borderRadius: 12, background: "#B39A70" }} />
+          </div>
+          <div style={{ display: "flex", fontSize: 15, letterSpacing: 7, color: "#B39A70", textTransform: "uppercase" }}>Colombia</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", width: 64, height: 2, background: "#B39A70" }} />
