@@ -1,4 +1,6 @@
 import { createHash, createHmac } from "node:crypto";
+import { getArea } from "../areas";
+import { numeroWhatsApp } from "../settings";
 import type { EstadoCrm, SolicitudRegistro } from "./schema";
 
 /**
@@ -42,6 +44,59 @@ export async function enviarAlCrm(r: SolicitudRegistro): Promise<EstadoCrm> {
   } catch {
     return "error";
   }
+}
+
+export type EstadoAviso = "enviado" | "no_configurado" | "error";
+
+/**
+ * Aviso a la firma por WhatsApp (WhatsApp Business Platform, Cloud API) por cada solicitud registrada.
+ * Se envía desde el servidor: no depende de que la persona pulse el botón de WhatsApp de /gracias.
+ * Usa una plantilla aprobada por Meta. Sin credenciales devuelve "no_configurado" y no envía nada.
+ * Las variables de entorno: WHATSAPP_TOKEN, WHATSAPP_SENDER_ID (número que envía), WHATSAPP_NOTIFY_TO
+ * (número de la firma; por defecto el de whatsapp.json), WHATSAPP_TEMPLATE y WHATSAPP_TEMPLATE_LANG.
+ */
+export async function avisarFirmaPorWhatsApp(r: SolicitudRegistro): Promise<EstadoAviso> {
+  const token = process.env.WHATSAPP_TOKEN;
+  const remitente = process.env.WHATSAPP_SENDER_ID;
+  const destino = (process.env.WHATSAPP_NOTIFY_TO || numeroWhatsApp()).replace(/\D/g, "");
+  const plantilla = process.env.WHATSAPP_TEMPLATE || "solicitud_web_nueva";
+  const idioma = process.env.WHATSAPP_TEMPLATE_LANG || "es_CO";
+  const base = process.env.WHATSAPP_API_BASE || "https://graph.facebook.com/v21.0";
+  if (!token || !remitente || destino.length < 10) return "no_configurado";
+
+  const area = getArea(r.area)?.nombre ?? r.area;
+  const cuerpo = JSON.stringify({
+    messaging_product: "whatsapp",
+    to: destino,
+    type: "template",
+    template: {
+      name: plantilla,
+      language: { code: idioma },
+      components: [
+        {
+          type: "body",
+          parameters: [r.id, area, r.prioridad.toUpperCase(), r.nombre, r.telefono].map((texto) => ({ type: "text", text: texto })),
+        },
+      ],
+    },
+  });
+
+  // Un reintento si hay error de red o del servidor de Meta. Los errores del pedido (plantilla, número) no se reintentan.
+  for (let intento = 1; intento <= 2; intento++) {
+    try {
+      const res = await fetch(`${base}/${encodeURIComponent(remitente)}/messages`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: cuerpo,
+        signal: AbortSignal.timeout(6000),
+      });
+      if (res.ok) return "enviado";
+      if (res.status < 500 && res.status !== 429) return "error";
+    } catch {
+      // Red o tiempo agotado: se intenta de nuevo.
+    }
+  }
+  return "error";
 }
 
 /**

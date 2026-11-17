@@ -5,7 +5,7 @@ import { consentimientos } from "@/lib/settings";
 import { SolicitudSchema, type RespuestaApi, type SolicitudRegistro } from "@/lib/leads/schema";
 import { getLeadStore } from "@/lib/leads/store";
 import { clasificar } from "@/lib/leads/prioridad";
-import { enviarAlCrm, enviarConversionMeta, limiteExcedido, sha256 } from "@/lib/leads/integrations";
+import { avisarFirmaPorWhatsApp, enviarAlCrm, enviarConversionMeta, limiteExcedido, sha256 } from "@/lib/leads/integrations";
 import { hoyEnBogota } from "@/lib/leads/validators";
 
 export const runtime = "nodejs";
@@ -170,6 +170,8 @@ export async function POST(req: NextRequest) {
     // La solicitud ya está guardada. El CRM y Meta son complementarios: si fallan, quedan para reintento.
     const estadoCrm = await enviarAlCrm(registro);
     await store.actualizarCrm(registro.id, estadoCrm).catch(() => undefined);
+    // Aviso a la firma por WhatsApp: ocurre aunque la persona no pulse «Enviar» en /gracias.
+    const avisoFirma = await avisarFirmaPorWhatsApp(registro);
 
     if (marketingAceptado(req)) {
       await enviarConversionMeta({
@@ -182,7 +184,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    console.info(`[solicitudes] ${registro.id} registrada (${store.nombre}); CRM: ${estadoCrm}`);
+    console.info(`[solicitudes] ${registro.id} registrada (${store.nombre}); CRM: ${estadoCrm}; aviso WhatsApp a la firma: ${avisoFirma}`);
     return responder({ ok: true, id: registro.id, ...siguiente }, 201);
   } catch (e) {
     // Sin datos personales en los registros del servidor.
