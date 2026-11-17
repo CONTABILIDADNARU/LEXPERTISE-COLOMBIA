@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
+import { AgendarConsultaLink } from "./ContactLinks";
 import { buttonClasses, cx } from "./ui";
 
 export type NavItem = { href: string; label: string };
@@ -125,9 +126,9 @@ export function MobileMenu({ items }: { items: NavItem[] }) {
               ))}
             </ul>
             <div className="mt-8 grid gap-3">
-              <Link href="/agendar-consulta" className={buttonClasses("primary")}>
+              <AgendarConsultaLink className={buttonClasses("primary")} onIrAlFormulario={() => setAbierto(false)}>
                 Agendar consulta
-              </Link>
+              </AgendarConsultaLink>
             </div>
           </nav>
         </div>,

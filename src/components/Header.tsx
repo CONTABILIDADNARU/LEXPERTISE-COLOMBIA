@@ -2,7 +2,8 @@ import { getRecursosVisibles } from "@/lib/content";
 import { IS_PRODUCTION } from "@/lib/env";
 import { Logo } from "./Logo";
 import { DesktopNav, MobileMenu, type NavItem } from "./Navigation";
-import { ButtonLink, Container } from "./ui";
+import { AgendarConsultaLink } from "./ContactLinks";
+import { buttonClasses, Container } from "./ui";
 
 export function getNavItems(): NavItem[] {
   const items: (NavItem | false)[] = [
@@ -26,9 +27,9 @@ export function Header() {
         <DesktopNav items={items} />
         <div className="flex items-center gap-2">
           <div className="hidden lg:block">
-            <ButtonLink href="/agendar-consulta" className="min-h-10 whitespace-nowrap px-4 py-2 text-sm">
+            <AgendarConsultaLink className={buttonClasses("primary", "min-h-10 whitespace-nowrap px-4 py-2 text-sm")}>
               Agendar consulta
-            </ButtonLink>
+            </AgendarConsultaLink>
           </div>
           <MobileMenu items={items} />
         </div>
