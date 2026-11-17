@@ -83,6 +83,17 @@ Cambios: preguntas de etapa, urgencia y modalidad; prioridad automática (alta/m
 | Mensaje de WhatsApp (número de prueba, sin guardar) | Incluye valor, referencia, tema, situación, modalidad, pago y la pregunta por fechas |
 | Enlace de la fundación | **Pide iniciar sesión en Vercel** (302): hay que reemplazarlo por la dirección pública |
 
+## Observaciones de la firma (2026-11-17)
+
+| Prueba | Resultado |
+|---|---|
+| API (archivo local) | **26/26**: nuevo caso «sin aceptar la Política de Cancelación y Reprogramación» (422); un valor de pago fuera de la lista («no-puede») se rechaza (422) |
+| Registro guardado | Incluye `politicaCancelacion: { aceptada: true, version: "2026-11-17.1", aceptadoEn }` y la versión nueva de los textos de autorización |
+| Recorrido completo en el navegador (compilación local) | Paso 3 sin valor y con 90 minutos; solo dos opciones de pago. Sin la casilla de la política no se envía y el foco va a esa casilla. Con ella llega a `/gracias?ruta=agendar` |
+| Mensaje de WhatsApp | Abre `wa.me/573016515265` con referencia, tema, situación, modalidad, pago y «Acepté la Política de Cancelación y Reprogramación», sin valor |
+| 34 páginas del mapa del sitio | Ninguna menciona el valor de la consulta ni la fundación |
+| Nombre y NIT | «LEXPERTISE COLOMBIA S.A.S» y «NIT 901.800.715-9» en logo, pie de página, autorizaciones, políticas y títulos |
+
 ## Incidencia durante el despliegue (2026-11-14)
 
 El primer despliegue con la CLI quedó en el entorno «production» del proyecto. En el plan Hobby, la protección estándar no cubría el dominio `lexpertise-web.vercel.app`, que respondió **200 sin sesión durante unos 2 minutos**. Esa compilación no tenía variables de entorno: modo de revisión, `noindex`, robots bloqueando todo y formulario sin almacenamiento (503). Se corrigió extendiendo Vercel Authentication a todos los despliegues; desde entonces todas las URL responden 302.

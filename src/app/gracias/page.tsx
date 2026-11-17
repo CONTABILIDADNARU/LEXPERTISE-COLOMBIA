@@ -6,11 +6,11 @@ import { SiguientePaso } from "@/components/SiguientePaso";
 import { ButtonLink, Container } from "@/components/ui";
 import type { Ruta } from "@/lib/leads/opciones";
 import { buildMetadata } from "@/lib/seo";
-import { agendaReserva, enlaceWhatsApp, numeroWhatsApp, precioConsulta } from "@/lib/settings";
+import { agendaReserva, enlaceWhatsApp, numeroWhatsApp, sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitud recibida",
-  description: "Recibimos tu solicitud. Un integrante del equipo de LEXPERTISE se pondrá en contacto contigo por el medio que elegiste.",
+  description: "Recibimos tu solicitud. Un integrante del equipo de LEXPERTISE COLOMBIA S.A.S se pondrá en contacto contigo por el medio que elegiste.",
   path: "/gracias",
   noindex: true,
 });
@@ -48,7 +48,6 @@ export default async function GraciasPage({ searchParams }: Props) {
               referencia={referencia}
               agenda={agendaReserva()}
               numeroWhatsApp={numero.length >= 10 ? numero : null}
-              precio={precioConsulta()}
             />
           ) : (
             <div className="mt-8 space-y-4 text-lg text-ivory/80">
@@ -65,6 +64,12 @@ export default async function GraciasPage({ searchParams }: Props) {
               Enviar esta solicitud no genera obligaciones ni constituye una relación abogado-cliente. La cita queda confirmada cuando te respondamos
               con la fecha y la hora. No es necesario que envíes documentos.
             </p>
+            {sitio.empresa.horario && (
+              <p>
+                Horario de recepción: {(sitio.empresa.horario.charAt(0).toLowerCase() + sitio.empresa.horario.slice(1)).replace(/\.$/, "")}. Las solicitudes enviadas
+                fuera de este horario se entienden recibidas a primera hora del día hábil siguiente.
+              </p>
+            )}
             <Pending campo="Tiempo de respuesta comprometido" oscuro />
           </div>
 

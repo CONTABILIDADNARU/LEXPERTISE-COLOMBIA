@@ -1,16 +1,16 @@
 {
-  "marca": "LEXPERTISE",
+  "marca": "LEXPERTISE COLOMBIA S.A.S",
   "descripcion": "Servicios jurídicos para personas y organizaciones en Colombia.",
   "verificado": false,
   "empresa": {
-    "razonSocial": "",
-    "nit": "",
+    "razonSocial": "LEXPERTISE COLOMBIA S.A.S",
+    "nit": "901.800.715-9",
     "direccion": "",
     "ciudad": "",
-    "correo": "",
+    "correo": "lexpertisesas@gmail.com",
     "correoDatos": "",
-    "telefono": "",
-    "horario": ""
+    "telefono": "+57 301 6515265",
+    "horario": "Lunes a viernes, de 8:00 a.m. a 5:00 p.m."
   },
   "cobertura": "Colombia",
   "redes": {
@@ -22,8 +22,8 @@
   },
   "consulta": {
     "confirmada": true,
-    "precio": "$200.000 COP",
-    "duracion": "",
+    "precio": "",
+    "duracion": "90 minutos",
     "modalidades": [],
     "condiciones": ""
   },
@@ -31,9 +31,6 @@
     "proveedor": "solicitud",
     "googleCalendarUrl": "",
     "calendlyUrl": ""
-  },
-  "fundacion": {
-    "url": "https://innova-escala-corp-cwo0kuf86-fondetrefi-s-projects.vercel.app/"
   },
   "comoNosConocio": [
     "Instagram",

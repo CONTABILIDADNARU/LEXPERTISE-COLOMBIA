@@ -1,6 +1,7 @@
 {
-  "version": "2026-11-13.1",
-  "tratamientoDatos": "Autorizo a {{marca}}, como responsable del tratamiento, a tratar los datos personales que suministro en este formulario para responder mi solicitud, contactarme por el medio que elegí y gestionar la relación previa a una eventual contratación. Declaro que he leído la Política de Tratamiento de Datos Personales y que conozco mis derechos a conocer, actualizar, rectificar y suprimir mis datos y a revocar esta autorización.",
+  "version": "2026-11-17.1",
+  "tratamientoDatos": "Autorizo a {{marca}} (NIT {{nit}}), como responsable del tratamiento, a tratar los datos personales que suministro en este formulario para responder mi solicitud, contactarme por el medio que elegí y gestionar la relación previa a una eventual contratación. Declaro que he leído la Política de Tratamiento de Datos Personales y que conozco mis derechos a conocer, actualizar, rectificar y suprimir mis datos y a revocar esta autorización.",
+  "politicaCancelacion": "He leído y acepto la Política de Cancelación y Reprogramación.",
   "comunicacionesComerciales": "Acepto recibir de {{marca}} información sobre sus servicios y contenidos por los medios de contacto que suministré. Sé que puedo retirar esta autorización en cualquier momento.",
   "avisoFormulario": "No incluyas datos sensibles (por ejemplo, de salud), documentos ni detalles de tu caso: un integrante del equipo revisará tu solicitud y te contactará por el medio que elegiste."
 }

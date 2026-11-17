@@ -2,9 +2,23 @@
   "hero": {
     "antetitulo": "Servicios jurídicos en Colombia",
     "titulo": "Cada decisión jurídica merece un análisis cuidadoso.",
-    "subtitulo": "LEXPERTISE presta servicios jurídicos para personas y organizaciones en distintas áreas del derecho. Conoce nuestros servicios y canales de atención.",
+    "subtitulo": "LEXPERTISE COLOMBIA S.A.S presta servicios jurídicos para personas y organizaciones en distintas áreas del derecho. Conoce nuestros servicios y canales de atención.",
     "ctaPrimario": "Agendar consulta",
     "ctaSecundario": "Conocer áreas de práctica"
+  },
+  "compromisos": {
+    "titulo": "Lo que puedes esperar",
+    "esperar": [
+      "Información sobre el alcance del servicio y los honorarios antes de cualquier contratación.",
+      "Un lenguaje comprensible, sin tecnicismos innecesarios.",
+      "Prudencia: cuando una respuesta depende de documentos o circunstancias, te lo diremos."
+    ],
+    "tituloNo": "Lo que no hacemos",
+    "noHacemos": [
+      "No prometemos resultados, plazos ni decisiones de autoridades judiciales o administrativas.",
+      "No prestamos servicios de derecho penal.",
+      "No resolvemos casos concretos por redes sociales o canales públicos: esa información se revisa en un espacio privado."
+    ]
   },
   "publico": {
     "titulo": "¿Qué tipo de orientación jurídica necesitas?",
@@ -84,13 +98,13 @@
     "titulo": "Preguntas frecuentes",
     "items": [
       {
-        "pregunta": "¿Qué asuntos jurídicos atiende LEXPERTISE?",
-        "respuesta": "LEXPERTISE presta servicios en derecho de familia y sucesiones, derecho laboral y seguridad social, derecho civil y contratos, derecho comercial y empresarial, derecho tributario, derecho administrativo, y propiedad intelectual y registro de marcas. La firma no presta servicios de derecho penal.",
+        "pregunta": "¿Qué asuntos jurídicos atiende LEXPERTISE COLOMBIA S.A.S?",
+        "respuesta": "LEXPERTISE COLOMBIA S.A.S presta servicios en derecho de familia y sucesiones, derecho laboral y seguridad social, derecho civil y contratos, derecho comercial y empresarial, derecho tributario, derecho administrativo, y propiedad intelectual y registro de marcas. La firma no presta servicios de derecho penal.",
         "pendiente": ""
       },
       {
         "pregunta": "¿Cómo agendo una consulta?",
-        "respuesta": "Pulsa «Agendar consulta» y responde la encuesta de participación (1 minuto). Al terminar, envías tu solicitud por WhatsApp con el resumen ya escrito y te confirmamos la fecha, la hora y el pago. No es necesario enviar documentos en esta etapa.",
+        "respuesta": "Pulsa «Agendar consulta» y responde la encuesta de participación (1 minuto). Al terminar, envías tu solicitud por WhatsApp con el resumen ya escrito y te confirmamos la fecha, la hora y el valor de la consulta. No es necesario enviar documentos en esta etapa.",
         "pendiente": ""
       },
       {
@@ -99,13 +113,18 @@
         "pendiente": ""
       },
       {
-        "pregunta": "¿Cuánto cuesta la consulta?",
-        "respuesta": "La consulta jurídica tiene un valor de $200.000 COP. En ella revisamos tu caso de forma general y te explicamos las alternativas. Los honorarios de cualquier servicio posterior dependen de la materia y del alcance, y se informan antes de contratar.",
-        "pendiente": "Duración de la consulta y medios de pago"
+        "pregunta": "¿Cuánto cuesta y cuánto dura la consulta?",
+        "respuesta": "La consulta jurídica dura 90 minutos. Su valor se informa antes de confirmar la cita. En ella revisamos tu caso de forma general y te explicamos las alternativas. Los honorarios de cualquier servicio posterior dependen de la materia y del alcance, y se informan antes de contratar.",
+        "pendiente": ""
+      },
+      {
+        "pregunta": "¿Puedo cancelar o reprogramar mi consulta?",
+        "respuesta": "Sí. Si cancelas con más de 48 horas hábiles de antelación, se reembolsa el 90 % del valor pagado. Hay una tolerancia de 15 minutos a partir de la hora programada; después de ese tiempo, sin aviso previo, la cita se da por cancelada por inasistencia. Las condiciones completas están en la Política de Cancelación y Reprogramación, que aceptas al enviar tu solicitud.",
+        "pendiente": ""
       },
       {
         "pregunta": "¿Qué ocurre después de enviar mi solicitud?",
-        "respuesta": "Un integrante del equipo revisa tu solicitud y te responde por WhatsApp para confirmar la fecha, la hora y el pago de la consulta. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
+        "respuesta": "Un integrante del equipo revisa tu solicitud y te responde por WhatsApp para confirmar la fecha, la hora y el valor de la consulta. Atendemos solicitudes de lunes a viernes, de 8:00 a.m. a 5:00 p.m.; las que llegan fuera de ese horario se entienden recibidas a primera hora del día hábil siguiente. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
         "pendiente": "Tiempo de respuesta comprometido por la firma"
       },
       {

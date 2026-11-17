@@ -12,7 +12,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Áreas de práctica y servicios jurídicos",
   description:
-    "Directorio de áreas de práctica de LEXPERTISE: familia y sucesiones, laboral, civil y contratos, comercial, tributario, administrativo, y propiedad intelectual.",
+    "Directorio de áreas de práctica de LEXPERTISE COLOMBIA S.A.S: familia y sucesiones, laboral, civil y contratos, comercial, tributario, administrativo, y propiedad intelectual.",
   path: "/servicios",
 });
 
@@ -73,7 +73,7 @@ export default function ServiciosPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-8 text-sm text-slate">LEXPERTISE no presta servicios de derecho penal.</p>
+        <p className="mt-8 text-sm text-slate">LEXPERTISE COLOMBIA S.A.S no presta servicios de derecho penal.</p>
       </Container>
       <ContactCTA titulo="¿No sabes qué área corresponde a tu asunto?" texto="Cuéntanos de forma general qué ocurre y te orientaremos sobre el área y las alternativas de atención." />
     </>

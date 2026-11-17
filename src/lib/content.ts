@@ -198,8 +198,3 @@ export function getEquipo(): Miembro[] {
     .filter((m) => m.verificado)
     .sort((a, b) => a.orden - b.orden);
 }
-
-/** El equipo se publica solo cuando hay perfiles verificados. */
-export function equipoPublicable(): boolean {
-  return getEquipo().length > 0;
-}

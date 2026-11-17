@@ -34,6 +34,7 @@ const base = (extra = {}) => ({
   correo: "qa+api@example.com",
   empresa: "",
   comoNosConocio: "Google",
+  aceptaPoliticaCancelacion: true,
   consentimientoDatos: true,
   consentimientoComercial: false,
   versionConsentimiento: VERSION,
@@ -111,10 +112,15 @@ await caso("Sin respuesta sobre el pago (encuesta obligatoria)", async () => {
   esperar(r.status === 422 && r.data?.campos?.pago, `status ${r.status} ${JSON.stringify(r.data?.campos)}`);
   return `422 · «${r.data.campos.pago}»`;
 });
-await caso("«No puedo pagar» nunca se registra (va a la fundación sin datos)", async () => {
+await caso("Respuesta de pago fuera de la lista (la opción «no puedo pagar» ya no existe)", async () => {
   const r = await enviar(base({ pago: "no-puede" }));
   esperar(r.status === 422 && r.data?.campos?.pago, `status ${r.status} ${JSON.stringify(r.data)}`);
   return "422 · no se guarda";
+});
+await caso("Sin aceptar la Política de Cancelación y Reprogramación", async () => {
+  const r = await enviar(base({ aceptaPoliticaCancelacion: false }));
+  esperar(r.status === 422 && r.data?.campos?.aceptaPoliticaCancelacion, `status ${r.status} ${JSON.stringify(r.data?.campos)}`);
+  return `422 · «${r.data.campos.aceptaPoliticaCancelacion}»`;
 });
 await caso("Correo inválido", async () => {
   const r = await enviar(base({ correo: "correo-sin-arroba" }));

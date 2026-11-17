@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { equipoPublicable, getRecursosVisibles, getServiciosVisibles } from "@/lib/content";
-import { IS_PRODUCTION, SITE_URL } from "@/lib/env";
+import { getRecursosVisibles, getServiciosVisibles } from "@/lib/content";
+import { SITE_URL } from "@/lib/env";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const hoy = new Date().toISOString().slice(0, 10);
@@ -13,12 +13,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { ruta: "/nosotros", prioridad: 0.6 },
     { ruta: "/contacto", prioridad: 0.7 },
     { ruta: "/agendar-consulta", prioridad: 0.7 },
-    ...(!IS_PRODUCTION || equipoPublicable() ? [{ ruta: "/equipo", prioridad: 0.5 }] : []),
+    { ruta: "/equipo", prioridad: 0.5 },
     ...(recursos.length ? [{ ruta: "/recursos", prioridad: 0.6 }] : []),
     { ruta: "/politica-de-privacidad", prioridad: 0.2 },
     { ruta: "/tratamiento-de-datos", prioridad: 0.2 },
     { ruta: "/politica-de-cookies", prioridad: 0.2 },
     { ruta: "/terminos-de-uso", prioridad: 0.2 },
+    { ruta: "/politica-de-cancelacion-y-reprogramacion", prioridad: 0.2 },
   ];
   return [
     ...estaticas.map((e) => ({ url: `${SITE_URL}${e.ruta}`, lastModified: hoy, priority: e.prioridad })),

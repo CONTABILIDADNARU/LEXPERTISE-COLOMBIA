@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, HeartHandshake, LoaderCircle, Lock, MessageCircle, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, LoaderCircle, Lock, MessageCircle, TriangleAlert } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { leerAtribucion } from "@/lib/attribution";
 import { CIUDADES_SUGERIDAS, type Publico } from "@/lib/areas";
@@ -44,6 +44,7 @@ type Valores = {
   correo: string;
   empresa: string;
   comoNosConocio: string;
+  aceptaPoliticaCancelacion: boolean;
   consentimientoDatos: boolean;
   consentimientoComercial: boolean;
 };
@@ -52,15 +53,13 @@ type Props = {
   tipo: "contacto" | "agendamiento";
   areas: AreaOpcion[];
   preset?: { publico?: Publico; area?: string; subcategoria?: string };
-  consent: { version: string; tratamientoDatos: string; comunicacionesComerciales: string; avisoFormulario: string };
+  consent: { version: string; tratamientoDatos: string; politicaCancelacion: string; comunicacionesComerciales: string; avisoFormulario: string };
   comoNosConocio: string[];
   whatsappHref: string | null;
   /** Hay agenda en línea: no se piden fechas posibles (la cita se elige en /gracias). */
   conAgenda: boolean;
-  /** Valor confirmado de la consulta (p. ej. «$200.000 COP») o null. */
-  precioConsulta: string | null;
-  /** Página para quien no puede pagar la consulta, o null si no está configurada. */
-  fundacionUrl: string | null;
+  /** Duración confirmada de la consulta (p. ej. «90 minutos») o null. El valor no se publica: se informa por WhatsApp. */
+  duracionConsulta: string | null;
   titulo?: string;
   descripcion?: string;
   className?: string;
@@ -82,10 +81,11 @@ const CAMPO_A_PASO: Record<string, Paso> = {
   telefono: "datos",
   correo: "datos",
   empresa: "datos",
+  aceptaPoliticaCancelacion: "datos",
   consentimientoDatos: "datos",
 };
 
-export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, conAgenda, precioConsulta, fundacionUrl, titulo, descripcion, className }: Props) {
+export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, conAgenda, duracionConsulta, titulo, descripcion, className }: Props) {
   const router = useRouter();
   const uid = useId();
   const id = (n: string) => `${uid}-${n}`;
@@ -117,13 +117,12 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
     correo: "",
     empresa: "",
     comoNosConocio: "",
+    aceptaPoliticaCancelacion: false,
     consentimientoDatos: false,
     consentimientoComercial: false,
   });
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<"idle" | "enviando" | "error">("idle");
-  /** Respondió que no puede pagar: la encuesta termina y se muestra la fundación (sin pedir datos). */
-  const [derivado, setDerivado] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
 
   const pasos = useMemo<Paso[]>(() => {
@@ -203,6 +202,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       if (t) e.telefono = t;
       const c = validarCorreo(v.correo);
       if (c) e.correo = c;
+      if (!v.aceptaPoliticaCancelacion) e.aceptaPoliticaCancelacion = "Debes aceptar la Política de Cancelación y Reprogramación para enviar tu solicitud.";
       if (!v.consentimientoDatos) e.consentimientoDatos = "Debes autorizar el tratamiento de datos para que podamos responder tu solicitud.";
     }
     return e;
@@ -228,13 +228,6 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       return;
     }
     track("form_step", { formulario: tipo, paso: paso });
-    if (paso === "pago" && v.pago === "no-puede") {
-      // Fin de la encuesta: no se piden ni se guardan datos personales.
-      track("derivacion_fundacion", { formulario: tipo, area: v.area, publico: v.publico });
-      setDerivado(true);
-      requestAnimationFrame(() => contenedor.current?.querySelector<HTMLElement>("[data-derivacion]")?.focus());
-      return;
-    }
     irA(indice + 1);
   }
 
@@ -270,6 +263,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       empresa: v.publico === "empresa" ? v.empresa : "",
       comoNosConocio: v.comoNosConocio,
       ...(pideFechas ? { fechasPreferidas: v.fechas.filter(Boolean), franja: v.franja } : {}),
+      aceptaPoliticaCancelacion: v.aceptaPoliticaCancelacion,
       consentimientoDatos: v.consentimientoDatos,
       consentimientoComercial: v.consentimientoComercial,
       versionConsentimiento: consent.version,
@@ -358,28 +352,6 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
         </div>
       </div>
 
-      {derivado ? (
-        <div data-derivacion tabIndex={-1} role="status" className="mt-6 outline-none">
-          <HeartHandshake aria-hidden strokeWidth={1.4} className="size-9 text-bronze-ink" />
-          <h3 className="mt-4 text-xl font-bold text-navy">Gracias por responder</h3>
-          <p className="mt-2 text-[0.95rem] text-slate">
-            {precioConsulta ? `La consulta con LEXPERTISE tiene un valor de ${precioConsulta}. ` : ""}Como en este momento no puedes pagarla, te
-            sugerimos visitar esta fundación, que puede orientarte según tu situación. No guardamos los datos de esta encuesta.
-          </p>
-          <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <button type="button" onClick={() => setDerivado(false)} className={cx(buttonClasses("secondary"), "sm:w-auto")}>
-              <ArrowLeft aria-hidden className="size-4" /> Cambiar mi respuesta
-            </button>
-            {fundacionUrl ? (
-              <a href={fundacionUrl} className={buttonClasses("primary")}>
-                Ir a la fundación <ArrowRight aria-hidden className="size-4" />
-              </a>
-            ) : (
-              <span className="text-sm text-slate">Enlace de la fundación pendiente.</span>
-            )}
-          </div>
-        </div>
-      ) : (
       <form
         noValidate
         onSubmit={(e) => {
@@ -400,7 +372,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           <legend data-titulo-paso tabIndex={-1} className="text-lg font-bold text-navy outline-none">
             {paso === "consulta" && (preset?.publico ? "¿Sobre qué área es tu consulta?" : "¿Sobre qué es tu consulta?")}
             {paso === "situacion" && "Cuéntanos tu situación"}
-            {paso === "pago" && "La consulta y su valor"}
+            {paso === "pago" && "La consulta"}
             {paso === "datos" && "Tus datos para agendar"}
           </legend>
 
@@ -494,14 +466,9 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           {paso === "pago" && (
             <div className="mt-5 grid gap-6">
               <p className="border-l-2 border-bronze bg-ivory px-4 py-3 text-[0.95rem] text-graphite">
-                {precioConsulta ? (
-                  <>
-                    La consulta jurídica tiene un valor de <strong className="text-navy">{precioConsulta}</strong>. En ella revisamos tu caso y te explicamos las
-                    alternativas, el alcance y los honorarios de cualquier servicio posterior.
-                  </>
-                ) : (
-                  "La consulta jurídica tiene un costo que te informaremos antes de agendarla."
-                )}
+                La consulta jurídica tiene un costo{duracionConsulta ? <> y dura <strong className="text-navy">{duracionConsulta}</strong></> : null}. Te informamos su
+                valor antes de confirmar la cita. En ella revisamos tu caso y te explicamos las alternativas, el alcance y los honorarios de cualquier
+                servicio posterior.
               </p>
               <Opciones
                 nombre="pago"
@@ -669,7 +636,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                 </Campo>
               )}
               {comoNosConocio.length > 0 && (
-                <Campo label="¿Dónde conociste a LEXPERTISE? (opcional)" htmlFor={id("origen")}>
+                <Campo label="¿Dónde conociste a LEXPERTISE COLOMBIA S.A.S? (opcional)" htmlFor={id("origen")}>
                   <select id={id("origen")} value={v.comoNosConocio} onChange={(e) => set("comoNosConocio", e.target.value)} className={inputCls()}>
                     <option value="">Prefiero no decirlo</option>
                     {comoNosConocio.map((o) => (
@@ -682,6 +649,29 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
               )}
 
               <div className="grid gap-3 border-t border-line pt-5 text-sm">
+                <label className="flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    data-campo="aceptaPoliticaCancelacion"
+                    checked={v.aceptaPoliticaCancelacion}
+                    onChange={(e) => set("aceptaPoliticaCancelacion", e.target.checked)}
+                    aria-invalid={Boolean(err("aceptaPoliticaCancelacion"))}
+                    aria-describedby={err("aceptaPoliticaCancelacion") ? id("e-cancelacion") : undefined}
+                    className="mt-1 size-4 shrink-0 accent-navy"
+                  />
+                  <span>
+                    {consent.politicaCancelacion}{" "}
+                    <Link
+                      href="/politica-de-cancelacion-y-reprogramacion"
+                      target="_blank"
+                      className="font-semibold text-navy underline decoration-bronze underline-offset-4"
+                    >
+                      Ver política
+                    </Link>
+                    <span className="text-danger"> (obligatorio)</span>
+                  </span>
+                </label>
+                {err("aceptaPoliticaCancelacion") && <MensajeError id={id("e-cancelacion")}>{err("aceptaPoliticaCancelacion")}</MensajeError>}
                 <label className="flex items-start gap-3">
                   <input
                     type="checkbox"
@@ -764,7 +754,6 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           </button>
         </div>
       </form>
-      )}
     </div>
   );
 }

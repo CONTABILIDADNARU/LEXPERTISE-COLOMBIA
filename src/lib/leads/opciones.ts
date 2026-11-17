@@ -18,13 +18,12 @@ export const URGENCIAS = [
 ] as const;
 
 /**
- * Disposición a pagar la consulta. Quien no puede pagarla termina la encuesta en ese paso y se le
- * muestra la fundación: no se le piden ni se guardan datos personales.
+ * Disposición a pagar la consulta. El valor no se publica (se informa por WhatsApp antes de confirmar
+ * la cita) y el sitio no remite a terceros: decisión de la firma del 17-nov-2026.
  */
 export const PAGOS = [
   { valor: "puede", etiqueta: "Puedo pagar la consulta", resumen: "puedo pagar la consulta" },
   { valor: "conversar", etiqueta: "Me interesa, pero quiero conversar la forma de pago", resumen: "me interesa, pero quiero conversar la forma de pago" },
-  { valor: "no-puede", etiqueta: "En este momento no puedo pagarla", resumen: "en este momento no puedo pagarla" },
 ] as const;
 
 export const MODALIDADES = [
@@ -38,9 +37,9 @@ export type Etapa = (typeof ETAPAS)[number]["valor"];
 export type Urgencia = (typeof URGENCIAS)[number]["valor"];
 export type Modalidad = (typeof MODALIDADES)[number]["valor"];
 export type Pago = (typeof PAGOS)[number]["valor"];
-/** Solo se registran solicitudes de quien puede pagar o quiere conversar el pago. */
-export type PagoRegistrable = Exclude<Pago, "no-puede">;
-export const PAGO_REGISTRABLE: [PagoRegistrable, ...PagoRegistrable[]] = ["puede", "conversar"];
+/** Valores que acepta el servidor (iguales a las opciones de la encuesta). */
+export type PagoRegistrable = Pago;
+export const PAGO_REGISTRABLE = PAGOS.map((p) => p.valor) as [Pago, ...Pago[]];
 
 export const ETAPA_VALORES = ETAPAS.map((e) => e.valor) as [Etapa, ...Etapa[]];
 export const URGENCIA_VALORES = URGENCIAS.map((u) => u.valor) as [Urgencia, ...Urgencia[]];

@@ -9,7 +9,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Recursos jurídicos y guías prácticas",
-  description: "Explicaciones generales sobre divorcios, contratos, asuntos laborales, sucesiones y marcas en Colombia, revisadas por el equipo jurídico de LEXPERTISE.",
+  description: "Explicaciones generales sobre divorcios, contratos, asuntos laborales, sucesiones y marcas en Colombia, revisadas por el equipo jurídico de LEXPERTISE COLOMBIA S.A.S.",
   path: "/recursos",
 });
 

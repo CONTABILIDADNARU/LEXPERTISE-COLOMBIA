@@ -8,7 +8,7 @@ export type Clasificacion = { prioridad: Prioridad; ruta: Ruta; motivo: string }
  * Prioridad y siguiente paso de una solicitud.
  * - Ruta: quien puede pagar la consulta envía su solicitud de cita por WhatsApp («agendar»);
  *   quien quiere conversar la forma de pago escribe por WhatsApp («conversar»).
- *   Quien no puede pagarla no llega aquí: la encuesta lo remite a la fundación sin guardar datos.
+ *   (El sitio no publica el valor de la consulta ni remite a terceros: decisión de la firma, 17-nov-2026.)
  * - Prioridad: ordena la atención según necesidad, etapa y urgencia. No descarta a nadie.
  */
 export function clasificar(d: Entrada): Clasificacion {

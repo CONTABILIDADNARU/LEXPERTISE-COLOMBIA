@@ -26,7 +26,7 @@ revision:
 
 ## 1. Responsable del tratamiento
 
-{{razonSocial}}, NIT {{nit}}, que usa la marca {{marca}} (en adelante, «{{marca}}»), es responsable del tratamiento de los datos personales que se recolectan a través del sitio web {{sitioUrl}} y de sus canales de contacto.
+{{razonSocial}}, NIT {{nit}}, es responsable del tratamiento de los datos personales que se recolectan a través del sitio web {{sitioUrl}} y de sus canales de contacto.
 
 - **Domicilio:** {{ciudad}}
 - **Dirección:** {{direccion}}

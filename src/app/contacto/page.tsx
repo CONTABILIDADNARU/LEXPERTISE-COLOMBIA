@@ -6,7 +6,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Contacto y canales de atención",
-  description: "Solicita información a LEXPERTISE: formulario, WhatsApp y canales oficiales de atención. Cuéntanos tu asunto de forma general y te contactamos.",
+  description: "Solicita información a LEXPERTISE COLOMBIA S.A.S: formulario, WhatsApp y canales oficiales de atención. Cuéntanos tu asunto de forma general y te contactamos.",
   path: "/contacto",
 });
 

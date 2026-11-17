@@ -18,8 +18,7 @@ export type EventName =
   | "generate_lead"
   | "schedule_request"
   | "appointment_confirmed"
-  | "open_calendar"
-  | "derivacion_fundacion";
+  | "open_calendar";
 
 const PARAMS_PERMITIDOS = ["area", "publico", "formulario", "ubicacion", "contexto", "servicio", "pagina", "paso", "prioridad", "ruta", "pago"] as const;
 type Param = (typeof PARAMS_PERMITIDOS)[number];

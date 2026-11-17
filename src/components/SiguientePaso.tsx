@@ -17,8 +17,6 @@ type Props = {
   agenda: AgendaReserva | null;
   /** Número oficial en formato internacional sin signos, o null si no está confirmado. */
   numeroWhatsApp: string | null;
-  /** Valor confirmado de la consulta (p. ej. «$200.000 COP»), o null. */
-  precio: string | null;
 };
 
 /**
@@ -27,7 +25,7 @@ type Props = {
  * - conversar: WhatsApp con el resumen ya escrito y «Mi pregunta es:»; alternativa, agenda.
  * - informar: recursos jurídicos; alternativa, WhatsApp.
  */
-export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp, precio }: Props) {
+export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Props) {
   const [resumen, setResumen] = useState<Resumen | null>(null);
   const [verAgenda, setVerAgenda] = useState(false);
 
@@ -44,11 +42,12 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp, precio
   const ref = referencia ? ` ${referencia}` : "";
   const mensaje = [
     ruta === "agendar"
-      ? `Hola, quiero agendar una consulta jurídica${precio ? ` (${precio})` : ""}. Mi solicitud es la${ref}, enviada desde la página web.`
+      ? `Hola, quiero agendar una consulta jurídica. Mi solicitud es la${ref}, enviada desde la página web.`
       : `Hola, envié la solicitud${ref} desde la página web.`,
     resumen ? `Tema: ${resumen.tema}. Situación: ${[resumen.etapa, resumen.urgencia].filter(Boolean).join("; ")}.` : "",
     resumen?.modalidad ? `Modalidad preferida: ${resumen.modalidad}.` : "",
     resumen?.pago ? `Pago: ${resumen.pago}.` : "",
+    "Acepté la Política de Cancelación y Reprogramación.",
     ruta === "agendar" ? "¿Qué fechas y horas tienen disponibles?" : "Mi pregunta es: ",
   ]
     .filter(Boolean)
@@ -63,9 +62,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp, precio
     return (
       <Bloque
         titulo="Último paso: envía tu solicitud de cita por WhatsApp."
-        texto={`El mensaje ya lleva el resumen de tu encuesta. Te responderemos por WhatsApp para confirmar la fecha, la hora y el pago de la consulta${
-          precio ? ` (${precio})` : ""
-        }.`}
+        texto="El mensaje ya lleva el resumen de tu encuesta. Te responderemos por WhatsApp para confirmar la fecha, la hora y el valor de la consulta."
       >
         <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("bronze", "Enviar mi solicitud por WhatsApp")}</div>
         {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos al celular que dejaste para agendar.</p>}
@@ -176,5 +173,5 @@ function Agenda({ agenda, ruta }: { agenda: AgendaReserva | null; ruta: Ruta }) 
     );
   }
 
-  return <iframe src={agenda.url} title="Agenda de consultas de LEXPERTISE" className="h-[680px] w-full border-0 bg-white" loading="lazy" />;
+  return <iframe src={agenda.url} title="Agenda de consultas de LEXPERTISE COLOMBIA S.A.S" className="h-[680px] w-full border-0 bg-white" loading="lazy" />;
 }

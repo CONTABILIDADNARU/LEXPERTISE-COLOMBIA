@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Building2, CircleHelp, User } from "lucide-react";
+import { ArrowRight, Building2, Check, CircleHelp, User, X } from "lucide-react";
 import { ArticleCard, FAQAccordion, ProcessSteps, ServiceCard } from "@/components/blocks";
 import { ContactCTA } from "@/components/sections";
 import { ButtonLink, Container, Eyebrow, Section, SectionHeading } from "@/components/ui";
@@ -8,14 +8,12 @@ import { buildMetadata } from "@/lib/seo";
 import { inicio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
-  title: "LEXPERTISE · Servicios jurídicos para personas y empresas en Colombia",
+  title: "LEXPERTISE COLOMBIA S.A.S · Servicios jurídicos para personas y empresas",
   description:
     "Servicios jurídicos en familia y sucesiones, laboral, civil y contratos, comercial, tributario, administrativo y marcas. Conoce las áreas y canales de atención.",
   path: "/",
   absoluto: true,
 });
-
-const ANALISIS = ["Hechos y contexto", "Documentos disponibles", "Fechas y términos", "Normas aplicables", "Alternativas y viabilidad"];
 
 export default function InicioPage() {
   const areas = getAreasPrincipales();
@@ -48,25 +46,29 @@ export default function InicioPage() {
             </div>
           </div>
 
-          {/* Composición editorial: el expediente de análisis (metodología, no fotografía). */}
-          <div aria-hidden className="animate-rise-delay relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rotate-[2.5deg] border border-ivory/10 bg-navy-800" />
-            <div className="absolute inset-0 translate-x-2 translate-y-2 rotate-[1deg] border border-ivory/10 bg-navy-700/70" />
-            <div className="relative bg-ivory p-7 text-graphite shadow-[0_30px_60px_-30px_rgb(0_0_0/0.6)] sm:p-9">
-              <div className="flex items-center justify-between border-b border-line pb-4">
-                <p className="eyebrow text-bronze-ink">Análisis del asunto</p>
-                <p className="font-serif text-lg text-navy">§</p>
-              </div>
-              <ol className="mt-2">
-                {ANALISIS.map((a, i) => (
-                  <li key={a} className="flex items-center gap-4 border-b border-line/70 py-3.5 last:border-0">
-                    <span className="font-serif text-xl text-bronze-ink">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-medium text-navy">{a}</span>
-                    <span className="ml-auto h-px w-10 bg-bronze/70" />
+          {/* «Lo que puedes esperar / Lo que no hacemos» (pedido de la firma: visible al inicio de la página). */}
+          <div className="animate-rise-delay relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
+            <div aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rotate-[2.5deg] border border-ivory/10 bg-navy-800" />
+            <div aria-hidden className="absolute inset-0 translate-x-2 translate-y-2 rotate-[1deg] border border-ivory/10 bg-navy-700/70" />
+            <div className="relative bg-ivory p-7 text-graphite shadow-[0_30px_60px_-30px_rgb(0_0_0/0.6)] sm:p-8">
+              <h2 className="eyebrow text-bronze-ink">{inicio.compromisos.titulo}</h2>
+              <ul className="mt-4 space-y-3">
+                {inicio.compromisos.esperar.map((t) => (
+                  <li key={t} className="flex gap-3 text-[0.95rem] text-navy">
+                    <Check aria-hidden strokeWidth={2} className="mt-1 size-4 shrink-0 text-bronze-ink" />
+                    {t}
                   </li>
                 ))}
-              </ol>
-              <p className="mt-5 text-sm text-slate">Cada recomendación parte de estos elementos, revisados para tu caso.</p>
+              </ul>
+              <h2 className="eyebrow mt-6 border-t border-line pt-5 text-bronze-ink">{inicio.compromisos.tituloNo}</h2>
+              <ul className="mt-4 space-y-3">
+                {inicio.compromisos.noHacemos.map((t) => (
+                  <li key={t} className="flex gap-3 text-[0.95rem] text-slate">
+                    <X aria-hidden strokeWidth={2} className="mt-1 size-4 shrink-0 text-slate" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Container>

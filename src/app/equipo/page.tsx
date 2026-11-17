@@ -1,28 +1,28 @@
 import Image from "next/image";
-import { notFound } from "next/navigation";
 import { UserRound } from "lucide-react";
+import { ServiceCard } from "@/components/blocks";
 import { PageHero } from "@/components/PageHero";
-import { Pending } from "@/components/Pending";
 import { ContactCTA } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { getArea } from "@/lib/areas";
-import { getEquipo } from "@/lib/content";
-import { IS_PRODUCTION } from "@/lib/env";
+import { getAreasPrincipales, getEquipo } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
+import { sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Equipo de profesionales",
-  description: "Conoce a los profesionales de LEXPERTISE, su formación y las áreas en las que acompañan a personas y empresas en Colombia.",
+  description: "El equipo de LEXPERTISE COLOMBIA S.A.S cubre todas las áreas de práctica de la firma, para personas y empresas en Colombia.",
   path: "/equipo",
 });
 
 /**
- * La página solo se publica con perfiles verificados (content/equipo/*.json con "verificado": true).
+ * Mientras no haya perfiles verificados (content/equipo/*.json con "verificado": true), la página
+ * muestra un texto general: el equipo cubre todas las áreas de práctica (decisión de la firma, 17-nov-2026).
  * Nunca se usan fotografías generadas ni de banco presentadas como el equipo real.
  */
 export default function EquipoPage() {
   const equipo = getEquipo();
-  if (IS_PRODUCTION && equipo.length === 0) notFound();
+  const areas = getAreasPrincipales();
 
   return (
     <>
@@ -37,14 +37,20 @@ export default function EquipoPage() {
       />
       <Section tono="ivory">
         {equipo.length === 0 ? (
-          <div className="max-w-2xl border border-dashed border-amber-400 bg-paper p-8">
-            <Pending campo="Perfiles verificados del equipo" />
-            <p className="mt-4 text-slate">
-              Esta sección se completará con información confirmada por LEXPERTISE: nombre, cargo, número de tarjeta profesional, formación,
-              áreas y fotografía real. Mientras no existan perfiles verificados, la página no se publica en producción y el enlace del menú se
-              oculta.
-            </p>
-          </div>
+          <>
+            <div className="max-w-2xl">
+              <h2 className="text-3xl text-navy sm:text-4xl">Cubrimos todas las áreas de práctica de la firma.</h2>
+              <p className="mt-4 text-lg text-slate">
+                {sitio.marca} cuenta con profesionales del derecho para cada una de las áreas que encuentras en este sitio, tanto para personas
+                como para empresas.
+              </p>
+            </div>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {areas.map((a) => (
+                <ServiceCard key={a.slug} servicio={a} />
+              ))}
+            </div>
+          </>
         ) : (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {equipo.map((m) => (

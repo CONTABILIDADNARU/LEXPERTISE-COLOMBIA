@@ -1,4 +1,4 @@
-import { equipoPublicable, getRecursosVisibles } from "@/lib/content";
+import { getRecursosVisibles } from "@/lib/content";
 import { IS_PRODUCTION } from "@/lib/env";
 import { Logo } from "./Logo";
 import { DesktopNav, MobileMenu, type NavItem } from "./Navigation";
@@ -10,7 +10,7 @@ export function getNavItems(): NavItem[] {
     { href: "/personas", label: "Personas" },
     { href: "/empresas", label: "Empresas" },
     { href: "/servicios", label: "Áreas de práctica" },
-    (!IS_PRODUCTION || equipoPublicable()) && { href: "/equipo", label: "Equipo" },
+    { href: "/equipo", label: "Equipo" },
     (!IS_PRODUCTION || getRecursosVisibles().length > 0) && { href: "/recursos", label: "Recursos" },
     { href: "/contacto", label: "Contacto" },
   ];

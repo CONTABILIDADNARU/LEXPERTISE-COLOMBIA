@@ -22,7 +22,7 @@ Este aviso te informa, de forma breve, cómo trata {{marca}} los datos personale
 
 ## Responsable del tratamiento
 
-- **Responsable:** {{razonSocial}} ({{marca}}), NIT {{nit}}.
+- **Responsable:** {{razonSocial}}, NIT {{nit}}.
 - **Domicilio y dirección:** {{direccion}}, {{ciudad}}.
 - **Correo para asuntos de datos personales:** {{correoDatos}}
 - **Correo general:** {{correo}}

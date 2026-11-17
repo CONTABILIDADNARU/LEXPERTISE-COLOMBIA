@@ -41,7 +41,6 @@ export const SolicitudSchema = z
     subcategoria: texto(40).default(""),
     etapa: z.enum(ETAPA_VALORES, { message: "Indica en qué punto está tu asunto." }),
     urgencia: z.enum(URGENCIA_VALORES, { message: "Indica cuándo quieres avanzar." }),
-    // «no-puede» no llega aquí: la encuesta termina antes y remite a la fundación sin pedir datos.
     pago: z.enum(PAGO_REGISTRABLE, { message: "Indica si puedes pagar la consulta o si quieres conversar la forma de pago." }),
     ciudad: z.string().superRefine(conMensaje(validarCiudad)).transform((v) => v.trim()),
     preferenciaContacto: z.enum(["whatsapp", "llamada", "correo"], { message: "Elige cómo prefieres que te contactemos." }),
@@ -53,6 +52,7 @@ export const SolicitudSchema = z
     modalidad: z.enum(MODALIDAD_VALORES, { message: "Elige tu preferencia de modalidad." }),
     fechasPreferidas: z.array(z.string()).max(3).default([]),
     franja: z.enum(["manana", "tarde", "indiferente"]).optional(),
+    aceptaPoliticaCancelacion: z.literal(true, { message: "Debes aceptar la Política de Cancelación y Reprogramación para enviar tu solicitud." }),
     consentimientoDatos: z.literal(true, { message: "Debes autorizar el tratamiento de datos para que podamos responder tu solicitud." }),
     consentimientoComercial: z.boolean().default(false),
     versionConsentimiento: texto(40),
@@ -120,6 +120,8 @@ export type SolicitudRegistro = {
   comoNosConocio: string;
   agendamiento: { modalidad: string; fechasPreferidas: string[]; franja: string } | null;
   consentimiento: { datos: true; comercial: boolean; version: string; textoSha256: string; aceptadoEn: string };
+  /** Aceptación obligatoria de la Política de Cancelación y Reprogramación (versión de los textos de consentimiento). */
+  politicaCancelacion: { aceptada: true; version: string; aceptadoEn: string };
   atribucion: SolicitudValida["atribucion"];
   canal: string;
   paginaOrigen: string;

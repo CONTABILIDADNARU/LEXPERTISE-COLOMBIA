@@ -19,7 +19,7 @@ revision:
   fecha: ""
 ---
 
-Estos términos regulan el uso del sitio web {{sitioUrl}}, operado por {{razonSocial}}, NIT {{nit}}, que usa la marca {{marca}} (en adelante, «{{marca}}»). Al navegar por el sitio o enviar una solicitud, aceptas estos términos. Si no estás de acuerdo con ellos, te pedimos no usar el sitio.
+Estos términos regulan el uso del sitio web {{sitioUrl}}, operado por {{razonSocial}}, NIT {{nit}}. Al navegar por el sitio o enviar una solicitud, aceptas estos términos. Si no estás de acuerdo con ellos, te pedimos no usar el sitio.
 
 ## 1. Carácter informativo del contenido
 

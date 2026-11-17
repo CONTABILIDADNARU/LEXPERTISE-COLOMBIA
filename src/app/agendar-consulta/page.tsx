@@ -1,15 +1,16 @@
-import { CalendarDays, CircleHelp, Clock, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { CalendarDays, CircleHelp, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Pending } from "@/components/Pending";
 import { DESCRIPCION_FORMULARIO, TITULO_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
-import { agendaReserva, precioConsulta, sitio } from "@/lib/settings";
+import { agendaReserva, duracionConsulta, sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitar una consulta jurídica",
   description:
-    "Solicita una consulta jurídica con LEXPERTISE: elige el área, tu modalidad preferida y fechas posibles. Te contactaremos para confirmar la cita.",
+    "Agenda una consulta jurídica con LEXPERTISE COLOMBIA S.A.S: responde una encuesta breve y envía tu solicitud por WhatsApp para confirmar la cita.",
   path: "/agendar-consulta",
 });
 
@@ -17,7 +18,7 @@ export default function AgendarPage() {
   const { consulta } = sitio;
   // Todo pasa por el formulario: la agenda en línea (si existe) se ofrece al terminar, en /gracias.
   const agenda = agendaReserva();
-  const precio = precioConsulta();
+  const duracion = duracionConsulta();
   return (
     <>
       <PageHero
@@ -27,7 +28,7 @@ export default function AgendarPage() {
         ]}
         eyebrow="Consulta jurídica"
         titulo="Agenda tu consulta jurídica."
-        texto={`Responde una encuesta breve sobre tu asunto${precio ? ` (la consulta tiene un valor de ${precio})` : ""}. Al terminar, envías tu solicitud por WhatsApp y te confirmamos la fecha, la hora y el pago.`}
+        texto="Responde una encuesta breve sobre tu asunto. Al terminar, envías tu solicitud por WhatsApp y te confirmamos la fecha, la hora y el valor de la consulta."
       />
       <Section tono="ivory">
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
@@ -52,18 +53,8 @@ export default function AgendarPage() {
                 <li className="flex gap-3">
                   <Clock aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
                   <span>
-                    <strong className="text-navy">Valor.</strong>{" "}
-                    {precio ? (
-                      <>
-                        La consulta tiene un valor de {precio}
-                        {consulta.duracion ? ` y dura ${consulta.duracion}` : ""}. Te indicamos cómo pagarla al confirmar la cita. {consulta.condiciones}
-                        {!consulta.duracion && <Pending campo="Duración de la consulta y medios de pago" className="ml-1" />}
-                      </>
-                    ) : (
-                      <>
-                        Se informan antes de confirmar la cita. <Pending campo="Precio, duración y condiciones de la consulta" />
-                      </>
-                    )}
+                    <strong className="text-navy">Duración y valor.</strong> {duracion ? `La consulta dura ${duracion}. ` : ""}Su valor se informa antes de
+                    confirmar la cita. {consulta.condiciones}
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -74,11 +65,31 @@ export default function AgendarPage() {
                 </li>
                 <li className="flex gap-3">
                   <CircleHelp aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
-                  <span>
-                    <strong className="text-navy">Cambios o cancelación.</strong> Si necesitas reprogramar o cancelar, avísanos por el canal en el que te confirmemos la cita.
-                    <Pending campo="Política de cancelación y reprogramación" className="ml-1" />
-                  </span>
+                  <div>
+                    <strong className="text-navy">Cancelación y reprogramación.</strong> Al enviar tu solicitud aceptas nuestra política:
+                    <ul className="mt-2 list-disc space-y-1.5 pl-5 text-slate marker:text-bronze">
+                      <li>Si cancelas con más de 48 horas hábiles de antelación, se reembolsa el 90 % del valor pagado (se retiene un 10 % por gastos administrativos, pasarelas de pago y gestión de agenda).</li>
+                      <li>Hay una tolerancia de 15 minutos desde la hora programada, en sala física o virtual.</li>
+                      <li>Si llegas o te conectas dentro de esos 15 minutos, la consulta dura el tiempo restante, sin extensión ni reducción de tarifa.</li>
+                      <li>Pasados los 15 minutos sin presencia ni aviso previo, la cita se da por cancelada por inasistencia; se analiza la razón para evaluar reprogramación o reembolso.</li>
+                    </ul>
+                    <Link
+                      href="/politica-de-cancelacion-y-reprogramacion"
+                      className="mt-2 inline-block font-semibold text-navy underline decoration-bronze underline-offset-4"
+                    >
+                      Ver la política completa
+                    </Link>
+                  </div>
                 </li>
+                {sitio.empresa.horario && (
+                  <li className="flex gap-3">
+                    <MessageCircle aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                    <span>
+                      <strong className="text-navy">Horario de recepción.</strong> {sitio.empresa.horario.replace(/\.$/, "")}. Las solicitudes enviadas fuera de este horario se
+                      entienden recibidas a primera hora del día hábil siguiente.
+                    </span>
+                  </li>
+                )}
               </ul>
             </div>
             {consulta.modalidades.length > 0 ? (

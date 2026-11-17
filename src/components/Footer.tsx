@@ -14,6 +14,7 @@ const LEGALES = [
   { href: "/tratamiento-de-datos", label: "Tratamiento de datos personales" },
   { href: "/politica-de-cookies", label: "Política de cookies" },
   { href: "/terminos-de-uso", label: "Términos de uso" },
+  { href: "/politica-de-cancelacion-y-reprogramacion", label: "Cancelación y reprogramación" },
 ];
 
 export function Footer() {

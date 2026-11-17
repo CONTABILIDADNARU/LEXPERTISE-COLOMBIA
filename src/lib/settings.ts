@@ -30,8 +30,6 @@ const SitioSchema = z.object({
     condiciones: str,
   }),
   agendamiento: z.object({ proveedor: z.enum(["solicitud", "google", "calendly"]), googleCalendarUrl: str, calendlyUrl: str }),
-  /** Página a la que se remite a quien no puede pagar la consulta (no se guardan sus datos). */
-  fundacion: z.object({ url: str }).default({ url: "" }),
   comoNosConocio: z.array(z.string()),
 });
 
@@ -46,6 +44,8 @@ const WhatsAppSchema = z.object({
 const Paso = z.object({ titulo: z.string(), texto: z.string() });
 const InicioSchema = z.object({
   hero: z.object({ antetitulo: z.string(), titulo: z.string(), subtitulo: z.string(), ctaPrimario: z.string(), ctaSecundario: z.string() }),
+  /** «Lo que puedes esperar / Lo que no hacemos»: tarjeta del inicio de la página principal. */
+  compromisos: z.object({ titulo: z.string(), esperar: z.array(z.string()).min(1), tituloNo: z.string(), noHacemos: z.array(z.string()).min(1) }),
   publico: z.object({
     titulo: z.string(),
     personas: z.object({ titulo: z.string(), texto: z.string(), cta: z.string() }),
@@ -69,6 +69,7 @@ const InicioSchema = z.object({
 const ConsentimientosSchema = z.object({
   version: z.string().min(3),
   tratamientoDatos: z.string().min(20),
+  politicaCancelacion: z.string().min(10),
   comunicacionesComerciales: z.string().min(10),
   avisoFormulario: z.string().min(10),
 });
@@ -77,12 +78,14 @@ export const sitio = SitioSchema.parse(sitioJson);
 export const whatsapp = WhatsAppSchema.parse(whatsappJson);
 export const inicio = InicioSchema.parse(inicioJson);
 
-/** Reemplaza variables {{marca}} en textos de consentimiento. */
+/** Reemplaza las variables {{marca}} y {{nit}} en los textos de consentimiento. */
 const consentRaw = ConsentimientosSchema.parse(consentimientosJson);
-const conMarca = (t: string) => t.replaceAll("{{marca}}", sitio.marca);
+const conMarca = (t: string) =>
+  t.replaceAll("{{marca}}", sitio.marca).replaceAll(" (NIT {{nit}})", sitio.empresa.nit ? ` (NIT ${sitio.empresa.nit})` : "");
 export const consentimientos = {
   version: consentRaw.version,
   tratamientoDatos: conMarca(consentRaw.tratamientoDatos),
+  politicaCancelacion: conMarca(consentRaw.politicaCancelacion),
   comunicacionesComerciales: conMarca(consentRaw.comunicacionesComerciales),
   avisoFormulario: conMarca(consentRaw.avisoFormulario),
 };
@@ -139,13 +142,10 @@ export function agendaReserva(): AgendaReserva | null {
   return null;
 }
 
-/** Valor confirmado de la consulta (p. ej. «$200.000 COP»), o null si no está confirmado. */
-export function precioConsulta(): string | null {
-  return sitio.consulta.confirmada && sitio.consulta.precio.trim() ? sitio.consulta.precio.trim() : null;
-}
+// El valor de la consulta no se publica (decisión de la firma, 17-nov-2026): se informa por WhatsApp
+// antes de confirmar la cita. `consulta.precio` queda solo como dato interno del panel.
 
-/** Enlace de la fundación para quien no puede pagar la consulta, o null si no está configurado. */
-export function enlaceFundacion(): string | null {
-  const url = sitio.fundacion.url.trim();
-  return /^https:\/\/[^\s]+$/.test(url) ? url : null;
+/** Duración confirmada de la consulta (p. ej. «90 minutos»), o null. */
+export function duracionConsulta(): string | null {
+  return sitio.consulta.confirmada && sitio.consulta.duracion.trim() ? sitio.consulta.duracion.trim() : null;
 }

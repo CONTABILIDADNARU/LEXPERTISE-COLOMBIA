@@ -22,7 +22,7 @@ revision:
   fecha: ""
 ---
 
-Esta política explica qué cookies y tecnologías similares usa el sitio {{sitioUrl}}, operado por {{razonSocial}} ({{marca}}), para qué sirven y cómo puedes elegir cuáles aceptar.
+Esta política explica qué cookies y tecnologías similares usa el sitio {{sitioUrl}}, operado por {{razonSocial}}, NIT {{nit}}, para qué sirven y cómo puedes elegir cuáles aceptar.
 
 ## Qué son las cookies y el almacenamiento local
 

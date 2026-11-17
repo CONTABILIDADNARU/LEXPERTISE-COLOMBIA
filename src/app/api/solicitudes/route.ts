@@ -151,6 +151,7 @@ export async function POST(req: NextRequest) {
         textoSha256: sha256(`${consentimientos.tratamientoDatos}\n${d.consentimientoComercial ? consentimientos.comunicacionesComerciales : ""}`),
         aceptadoEn: ahora,
       },
+      politicaCancelacion: { aceptada: true, version: consentimientos.version, aceptadoEn: ahora },
       atribucion: d.atribucion,
       canal: canalDe(d.atribucion),
       paginaOrigen: d.paginaOrigen,

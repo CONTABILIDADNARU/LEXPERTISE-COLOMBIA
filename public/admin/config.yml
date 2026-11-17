@@ -212,8 +212,8 @@ collections:
             name: consulta
             widget: object
             fields:
-              - { label: Precio y condiciones confirmados, name: confirmada, widget: boolean }
-              - { label: Precio, name: precio, widget: string, required: false }
+              - { label: Datos de la consulta confirmados, name: confirmada, widget: boolean }
+              - { label: Precio (dato interno, no se publica), name: precio, widget: string, required: false, hint: "La firma decidió informar el valor por WhatsApp antes de confirmar la cita: este campo no aparece en el sitio." }
               - { label: Duración, name: duracion, widget: string, required: false }
               - { label: Modalidades, name: modalidades, widget: select, multiple: true, options: [Virtual, Presencial, Telefónica], required: false }
               - { label: Condiciones, name: condiciones, widget: text, required: false }
@@ -224,11 +224,6 @@ collections:
               - { label: Proveedor, name: proveedor, widget: select, options: [solicitud, google, calendly], hint: "solicitud = el formulario pide fechas posibles · google = agenda de citas de Google Calendar · calendly = Calendly. La agenda se ofrece al terminar el formulario según la prioridad del caso." }
               - { label: Enlace de la agenda de Google Calendar, name: googleCalendarUrl, widget: string, required: false, hint: "Google Calendar → agenda de citas → Compartir → Insertar en el sitio web: copia la dirección https://calendar.google.com/calendar/appointments/schedules/… (también sirve el enlace corto https://calendar.app.google/…, que se abre en otra pestaña)." }
               - { label: URL de Calendly, name: calendlyUrl, widget: string, required: false }
-          - label: Fundación (para quien no puede pagar la consulta)
-            name: fundacion
-            widget: object
-            fields:
-              - { label: Enlace de la fundación, name: url, widget: string, required: false, hint: "Página pública (https) a la que se envía a quien responde que no puede pagar la consulta. Debe abrirse sin iniciar sesión." }
           - { label: Opciones de «¿Dónde nos conociste?», name: comoNosConocio, widget: list }
       - name: whatsapp
         label: WhatsApp
@@ -259,6 +254,14 @@ collections:
               - { label: Subtítulo, name: subtitulo, widget: text }
               - { label: Botón principal, name: ctaPrimario, widget: string }
               - { label: Botón secundario, name: ctaSecundario, widget: string }
+          - label: Lo que puedes esperar / Lo que no hacemos (tarjeta del inicio)
+            name: compromisos
+            widget: object
+            fields:
+              - { label: Título, name: titulo, widget: string }
+              - { label: Lo que puedes esperar, name: esperar, widget: list, field: { label: Punto, name: punto, widget: string } }
+              - { label: Título del segundo bloque, name: tituloNo, widget: string }
+              - { label: Lo que no hacemos, name: noHacemos, widget: list, field: { label: Punto, name: punto, widget: string } }
           - label: Público
             name: publico
             widget: object
@@ -295,6 +298,7 @@ collections:
         fields:
           - { label: Versión (cambiarla cada vez que se modifique un texto), name: version, widget: string }
           - { label: Autorización de tratamiento de datos, name: tratamientoDatos, widget: text }
+          - { label: Aceptación de la política de cancelación (obligatoria), name: politicaCancelacion, widget: string }
           - { label: Comunicaciones comerciales (opcional), name: comunicacionesComerciales, widget: text }
           - { label: Aviso del formulario, name: avisoFormulario, widget: text }
       - name: redirecciones

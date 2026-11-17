@@ -12,10 +12,10 @@
 |---|---|
 | Tu consulta | Persona o empresa y área (se salta si la página ya los define) |
 | Tu situación | Tipo de asunto · **¿En qué punto está?** (aún no inicia / proceso en curso / fecha límite o audiencia próxima / solo informarse) · **¿Cuándo quieres avanzar?** (lo antes posible / este mes / próximos meses / aún no lo sé) |
-| La consulta y su valor | Valor de la consulta (**$200.000 COP**, confirmado por la agencia el 17-nov) · **¿Cómo quieres continuar?** (puedo pagarla / me interesa, pero quiero conversar la forma de pago / en este momento no puedo pagarla) · modalidad |
-| Tus datos para agendar | Ciudad, nombre, celular (WhatsApp), correo, fechas posibles y franja (**solo si no hay agenda en línea**), empresa (opcional), cómo nos conoció (opcional), autorizaciones |
+| La consulta | «La consulta jurídica tiene un costo y dura 90 minutos. Te informamos su valor antes de confirmar la cita.» · **¿Cómo quieres continuar?** (puedo pagar la consulta / me interesa, pero quiero conversar la forma de pago) · modalidad |
+| Tus datos para agendar | Ciudad, nombre, celular (WhatsApp), correo, fechas posibles y franja (**solo si no hay agenda en línea**), empresa (opcional), cómo nos conoció (opcional), **aceptación obligatoria de la Política de Cancelación y Reprogramación**, autorizaciones |
 
-**Quien no puede pagar la consulta** termina la encuesta en el paso 3: ve un mensaje y el botón «Ir a la fundación» (`sitio.json → fundacion.url`). **No se le piden ni se guardan datos personales**; solo se registra el evento anónimo `derivacion_fundacion`. Si más adelante se quiere enviar sus datos a la fundación, hará falta una autorización específica para compartirlos.
+**Por decisión de la firma (17-nov-2026), el sitio no publica el valor de la consulta ni remite a una fundación**: el valor se informa por WhatsApp antes de confirmar la cita. La opción «no puedo pagarla» se quitó; quien no puede pagar elige «conversar la forma de pago» y el equipo lo atiende por WhatsApp. La aceptación de la política de cancelación se guarda en cada solicitud (`politicaCancelacion: { aceptada, version, aceptadoEn }`).
 
 ### Prioridad y siguiente paso (`src/lib/leads/prioridad.ts`)
 
@@ -29,9 +29,8 @@
 |---|---|---|
 | Puedo pagar | `agendar` | **«Enviar mi solicitud por WhatsApp»**, con el mensaje escrito: valor, referencia, tema, situación, modalidad y pago, más «¿Qué fechas y horas tienen disponibles?». Si hay agenda en línea, también puede apartar la hora. |
 | Quiero conversar el pago | `conversar` | WhatsApp con el resumen y «Mi pregunta es:»; si hay agenda, alternativa |
-| No puedo pagar | — | Fundación (sin registro) |
 
-Las solicitudes de quien puede pagar o quiere conversar el pago se guardan con `pago`, `prioridad`, `ruta` y `motivoPrioridad`. Por decisión de la agencia (17-nov), quien no puede pagar se remite a la fundación en lugar de registrarse. El resumen para WhatsApp (referencia, tema, etapa y urgencia, sin nombre ni contacto) pasa a `/gracias` por `sessionStorage` (`lx_siguiente_paso`) y se borra al cerrar la pestaña.
+Todas las solicitudes se guardan con `pago`, `prioridad`, `ruta` y `motivoPrioridad`. El resumen para WhatsApp (referencia, tema, etapa y urgencia, sin nombre ni contacto) pasa a `/gracias` por `sessionStorage` (`lx_siguiente_paso`) y se borra al cerrar la pestaña.
 
 | Control | Implementación |
 |---|---|
@@ -93,7 +92,7 @@ El receptor (webhook del CRM o un orquestador como Make, Zapier o n8n) debe veri
 ## 4. WhatsApp
 
 - Número oficial en `content/settings/whatsapp.json` (formato internacional sin signos, p. ej. `573001234567`).
-- **La solicitud de cita se envía por WhatsApp** al terminar la encuesta. Mensaje de quien puede pagar: «Hola, quiero agendar una consulta jurídica ($200.000 COP). Mi solicitud es la LX-…, enviada desde la página web. Tema: … Situación: …; … Modalidad preferida: … Pago: puedo pagar la consulta. ¿Qué fechas y horas tienen disponibles?». Quien quiere conversar el pago recibe el mismo resumen con «Mi pregunta es: ». El mensaje no lleva nombre, teléfono ni correo.
+- **La solicitud de cita se envía por WhatsApp** al terminar la encuesta. Número oficial: **+57 301 6515265** (`573016515265`, línea de atención y WhatsApp corporativo). Mensaje de quien puede pagar: «Hola, quiero agendar una consulta jurídica. Mi solicitud es la LX-…, enviada desde la página web. Tema: … Situación: …; … Modalidad preferida: … Pago: puedo pagar la consulta. Acepté la Política de Cancelación y Reprogramación. ¿Qué fechas y horas tienen disponibles?». Quien quiere conversar el pago recibe el mismo resumen con «Mi pregunta es: ». El mensaje no lleva nombre, teléfono ni correo.
 - Es la persona quien envía el mensaje desde su WhatsApp. Para que el aviso llegue solo, sin que la persona lo envíe, haría falta la API de WhatsApp Business o un orquestador conectado al CRM.
 - Los mensajes por contexto de `whatsapp.json` quedan para el aviso de error del formulario (si el servidor no responde).
 - Sin número: en revisión se muestra un botón deshabilitado «Pendiente»; en producción no se muestra y la página indica que el equipo contactará por el medio elegido.
@@ -123,7 +122,6 @@ Las etiquetas **no se cargan** hasta que la persona acepta la categoría corresp
 | `generate_lead` | **Después** de que el servidor confirma el registro | `formulario`, `area`, `publico`, `prioridad`, `ruta` + `event_id` | `Lead` + `eventID` |
 | `schedule_request` | Solicitud de consulta confirmada por el servidor | ídem | `Schedule` + `eventID` |
 | `open_calendar` | Abre la agenda de Google Calendar en `/gracias` | `ubicacion`, `ruta` | — |
-| `derivacion_fundacion` | Responde que no puede pagar y se le muestra la fundación (sin registro) | `formulario`, `area`, `publico` | — |
 | `appointment_confirmed` | Calendly confirma una reserva (si se activa) | `formulario` | `Schedule` |
 
 - **Deduplicación:** el `event_id` del navegador y el de la API de Conversiones es la referencia de la solicitud (`LX-…`).

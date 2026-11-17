@@ -93,10 +93,7 @@ for (const [k, label] of Object.entries(obligatorios)) if (!e[k]) add("BLOQUEANT
 if (!e.direccion) add("IMPORTANTE", "settings/sitio.json: falta dirección (necesaria para la política de datos y para indicar si hay atención presencial).");
 if (!e.horario) add("IMPORTANTE", "settings/sitio.json: falta horario de atención.");
 if (!sitio.verificado) add("IMPORTANTE", "settings/sitio.json: datos no marcados como verificados (no se emite marcado LegalService).");
-if (!sitio.consulta.confirmada) add("INFORMATIVO", "settings/sitio.json: precio/duración de la consulta sin confirmar (no se publican).");
-else if (!sitio.consulta.duracion) add("INFORMATIVO", "settings/sitio.json: falta la duración de la consulta (el precio sí está confirmado).");
-if (!/^https:\/\//.test(sitio.fundacion?.url ?? "")) add("IMPORTANTE", "settings/sitio.json: falta el enlace de la fundación para quien no puede pagar la consulta.");
-else if (/-[a-z0-9]{9}-[a-z0-9-]+\.vercel\.app/.test(sitio.fundacion.url)) add("IMPORTANTE", "settings/sitio.json: el enlace de la fundación es la dirección de un despliegue de Vercel (cambia en cada despliegue y puede pedir inicio de sesión). Usar la dirección pública estable.");
+if (!sitio.consulta.confirmada || !sitio.consulta.duracion) add("INFORMATIVO", "settings/sitio.json: duración de la consulta sin confirmar (no se publica).");
 if (!sitio.consulta.modalidades.length) add("IMPORTANTE", "settings/sitio.json: modalidades de atención sin confirmar.");
 if (!Object.values(sitio.redes).some(Boolean)) add("INFORMATIVO", "settings/sitio.json: redes sociales oficiales sin verificar.");
 const ag = sitio.agendamiento;
@@ -110,7 +107,7 @@ if (wa.numero.replace(/\D/g, "").length < 10) add("BLOQUEANTE", "settings/whatsa
 const inicio = json("settings/inicio.json");
 for (const f of inicio.faq.items) if (f.pendiente) add("IMPORTANTE", `settings/inicio.json: FAQ «${f.pregunta}» → pendiente: ${f.pendiente}.`);
 const equipo = existsSync(C("equipo")) ? readdirSync(C("equipo")).filter((f) => f.endsWith(".json")) : [];
-if (!equipo.length) add("IMPORTANTE", "content/equipo: sin perfiles verificados (la página /equipo no se publica).");
+if (!equipo.length) add("INFORMATIVO", "content/equipo: sin perfiles verificados (la página /equipo muestra el texto general de áreas, como pidió la firma).");
 const nosotros = matter(readFileSync(C("paginas/nosotros.md"), "utf8"));
 if (nosotros.data.revision?.estado !== "aprobado") add("BLOQUEANTE", "paginas/nosotros.md: pendiente de aprobación.");
 const cms = readFileSync(join(ROOT, "public/admin/config.yml"), "utf8");

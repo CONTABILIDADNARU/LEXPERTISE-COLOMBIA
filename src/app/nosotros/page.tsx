@@ -16,7 +16,8 @@ export default async function NosotrosPage() {
   const html = await renderMarkdown(pagina.cuerpo);
   const e = sitio.empresa;
   const datos = [
-    { etiqueta: "Marca", valor: sitio.marca, pendiente: "" },
+    // La marca solo se lista si es distinta de la razón social.
+    ...(sitio.marca !== e.razonSocial ? [{ etiqueta: "Marca", valor: sitio.marca, pendiente: "" }] : []),
     { etiqueta: "Razón social", valor: e.razonSocial, pendiente: "Razón social" },
     { etiqueta: "NIT", valor: e.nit, pendiente: "NIT" },
     { etiqueta: "Domicilio", valor: e.ciudad, pendiente: "Ciudad de domicilio" },
