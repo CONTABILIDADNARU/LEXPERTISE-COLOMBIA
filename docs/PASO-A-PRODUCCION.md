@@ -22,7 +22,7 @@
 
 ## 3. Staging (Vercel) — ya desplegado
 
-- URL: `https://lexpertise-web.vercel.app` (proyecto `lexpertise-web`, equipo Segmenta, plan Hobby).
+- URL: `https://lexpertise-colombia.vercel.app` (la dirección anterior, `lexpertise-web.vercel.app`, redirige a esta). Proyecto `lexpertise-colombia`, equipo Segmenta, plan Hobby. `NEXT_PUBLIC_SITE_URL` apunta a la dirección nueva.
 - Acceso: **público** desde el 14-nov-2026 por decisión de la agencia (`ssoProtection: null`), para que cualquier persona con la dirección pueda revisarlo. Sigue sin indexarse: `noindex` en la meta y en la cabecera, y `robots.txt` bloquea todo. Quedan a la vista los textos sin aprobar y los avisos «Pendiente», y el formulario guarda solicitudes reales en Supabase.
 - Para volver a protegerlo: Vercel → proyecto → Settings → Deployment Protection → Vercel Authentication → «All Deployments» (o `PATCH /v9/projects/<id>` con `{"ssoProtection":{"deploymentType":"all"}}`).
 - Para dar acceso a revisores de LEXPERTISE: invitarlos al equipo de Vercel o generar un enlace para compartir desde el panel del despliegue (expira).
