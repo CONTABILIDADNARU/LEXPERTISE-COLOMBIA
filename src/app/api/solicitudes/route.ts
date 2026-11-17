@@ -130,6 +130,7 @@ export async function POST(req: NextRequest) {
       etapa: d.etapa,
       urgencia: d.urgencia,
       modalidad: d.modalidad,
+      pago: d.pago,
       prioridad: clasificacion.prioridad,
       ruta: clasificacion.ruta,
       motivoPrioridad: clasificacion.motivo,

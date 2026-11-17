@@ -36,7 +36,7 @@ Algunas cookies las instala {{marca}} (cookies propias) y otras las instalan ser
 
 Permiten que el sitio funcione y recuerde tu elección sobre las cookies. Usamos la cookie `lx_consent`, que guarda tus preferencias durante 180 días. No se puede desactivar desde el panel, porque sin ella el sitio no podría recordar lo que elegiste.
 
-Cuando envías una solicitud, el sitio guarda en el almacenamiento de la sesión del navegador (`lx_siguiente_paso`) el número de referencia y un resumen general del asunto (tema, etapa y cuándo quieres avanzar). Sirve solo para escribir el mensaje de WhatsApp de la página de confirmación y se borra al cerrar la pestaña. No incluye tu nombre, teléfono ni correo.
+Cuando envías una solicitud, el sitio guarda en el almacenamiento de la sesión del navegador (`lx_siguiente_paso`) el número de referencia y un resumen general del asunto (tema, etapa, cuándo quieres avanzar, modalidad y si puedes pagar la consulta). Sirve solo para escribir el mensaje de WhatsApp de la página de confirmación y se borra al cerrar la pestaña. No incluye tu nombre, teléfono ni correo.
 
 ### Funcionales
 

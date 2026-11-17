@@ -23,13 +23,14 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A2 | **Sitio anterior (Odoo):** no se encontró el dominio ni páginas indexadas. Si existe, exportar URLs de Search Console y cargar redirecciones 301 antes de cambiar el DNS. |
 | A3 | Modalidades de atención (virtual, presencial, telefónica), ciudades con atención presencial y dirección. |
 | A4 | Tiempo de respuesta comprometido a las solicitudes. |
-| A5 | Precio, duración, alcance y condiciones de la consulta (la cifra preliminar de COP 200.000–300.000 **no** se publicó). Política de cancelación y reprogramación. |
+| A5 | Precio de la consulta: **$200.000 COP**, confirmado por la agencia el 17-nov y publicado. Faltan la duración, los medios de pago, el momento del pago y la política de cancelación y reprogramación. |
 | A6 | Perfiles verificados del equipo con fotografías reales (la página /equipo no se publica sin ellos). |
 | A7 | Confirmar si la firma presta **asuntos societarios** y un modelo de **acompañamiento recurrente** a empresas. |
 | A8 | Repositorio creado: `segmentamkt/LEXPERTISE-COLOMBIA` (público). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |
 | A9 | Límite de envíos global en Vercel (Upstash Redis) para que el límite por IP no dependa de una sola instancia. |
 | A11 | ~~Token para pruebas automáticas~~: ya no hace falta, porque el staging es público desde el 14-nov. Si se vuelve a proteger, lo debe crear una persona del equipo en Vercel. |
 | A10 | Cuentas de medición: GA4 o GTM, Píxel de Meta, Search Console y, si se aprueba, API de Conversiones. |
+| A15 | **Fundación:** el enlace configurado (`innova-escala-corp-cwo0kuf86-fondetrefi-s-projects.vercel.app`) es la dirección de un despliegue de Vercel y hoy **pide iniciar sesión** (302 al login). Hace falta su dirección pública estable, el nombre de la fundación, qué servicio presta y cómo será la «conexión» con LEXPERTISE. |
 | A12 | **Agenda de citas de Google Calendar:** crear la agenda en la cuenta de la firma y pegar el enlace de inserción en Configuración → Agendamiento (ver `MANUAL-EQUIPO.md` §7b). Sin ella, los casos de prioridad alta no pueden agendar al terminar y el formulario pide fechas posibles. |
 | A13 | Áreas o asuntos prioritarios para la firma, para ajustar la regla de prioridad alta (`src/lib/leads/prioridad.ts`). |
 | A14 | Si se aprueba: evento «lead calificado» para Meta y Google (prioridad alta) y pregunta de disposición a pagar con el valor de la consulta (requiere A5). |

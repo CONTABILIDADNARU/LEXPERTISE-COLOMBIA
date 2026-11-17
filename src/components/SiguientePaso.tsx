@@ -17,6 +17,8 @@ type Props = {
   agenda: AgendaReserva | null;
   /** Número oficial en formato internacional sin signos, o null si no está confirmado. */
   numeroWhatsApp: string | null;
+  /** Valor confirmado de la consulta (p. ej. «$200.000 COP»), o null. */
+  precio: string | null;
 };
 
 /**
@@ -25,7 +27,7 @@ type Props = {
  * - conversar: WhatsApp con el resumen ya escrito y «Mi pregunta es:»; alternativa, agenda.
  * - informar: recursos jurídicos; alternativa, WhatsApp.
  */
-export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Props) {
+export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp, precio }: Props) {
   const [resumen, setResumen] = useState<Resumen | null>(null);
   const [verAgenda, setVerAgenda] = useState(false);
 
@@ -38,10 +40,16 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
     }
   }, [referencia]);
 
+  // La solicitud de cita viaja a WhatsApp con el resumen de la encuesta ya escrito (sin nombre, teléfono ni correo).
+  const ref = referencia ? ` ${referencia}` : "";
   const mensaje = [
-    `Hola, envié la solicitud ${referencia ?? ""} desde la página web.`.replace("  ", " "),
+    ruta === "agendar"
+      ? `Hola, quiero agendar una consulta jurídica${precio ? ` (${precio})` : ""}. Mi solicitud es la${ref}, enviada desde la página web.`
+      : `Hola, envié la solicitud${ref} desde la página web.`,
     resumen ? `Tema: ${resumen.tema}. Situación: ${[resumen.etapa, resumen.urgencia].filter(Boolean).join("; ")}.` : "",
-    "Mi pregunta es: ",
+    resumen?.modalidad ? `Modalidad preferida: ${resumen.modalidad}.` : "",
+    resumen?.pago ? `Pago: ${resumen.pago}.` : "",
+    ruta === "agendar" ? "¿Qué fechas y horas tienen disponibles?" : "Mi pregunta es: ",
   ]
     .filter(Boolean)
     .join(" ");
@@ -53,12 +61,20 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
 
   if (ruta === "agendar") {
     return (
-      <Bloque titulo="Tu siguiente paso: elige el día y la hora de tu consulta." texto="Por lo que nos contaste, podemos agendar tu consulta de una vez.">
-        <Agenda agenda={agenda} ruta={ruta} />
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <span className="text-sm text-ivory/65">¿Prefieres escribirnos primero?</span>
-          {whatsapp("ghost-dark", "Escribir mi pregunta por WhatsApp")}
-        </div>
+      <Bloque
+        titulo="Último paso: envía tu solicitud de cita por WhatsApp."
+        texto={`El mensaje ya lleva el resumen de tu encuesta. Te responderemos por WhatsApp para confirmar la fecha, la hora y el pago de la consulta${
+          precio ? ` (${precio})` : ""
+        }.`}
+      >
+        <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("bronze", "Enviar mi solicitud por WhatsApp")}</div>
+        {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos al celular que dejaste para agendar.</p>}
+        {agenda && (
+          <div className="mt-8 border-t border-ivory/10 pt-6">
+            <p className="mb-4 text-sm text-ivory/65">¿Quieres elegir ya el día y la hora? Aparta tu cita en la agenda y envíanos igual la solicitud por WhatsApp.</p>
+            <Agenda agenda={agenda} ruta={ruta} />
+          </div>
+        )}
       </Bloque>
     );
   }
@@ -66,11 +82,11 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
   if (ruta === "conversar") {
     return (
       <Bloque
-        titulo="Tu siguiente paso: escríbenos tu pregunta por WhatsApp."
-        texto="El resumen de tu solicitud ya va escrito en el mensaje; solo agrega tu pregunta. Así sabemos de una vez qué necesitas."
+        titulo="Último paso: escríbenos por WhatsApp."
+        texto="El resumen de tu encuesta ya va escrito en el mensaje. Cuéntanos qué forma de pago necesitas o cuál es tu pregunta y te responderemos por ahí."
       >
         <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("bronze", "Escribir mi pregunta por WhatsApp")}</div>
-        {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos por el medio que elegiste.</p>}
+        {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos al celular que dejaste.</p>}
         {agenda && (
           <div className="mt-8 border-t border-ivory/10 pt-6">
             {verAgenda ? (

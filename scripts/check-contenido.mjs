@@ -94,6 +94,9 @@ if (!e.direccion) add("IMPORTANTE", "settings/sitio.json: falta dirección (nece
 if (!e.horario) add("IMPORTANTE", "settings/sitio.json: falta horario de atención.");
 if (!sitio.verificado) add("IMPORTANTE", "settings/sitio.json: datos no marcados como verificados (no se emite marcado LegalService).");
 if (!sitio.consulta.confirmada) add("INFORMATIVO", "settings/sitio.json: precio/duración de la consulta sin confirmar (no se publican).");
+else if (!sitio.consulta.duracion) add("INFORMATIVO", "settings/sitio.json: falta la duración de la consulta (el precio sí está confirmado).");
+if (!/^https:\/\//.test(sitio.fundacion?.url ?? "")) add("IMPORTANTE", "settings/sitio.json: falta el enlace de la fundación para quien no puede pagar la consulta.");
+else if (/-[a-z0-9]{9}-[a-z0-9-]+\.vercel\.app/.test(sitio.fundacion.url)) add("IMPORTANTE", "settings/sitio.json: el enlace de la fundación es la dirección de un despliegue de Vercel (cambia en cada despliegue y puede pedir inicio de sesión). Usar la dirección pública estable.");
 if (!sitio.consulta.modalidades.length) add("IMPORTANTE", "settings/sitio.json: modalidades de atención sin confirmar.");
 if (!Object.values(sitio.redes).some(Boolean)) add("INFORMATIVO", "settings/sitio.json: redes sociales oficiales sin verificar.");
 const ag = sitio.agendamiento;

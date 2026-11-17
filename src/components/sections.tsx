@@ -1,6 +1,6 @@
 import { AREAS, type Publico } from "@/lib/areas";
 import { getServiciosVisibles } from "@/lib/content";
-import { agendaReserva, consentimientos, enlaceWhatsApp, sitio, type WhatsAppContexto } from "@/lib/settings";
+import { agendaReserva, consentimientos, enlaceFundacion, enlaceWhatsApp, precioConsulta, sitio, type WhatsAppContexto } from "@/lib/settings";
 import { ContactChannels } from "./ContactChannels";
 import { LeadForm, type AreaOpcion } from "./LeadForm";
 import { Eyebrow, Section } from "./ui";
@@ -35,6 +35,8 @@ export function LeadFormServer({
       comoNosConocio={sitio.comoNosConocio}
       whatsappHref={enlaceWhatsApp(contexto)}
       conAgenda={agendaReserva() !== null}
+      precioConsulta={precioConsulta()}
+      fundacionUrl={enlaceFundacion()}
       titulo={titulo}
       descripcion={descripcion}
       className={className}
@@ -42,20 +44,21 @@ export function LeadFormServer({
   );
 }
 
-export const DESCRIPCION_FORMULARIO = "Responde unas preguntas breves (1 minuto). No incluyas detalles íntimos ni documentos.";
+export const TITULO_FORMULARIO = "Encuesta de participación";
+export const DESCRIPCION_FORMULARIO = "Responde 4 preguntas breves (1 minuto) para agendar tu consulta. No incluyas detalles íntimos ni documentos.";
 
 /** Cómo funciona: todo pasa por el formulario y, según el caso, se agenda o se continúa por WhatsApp. */
 function pasosAgenda(): string[] {
-  const agenda = agendaReserva() !== null;
+  const precio = precioConsulta();
   const whatsapp = enlaceWhatsApp() !== null;
-  const segundo = agenda
-    ? `Según tu caso, eliges el día y la hora de tu consulta${whatsapp ? " o nos escribes tu pregunta por WhatsApp" : ""}.`
-    : `Según tu caso, te contactamos para acordar la consulta${whatsapp ? " o nos escribes tu pregunta por WhatsApp" : ""}.`;
-  return [
-    "Respondes unas preguntas breves sobre tu asunto.",
-    segundo,
-    "Te informamos el alcance y los honorarios antes de cualquier contratación.",
+  const pasos = [
+    "Respondes una encuesta breve sobre tu asunto.",
+    `${precio ? `Si continúas con la consulta (${precio}), ` : "Si continúas con la consulta, "}${
+      whatsapp ? "envías tu solicitud por WhatsApp y te confirmamos la fecha, la hora y el pago." : "te contactamos para confirmar la fecha, la hora y el pago."
+    }`,
   ];
+  if (enlaceFundacion()) pasos.push("Si en este momento no puedes pagarla, te indicamos una fundación que puede orientarte.");
+  return pasos;
 }
 
 /** Bloque de cierre de alto contraste con canales y formulario compacto. */
@@ -95,7 +98,7 @@ export function ContactCTA({
             <ContactChannels dark contexto={contexto} />
           </div>
         </div>
-        {conFormulario && <LeadFormServer preset={preset} contexto={contexto} titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />}
+        {conFormulario && <LeadFormServer preset={preset} contexto={contexto} titulo={TITULO_FORMULARIO} descripcion={DESCRIPCION_FORMULARIO} />}
       </div>
     </Section>
   );

@@ -26,6 +26,7 @@ const base = (extra = {}) => ({
   etapa: "sin-iniciar",
   urgencia: "este-mes",
   modalidad: "virtual",
+  pago: "puede",
   ciudad: "Bogotá",
   preferenciaContacto: "whatsapp",
   nombre: "Prueba Automática",
@@ -90,15 +91,30 @@ await caso("Fecha límite próxima → prioridad alta aunque no sepa cuándo ava
   esperar(r.status === 201 && r.data.prioridad === "alta" && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
   return `201 · ${r.data.id} · alta → agendar`;
 });
-await caso("Sin urgencia (próximos meses) → prioridad media, ruta WhatsApp", async () => {
+await caso("Puede pagar, sin urgencia (próximos meses) → prioridad media, agenda por WhatsApp", async () => {
   const r = await enviar(base({ urgencia: "proximos-meses" }));
+  esperar(r.status === 201 && r.data.prioridad === "media" && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} · media → agendar`;
+});
+await caso("Puede pagar pero solo quiere informarse → prioridad baja, se guarda igual", async () => {
+  const r = await enviar(base({ etapa: "informarse", urgencia: "inmediata" }));
+  esperar(r.status === 201 && r.data.prioridad === "baja" && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} · baja → agendar`;
+});
+await caso("Quiere conversar la forma de pago → prioridad media, ruta WhatsApp", async () => {
+  const r = await enviar(base({ pago: "conversar" }));
   esperar(r.status === 201 && r.data.prioridad === "media" && r.data.ruta === "conversar", `status ${r.status} ${JSON.stringify(r.data)}`);
   return `201 · ${r.data.id} · media → conversar`;
 });
-await caso("Solo quiere informarse → prioridad baja, se guarda igual", async () => {
-  const r = await enviar(base({ etapa: "informarse", urgencia: "inmediata" }));
-  esperar(r.status === 201 && r.data.prioridad === "baja" && r.data.ruta === "informar", `status ${r.status} ${JSON.stringify(r.data)}`);
-  return `201 · ${r.data.id} · baja → informar`;
+await caso("Sin respuesta sobre el pago (encuesta obligatoria)", async () => {
+  const r = await enviar(base({ pago: undefined }));
+  esperar(r.status === 422 && r.data?.campos?.pago, `status ${r.status} ${JSON.stringify(r.data?.campos)}`);
+  return `422 · «${r.data.campos.pago}»`;
+});
+await caso("«No puedo pagar» nunca se registra (va a la fundación sin datos)", async () => {
+  const r = await enviar(base({ pago: "no-puede" }));
+  esperar(r.status === 422 && r.data?.campos?.pago, `status ${r.status} ${JSON.stringify(r.data)}`);
+  return "422 · no se guarda";
 });
 await caso("Correo inválido", async () => {
   const r = await enviar(base({ correo: "correo-sin-arroba" }));
@@ -160,10 +176,10 @@ await caso("Agendamiento con fecha pasada", async () => {
   esperar(r.status === 422 && r.data?.campos?.fechasPreferidas, `status ${r.status}`);
   return `422 · «${r.data.campos.fechasPreferidas}»`;
 });
-await caso("Fuera del portafolio (área «otro») → revisión humana, ruta WhatsApp", async () => {
+await caso("Fuera del portafolio (área «otro») → revisión humana, prioridad media", async () => {
   const r = await enviar(base({ area: "otro", subcategoria: "" }));
-  esperar(r.status === 201 && r.data.ruta === "conversar", `status ${r.status} ${JSON.stringify(r.data)}`);
-  return `201 · ${r.data.id} (requiereRevisionHumana) · media → conversar`;
+  esperar(r.status === 201 && r.data.prioridad === "media" && r.data.ruta === "agendar", `status ${r.status} ${JSON.stringify(r.data)}`);
+  return `201 · ${r.data.id} (requiereRevisionHumana) · media → agendar`;
 });
 await caso("Empresa (B2B) sin NIT", async () => {
   const r = await enviar(base({ publico: "empresa", area: "comercial", subcategoria: "contratos-comerciales", empresa: "Empresa de Prueba SAS", paginaOrigen: "/empresas" }));

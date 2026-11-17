@@ -1,10 +1,10 @@
 import { CalendarDays, CircleHelp, Clock, ShieldCheck } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Pending } from "@/components/Pending";
-import { DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
+import { DESCRIPCION_FORMULARIO, TITULO_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
-import { agendaReserva, sitio } from "@/lib/settings";
+import { agendaReserva, precioConsulta, sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitar una consulta jurídica",
@@ -17,6 +17,7 @@ export default function AgendarPage() {
   const { consulta } = sitio;
   // Todo pasa por el formulario: la agenda en línea (si existe) se ofrece al terminar, en /gracias.
   const agenda = agendaReserva();
+  const precio = precioConsulta();
   return (
     <>
       <PageHero
@@ -26,11 +27,7 @@ export default function AgendarPage() {
         ]}
         eyebrow="Consulta jurídica"
         titulo="Agenda tu consulta jurídica."
-        texto={
-          agenda
-            ? "Responde unas preguntas breves sobre tu asunto. Según tu caso, al terminar podrás elegir el día y la hora de tu consulta."
-            : "Responde unas preguntas breves e indica algunas fechas posibles. Un integrante del equipo te contactará para confirmar disponibilidad, alcance y honorarios."
-        }
+        texto={`Responde una encuesta breve sobre tu asunto${precio ? ` (la consulta tiene un valor de ${precio})` : ""}. Al terminar, envías tu solicitud por WhatsApp y te confirmamos la fecha, la hora y el pago.`}
       />
       <Section tono="ivory">
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
@@ -55,10 +52,12 @@ export default function AgendarPage() {
                 <li className="flex gap-3">
                   <Clock aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
                   <span>
-                    <strong className="text-navy">Duración y valor.</strong>{" "}
-                    {consulta.confirmada && consulta.duracion && consulta.precio ? (
+                    <strong className="text-navy">Valor.</strong>{" "}
+                    {precio ? (
                       <>
-                        La consulta dura {consulta.duracion} y tiene un valor de {consulta.precio}. {consulta.condiciones}
+                        La consulta tiene un valor de {precio}
+                        {consulta.duracion ? ` y dura ${consulta.duracion}` : ""}. Te indicamos cómo pagarla al confirmar la cita. {consulta.condiciones}
+                        {!consulta.duracion && <Pending campo="Duración de la consulta y medios de pago" className="ml-1" />}
                       </>
                     ) : (
                       <>
@@ -92,7 +91,7 @@ export default function AgendarPage() {
             <LeadFormServer
               tipo="agendamiento"
               contexto="agendar"
-              titulo="Agenda tu consulta"
+              titulo={TITULO_FORMULARIO}
               descripcion={agenda ? DESCRIPCION_FORMULARIO : `${DESCRIPCION_FORMULARIO} Las fechas se registran en hora de Colombia (GMT-5).`}
             />
           </div>

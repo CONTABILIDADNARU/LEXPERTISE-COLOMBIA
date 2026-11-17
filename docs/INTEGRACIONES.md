@@ -6,24 +6,32 @@
 
 **Todo pasa por el formulario.** Los botones directos de WhatsApp y llamada se retiraron de las páginas. El único llamado del sitio es «Agendar consulta», que lleva al formulario de la página o a `/agendar-consulta`. WhatsApp aparece después de enviar, con el resumen ya escrito.
 
-### Pasos del formulario (4 como máximo; 3 en landings y páginas de servicio)
+### Encuesta de participación (4 pasos como máximo; 3 en landings y páginas de servicio)
 
 | Paso | Campos |
 |---|---|
 | Tu consulta | Persona o empresa y área (se salta si la página ya los define) |
 | Tu situación | Tipo de asunto · **¿En qué punto está?** (aún no inicia / proceso en curso / fecha límite o audiencia próxima / solo informarse) · **¿Cuándo quieres avanzar?** (lo antes posible / este mes / próximos meses / aún no lo sé) |
-| Atención | Ciudad · modalidad · medio de contacto preferido · fechas posibles y franja (**solo si no hay agenda en línea**) |
-| Datos de contacto | Nombre, celular, correo, empresa (opcional), cómo nos conoció (opcional), autorizaciones |
+| La consulta y su valor | Valor de la consulta (**$200.000 COP**, confirmado por la agencia el 17-nov) · **¿Cómo quieres continuar?** (puedo pagarla / me interesa, pero quiero conversar la forma de pago / en este momento no puedo pagarla) · modalidad |
+| Tus datos para agendar | Ciudad, nombre, celular (WhatsApp), correo, fechas posibles y franja (**solo si no hay agenda en línea**), empresa (opcional), cómo nos conoció (opcional), autorizaciones |
+
+**Quien no puede pagar la consulta** termina la encuesta en el paso 3: ve un mensaje y el botón «Ir a la fundación» (`sitio.json → fundacion.url`). **No se le piden ni se guardan datos personales**; solo se registra el evento anónimo `derivacion_fundacion`. Si más adelante se quiere enviar sus datos a la fundación, hará falta una autorización específica para compartirlos.
 
 ### Prioridad y siguiente paso (`src/lib/leads/prioridad.ts`)
 
 | Prioridad | Regla | Siguiente paso en `/gracias` |
 |---|---|---|
-| Alta | Área atendida, tipo de asunto definido y (fecha límite **o** quiere avanzar lo antes posible o este mes) | Agenda en línea; alternativa, WhatsApp |
-| Media | Área «otro» (no sabe cuál), tipo de asunto «otro», o sin urgencia inmediata | WhatsApp con el resumen y «Mi pregunta es:»; alternativa, agenda |
-| Baja | «Solo quiero informarme» | Recursos jurídicos; alternativa, WhatsApp |
+| Alta | Puede pagar, área atendida, tipo de asunto definido y (fecha límite **o** quiere avanzar lo antes posible o este mes) | Según el pago (columna siguiente) |
+| Media | Área «otro», tipo de asunto «otro», quiere conversar el pago, o sin urgencia inmediata | |
+| Baja | «Solo quiero informarme» | |
 
-Nadie se rechaza: todas las solicitudes se guardan con `prioridad`, `ruta` y `motivoPrioridad`. La regla no usa datos económicos ni personales. El resumen para WhatsApp (referencia, tema, etapa y urgencia, sin nombre ni contacto) pasa a `/gracias` por `sessionStorage` (`lx_siguiente_paso`) y se borra al cerrar la pestaña.
+| Respuesta de pago | Ruta | Siguiente paso en `/gracias` |
+|---|---|---|
+| Puedo pagar | `agendar` | **«Enviar mi solicitud por WhatsApp»**, con el mensaje escrito: valor, referencia, tema, situación, modalidad y pago, más «¿Qué fechas y horas tienen disponibles?». Si hay agenda en línea, también puede apartar la hora. |
+| Quiero conversar el pago | `conversar` | WhatsApp con el resumen y «Mi pregunta es:»; si hay agenda, alternativa |
+| No puedo pagar | — | Fundación (sin registro) |
+
+Las solicitudes de quien puede pagar o quiere conversar el pago se guardan con `pago`, `prioridad`, `ruta` y `motivoPrioridad`. Por decisión de la agencia (17-nov), quien no puede pagar se remite a la fundación en lugar de registrarse. El resumen para WhatsApp (referencia, tema, etapa y urgencia, sin nombre ni contacto) pasa a `/gracias` por `sessionStorage` (`lx_siguiente_paso`) y se borra al cerrar la pestaña.
 
 | Control | Implementación |
 |---|---|
@@ -49,6 +57,7 @@ No se solicitan documentos, números de identificación, NIT ni detalles del cas
   - Basta la clave publicable (`SUPABASE_KEY`); no hace falta la `service_role`.
   - Las duplicadas se resuelven en la base (restricción única de `idempotency_key`): un reintento devuelve la referencia original.
   - El asesor de seguridad de Supabase marca dos avisos esperados: tablas con RLS sin políticas (intencional) y funciones `SECURITY DEFINER` ejecutables por `anon` (protegidas por el secreto).
+- `supabase/migrations/003_pago_consulta.sql`: columna `pago` («puede» o «conversar»); la vista `resumen_embudo` agrupa también por pago y cuenta `pueden_pagar`.
 - `supabase/migrations/002_prioridad_y_reporte.sql`: columnas consultables `etapa`, `urgencia`, `modalidad`, `prioridad` y `ruta`, y la vista **`lexpertise.resumen_embudo`** («qué vende»): solicitudes por semana, canal, campaña, página de entrada, área y prioridad, sin datos personales. Se consulta en el editor SQL de Supabase:
   ```sql
   select * from lexpertise.resumen_embudo order by semana desc, prioridad_alta desc;
@@ -84,7 +93,8 @@ El receptor (webhook del CRM o un orquestador como Make, Zapier o n8n) debe veri
 ## 4. WhatsApp
 
 - Número oficial en `content/settings/whatsapp.json` (formato internacional sin signos, p. ej. `573001234567`).
-- **Se ofrece solo después del formulario**, en `/gracias`, con el mensaje: «Hola, envié la solicitud LX-… desde la página web. Tema: … Situación: …; … Mi pregunta es: ». La persona solo escribe su pregunta.
+- **La solicitud de cita se envía por WhatsApp** al terminar la encuesta. Mensaje de quien puede pagar: «Hola, quiero agendar una consulta jurídica ($200.000 COP). Mi solicitud es la LX-…, enviada desde la página web. Tema: … Situación: …; … Modalidad preferida: … Pago: puedo pagar la consulta. ¿Qué fechas y horas tienen disponibles?». Quien quiere conversar el pago recibe el mismo resumen con «Mi pregunta es: ». El mensaje no lleva nombre, teléfono ni correo.
+- Es la persona quien envía el mensaje desde su WhatsApp. Para que el aviso llegue solo, sin que la persona lo envíe, haría falta la API de WhatsApp Business o un orquestador conectado al CRM.
 - Los mensajes por contexto de `whatsapp.json` quedan para el aviso de error del formulario (si el servidor no responde).
 - Sin número: en revisión se muestra un botón deshabilitado «Pendiente»; en producción no se muestra y la página indica que el equipo contactará por el medio elegido.
 
@@ -113,6 +123,7 @@ Las etiquetas **no se cargan** hasta que la persona acepta la categoría corresp
 | `generate_lead` | **Después** de que el servidor confirma el registro | `formulario`, `area`, `publico`, `prioridad`, `ruta` + `event_id` | `Lead` + `eventID` |
 | `schedule_request` | Solicitud de consulta confirmada por el servidor | ídem | `Schedule` + `eventID` |
 | `open_calendar` | Abre la agenda de Google Calendar en `/gracias` | `ubicacion`, `ruta` | — |
+| `derivacion_fundacion` | Responde que no puede pagar y se le muestra la fundación (sin registro) | `formulario`, `area`, `publico` | — |
 | `appointment_confirmed` | Calendly confirma una reserva (si se activa) | `formulario` | `Schedule` |
 
 - **Deduplicación:** el `event_id` del navegador y el de la API de Conversiones es la referencia de la solicitud (`LX-…`).

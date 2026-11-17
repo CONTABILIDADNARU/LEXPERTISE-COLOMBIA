@@ -15,7 +15,7 @@ import {
   ServiceCard,
 } from "@/components/blocks";
 import { TrackView } from "@/components/client-utils";
-import { ContactCTA, DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
+import { ContactCTA, DESCRIPCION_FORMULARIO, TITULO_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { ButtonLink, Container, Eyebrow, Section, buttonClasses, cx } from "@/components/ui";
 import { getArea, type Publico } from "@/lib/areas";
 import { getServicio, getServicios, getServiciosVisibles, servicioVisible, type Servicio } from "@/lib/content";
@@ -132,7 +132,7 @@ export default async function ServicioPage({ params }: Props) {
           </div>
           {esLanding && (
             <div id="solicitud" className="scroll-mt-24 lg:col-start-2 lg:row-span-2 lg:row-start-1">
-              <LeadFormServer preset={preset} contexto={s.whatsapp} titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />
+              <LeadFormServer preset={preset} contexto={s.whatsapp} titulo={TITULO_FORMULARIO} descripcion={DESCRIPCION_FORMULARIO} />
             </div>
           )}
           {esLanding && (

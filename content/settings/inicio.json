@@ -27,21 +27,53 @@
     "titulo": "Un proceso que comienza por comprender tu situación.",
     "texto": "No partimos de respuestas prefabricadas. Antes de proponer una alternativa, revisamos los hechos, los documentos, las fechas y las normas aplicables.",
     "pasos": [
-      { "titulo": "Contacto inicial", "texto": "Identificación general de la materia de consulta y del canal de atención." },
-      { "titulo": "Evaluación del asunto", "texto": "Revisión de hechos, fechas y documentación pertinente." },
-      { "titulo": "Definición del alcance", "texto": "Información sobre alternativas, honorarios y pasos aplicables antes de cualquier contratación." },
-      { "titulo": "Desarrollo del servicio", "texto": "Acompañamiento según las condiciones contratadas." }
+      {
+        "titulo": "Contacto inicial",
+        "texto": "Identificación general de la materia de consulta y del canal de atención."
+      },
+      {
+        "titulo": "Evaluación del asunto",
+        "texto": "Revisión de hechos, fechas y documentación pertinente."
+      },
+      {
+        "titulo": "Definición del alcance",
+        "texto": "Información sobre alternativas, honorarios y pasos aplicables antes de cualquier contratación."
+      },
+      {
+        "titulo": "Desarrollo del servicio",
+        "texto": "Acompañamiento según las condiciones contratadas."
+      }
     ]
   },
   "destacados": {
     "titulo": "Servicios destacados",
     "texto": "Algunos de los asuntos sobre los que más nos consultan.",
     "items": [
-      { "titulo": "Consultas jurídicas", "texto": "Un espacio para exponer tu asunto, ordenar la información y conocer las alternativas generales.", "href": "/agendar-consulta" },
-      { "titulo": "Revisión y elaboración de contratos", "texto": "Lectura cuidadosa de obligaciones, plazos, pagos y mecanismos de terminación antes de firmar.", "href": "/derecho-civil-y-contratos" },
-      { "titulo": "Asuntos de familia", "texto": "Divorcios, alimentos, custodia, visitas, sociedad conyugal y sucesiones, con un enfoque discreto.", "href": "/derecho-de-familia" },
-      { "titulo": "Derecho laboral", "texto": "Orientación para trabajadores y empleadores sobre contratos, terminaciones, liquidaciones y seguridad social.", "href": "/derecho-laboral" },
-      { "titulo": "Asesoría a empresas", "texto": "Contratos comerciales, documentos laborales, marcas y asuntos tributarios y administrativos.", "href": "/empresas" }
+      {
+        "titulo": "Consultas jurídicas",
+        "texto": "Un espacio para exponer tu asunto, ordenar la información y conocer las alternativas generales.",
+        "href": "/agendar-consulta"
+      },
+      {
+        "titulo": "Revisión y elaboración de contratos",
+        "texto": "Lectura cuidadosa de obligaciones, plazos, pagos y mecanismos de terminación antes de firmar.",
+        "href": "/derecho-civil-y-contratos"
+      },
+      {
+        "titulo": "Asuntos de familia",
+        "texto": "Divorcios, alimentos, custodia, visitas, sociedad conyugal y sucesiones, con un enfoque discreto.",
+        "href": "/derecho-de-familia"
+      },
+      {
+        "titulo": "Derecho laboral",
+        "texto": "Orientación para trabajadores y empleadores sobre contratos, terminaciones, liquidaciones y seguridad social.",
+        "href": "/derecho-laboral"
+      },
+      {
+        "titulo": "Asesoría a empresas",
+        "texto": "Contratos comerciales, documentos laborales, marcas y asuntos tributarios y administrativos.",
+        "href": "/empresas"
+      }
     ]
   },
   "recursos": {
@@ -57,8 +89,8 @@
         "pendiente": ""
       },
       {
-        "pregunta": "¿Cómo puedo solicitar información de una consulta?",
-        "respuesta": "Puedes diligenciar el formulario de solicitud o usar los canales publicados en la página de contacto. Basta con indicar, de forma general, el tipo de asunto. No es necesario enviar documentos en esta etapa.",
+        "pregunta": "¿Cómo agendo una consulta?",
+        "respuesta": "Pulsa «Agendar consulta» y responde la encuesta de participación (1 minuto). Al terminar, envías tu solicitud por WhatsApp con el resumen ya escrito y te confirmamos la fecha, la hora y el pago. No es necesario enviar documentos en esta etapa.",
         "pendiente": ""
       },
       {
@@ -67,13 +99,13 @@
         "pendiente": ""
       },
       {
-        "pregunta": "¿Cómo conozco los honorarios?",
-        "respuesta": "Los honorarios dependen de la materia y del alcance del servicio. Se informan antes de cualquier contratación, una vez se conoce el asunto de forma general.",
-        "pendiente": ""
+        "pregunta": "¿Cuánto cuesta la consulta?",
+        "respuesta": "La consulta jurídica tiene un valor de $200.000 COP. En ella revisamos tu caso de forma general y te explicamos las alternativas. Los honorarios de cualquier servicio posterior dependen de la materia y del alcance, y se informan antes de contratar.",
+        "pendiente": "Duración de la consulta y medios de pago"
       },
       {
         "pregunta": "¿Qué ocurre después de enviar mi solicitud?",
-        "respuesta": "Un integrante del equipo revisa la solicitud y te contacta por el medio que elegiste para conocer la materia de forma general e informarte las alternativas de atención. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
+        "respuesta": "Un integrante del equipo revisa tu solicitud y te responde por WhatsApp para confirmar la fecha, la hora y el pago de la consulta. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
         "pendiente": "Tiempo de respuesta comprometido por la firma"
       },
       {

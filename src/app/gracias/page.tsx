@@ -6,7 +6,7 @@ import { SiguientePaso } from "@/components/SiguientePaso";
 import { ButtonLink, Container } from "@/components/ui";
 import type { Ruta } from "@/lib/leads/opciones";
 import { buildMetadata } from "@/lib/seo";
-import { agendaReserva, enlaceWhatsApp, numeroWhatsApp } from "@/lib/settings";
+import { agendaReserva, enlaceWhatsApp, numeroWhatsApp, precioConsulta } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitud recibida",
@@ -43,7 +43,13 @@ export default async function GraciasPage({ searchParams }: Props) {
           )}
 
           {ruta ? (
-            <SiguientePaso ruta={ruta} referencia={referencia} agenda={agendaReserva()} numeroWhatsApp={numero.length >= 10 ? numero : null} />
+            <SiguientePaso
+              ruta={ruta}
+              referencia={referencia}
+              agenda={agendaReserva()}
+              numeroWhatsApp={numero.length >= 10 ? numero : null}
+              precio={precioConsulta()}
+            />
           ) : (
             <div className="mt-8 space-y-4 text-lg text-ivory/80">
               <p>
@@ -56,8 +62,8 @@ export default async function GraciasPage({ searchParams }: Props) {
 
           <div className="mt-8 space-y-3 text-base text-ivory/65">
             <p>
-              Enviar esta solicitud no genera obligaciones ni constituye una relación abogado-cliente. El alcance y los honorarios se informan antes de
-              cualquier contratación. No es necesario que envíes documentos.
+              Enviar esta solicitud no genera obligaciones ni constituye una relación abogado-cliente. La cita queda confirmada cuando te respondamos
+              con la fecha y la hora. No es necesario que envíes documentos.
             </p>
             <Pending campo="Tiempo de respuesta comprometido" oscuro />
           </div>

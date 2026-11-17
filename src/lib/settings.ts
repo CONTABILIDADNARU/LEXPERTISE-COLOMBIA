@@ -30,6 +30,8 @@ const SitioSchema = z.object({
     condiciones: str,
   }),
   agendamiento: z.object({ proveedor: z.enum(["solicitud", "google", "calendly"]), googleCalendarUrl: str, calendlyUrl: str }),
+  /** Página a la que se remite a quien no puede pagar la consulta (no se guardan sus datos). */
+  fundacion: z.object({ url: str }).default({ url: "" }),
   comoNosConocio: z.array(z.string()),
 });
 
@@ -135,4 +137,15 @@ export function agendaReserva(): AgendaReserva | null {
     return { proveedor: "calendly", url: a.calendlyUrl.trim(), incrustable: true };
   }
   return null;
+}
+
+/** Valor confirmado de la consulta (p. ej. «$200.000 COP»), o null si no está confirmado. */
+export function precioConsulta(): string | null {
+  return sitio.consulta.confirmada && sitio.consulta.precio.trim() ? sitio.consulta.precio.trim() : null;
+}
+
+/** Enlace de la fundación para quien no puede pagar la consulta, o null si no está configurado. */
+export function enlaceFundacion(): string | null {
+  const url = sitio.fundacion.url.trim();
+  return /^https:\/\/[^\s]+$/.test(url) ? url : null;
 }

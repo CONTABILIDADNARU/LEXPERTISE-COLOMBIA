@@ -1,6 +1,6 @@
 import { ContactChannels } from "@/components/ContactChannels";
 import { PageHero } from "@/components/PageHero";
-import { DESCRIPCION_FORMULARIO, LeadFormServer } from "@/components/sections";
+import { DESCRIPCION_FORMULARIO, TITULO_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
 
@@ -32,7 +32,7 @@ export default function ContactoPage() {
             </div>
           </div>
           <div id="solicitud" className="scroll-mt-24">
-            <LeadFormServer titulo="Agenda tu consulta" descripcion={DESCRIPCION_FORMULARIO} />
+            <LeadFormServer titulo={TITULO_FORMULARIO} descripcion={DESCRIPCION_FORMULARIO} />
           </div>
         </div>
       </Section>

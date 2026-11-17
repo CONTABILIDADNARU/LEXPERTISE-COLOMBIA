@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { AREA_KEYS, getArea, subcategoriasValidas } from "../areas";
 import { agendaReserva } from "../settings";
-import { ETAPA_VALORES, MODALIDAD_VALORES, URGENCIA_VALORES, type Etapa, type Modalidad, type Prioridad, type Ruta, type Urgencia } from "./opciones";
+import { ETAPA_VALORES, MODALIDAD_VALORES, PAGO_REGISTRABLE, URGENCIA_VALORES, type Etapa, type Modalidad, type PagoRegistrable, type Prioridad, type Ruta, type Urgencia } from "./opciones";
 import {
   hoyEnBogota,
   normalizarTelefono,
@@ -41,6 +41,8 @@ export const SolicitudSchema = z
     subcategoria: texto(40).default(""),
     etapa: z.enum(ETAPA_VALORES, { message: "Indica en qué punto está tu asunto." }),
     urgencia: z.enum(URGENCIA_VALORES, { message: "Indica cuándo quieres avanzar." }),
+    // «no-puede» no llega aquí: la encuesta termina antes y remite a la fundación sin pedir datos.
+    pago: z.enum(PAGO_REGISTRABLE, { message: "Indica si puedes pagar la consulta o si quieres conversar la forma de pago." }),
     ciudad: z.string().superRefine(conMensaje(validarCiudad)).transform((v) => v.trim()),
     preferenciaContacto: z.enum(["whatsapp", "llamada", "correo"], { message: "Elige cómo prefieres que te contactemos." }),
     nombre: z.string().superRefine(conMensaje(validarNombre)).transform((v) => v.trim().replace(/\s+/g, " ")),
@@ -105,6 +107,8 @@ export type SolicitudRegistro = {
   etapa: Etapa;
   urgencia: Urgencia;
   modalidad: Modalidad;
+  /** Disposición a pagar la consulta. */
+  pago: PagoRegistrable;
   /** Clasificación automática: ordena la atención y define el siguiente paso. Nunca descarta solicitudes. */
   prioridad: Prioridad;
   ruta: Ruta;

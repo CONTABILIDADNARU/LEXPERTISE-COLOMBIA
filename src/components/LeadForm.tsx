@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, LoaderCircle, Lock, MessageCircle, TriangleAlert } from "lucide-react";
+import { ArrowLeft, ArrowRight, HeartHandshake, LoaderCircle, Lock, MessageCircle, TriangleAlert } from "lucide-react";
 import { track } from "@/lib/analytics";
 import { leerAtribucion } from "@/lib/attribution";
 import { CIUDADES_SUGERIDAS, type Publico } from "@/lib/areas";
 import type { RespuestaApi } from "@/lib/leads/schema";
-import { CLAVE_SIGUIENTE_PASO, ETAPAS, MODALIDADES, URGENCIAS, type SiguientePaso } from "@/lib/leads/opciones";
+import { CLAVE_SIGUIENTE_PASO, ETAPAS, MODALIDADES, PAGOS, URGENCIAS, type SiguientePaso } from "@/lib/leads/opciones";
 import { hoyEnBogota, sumarDias, validarCiudad, validarCorreo, validarFechaPreferida, validarNombre, validarTelefono } from "@/lib/leads/validators";
 import { buttonClasses, cx } from "./ui";
 
@@ -19,11 +19,11 @@ export type AreaOpcion = {
   subcategorias: Record<Publico, { valor: string; etiqueta: string }[]>;
 };
 
-type Paso = "consulta" | "situacion" | "atencion" | "datos";
+type Paso = "consulta" | "situacion" | "pago" | "datos";
 const NOMBRE_PASO: Record<Paso, string> = {
   consulta: "Tu consulta",
   situacion: "Tu situación",
-  atencion: "Atención",
+  pago: "Consulta y pago",
   datos: "Datos de contacto",
 };
 
@@ -33,6 +33,7 @@ type Valores = {
   subcategoria: string;
   etapa: "" | (typeof ETAPAS)[number]["valor"];
   urgencia: "" | (typeof URGENCIAS)[number]["valor"];
+  pago: "" | (typeof PAGOS)[number]["valor"];
   ciudad: string;
   preferenciaContacto: "" | "whatsapp" | "llamada" | "correo";
   modalidad: "" | "virtual" | "presencial" | "telefonica" | "sin-preferencia";
@@ -56,6 +57,10 @@ type Props = {
   whatsappHref: string | null;
   /** Hay agenda en línea: no se piden fechas posibles (la cita se elige en /gracias). */
   conAgenda: boolean;
+  /** Valor confirmado de la consulta (p. ej. «$200.000 COP») o null. */
+  precioConsulta: string | null;
+  /** Página para quien no puede pagar la consulta, o null si no está configurada. */
+  fundacionUrl: string | null;
   titulo?: string;
   descripcion?: string;
   className?: string;
@@ -67,11 +72,12 @@ const CAMPO_A_PASO: Record<string, Paso> = {
   subcategoria: "situacion",
   etapa: "situacion",
   urgencia: "situacion",
-  ciudad: "atencion",
-  preferenciaContacto: "atencion",
-  modalidad: "atencion",
-  fechasPreferidas: "atencion",
-  franja: "atencion",
+  pago: "pago",
+  modalidad: "pago",
+  ciudad: "datos",
+  preferenciaContacto: "datos",
+  fechasPreferidas: "datos",
+  franja: "datos",
   nombre: "datos",
   telefono: "datos",
   correo: "datos",
@@ -79,7 +85,7 @@ const CAMPO_A_PASO: Record<string, Paso> = {
   consentimientoDatos: "datos",
 };
 
-export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, conAgenda, titulo, descripcion, className }: Props) {
+export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsappHref, conAgenda, precioConsulta, fundacionUrl, titulo, descripcion, className }: Props) {
   const router = useRouter();
   const uid = useId();
   const id = (n: string) => `${uid}-${n}`;
@@ -100,6 +106,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
     subcategoria: preset?.subcategoria ?? "",
     etapa: "",
     urgencia: "",
+    pago: "",
     ciudad: "",
     preferenciaContacto: "",
     modalidad: "",
@@ -115,12 +122,14 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
   });
   const [errores, setErrores] = useState<Record<string, string>>({});
   const [estado, setEstado] = useState<"idle" | "enviando" | "error">("idle");
+  /** Respondió que no puede pagar: la encuesta termina y se muestra la fundación (sin pedir datos). */
+  const [derivado, setDerivado] = useState(false);
   const [mensajeError, setMensajeError] = useState("");
 
   const pasos = useMemo<Paso[]>(() => {
     const p: Paso[] = [];
     if (!preset?.publico || !preset?.area) p.push("consulta");
-    p.push("situacion", "atencion", "datos");
+    p.push("situacion", "pago", "datos");
     return p;
   }, [preset?.publico, preset?.area]);
   const pideFechas = tipo === "agendamiento" && !conAgenda;
@@ -169,11 +178,13 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       if (!v.etapa) e.etapa = "Indica en qué punto está tu asunto.";
       if (!v.urgencia) e.urgencia = "Indica cuándo quieres avanzar.";
     }
-    if (p === "atencion") {
+    if (p === "pago") {
+      if (!v.pago) e.pago = "Elige cómo quieres continuar.";
+      if (!v.modalidad) e.modalidad = "Elige tu preferencia de modalidad.";
+    }
+    if (p === "datos") {
       const c = validarCiudad(v.ciudad);
       if (c) e.ciudad = c;
-      if (!v.modalidad) e.modalidad = "Elige tu preferencia de modalidad.";
-      if (!v.preferenciaContacto) e.preferenciaContacto = "Elige cómo prefieres que te contactemos.";
       if (pideFechas) {
         if (!v.franja) e.franja = "Elige una franja horaria.";
         const fechas = v.fechas.filter(Boolean);
@@ -217,6 +228,13 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       return;
     }
     track("form_step", { formulario: tipo, paso: paso });
+    if (paso === "pago" && v.pago === "no-puede") {
+      // Fin de la encuesta: no se piden ni se guardan datos personales.
+      track("derivacion_fundacion", { formulario: tipo, area: v.area, publico: v.publico });
+      setDerivado(true);
+      requestAnimationFrame(() => contenedor.current?.querySelector<HTMLElement>("[data-derivacion]")?.focus());
+      return;
+    }
     irA(indice + 1);
   }
 
@@ -242,8 +260,10 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       etapa: v.etapa,
       urgencia: v.urgencia,
       modalidad: v.modalidad,
+      pago: v.pago,
       ciudad: v.ciudad,
-      preferenciaContacto: v.preferenciaContacto,
+      // La solicitud se envía por WhatsApp al terminar: es el medio de contacto.
+      preferenciaContacto: "whatsapp",
       nombre: v.nombre,
       telefono: v.telefono,
       correo: v.correo,
@@ -305,6 +325,8 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
       tema: tema.toLowerCase(),
       etapa: ETAPAS.find((x) => x.valor === v.etapa)?.resumen ?? "",
       urgencia: URGENCIAS.find((x) => x.valor === v.urgencia)?.resumen ?? "",
+      modalidad: MODALIDADES.find((x) => x.valor === v.modalidad)?.etiqueta.toLowerCase() ?? "",
+      pago: PAGOS.find((x) => x.valor === v.pago)?.resumen ?? "",
     };
     try {
       sessionStorage.setItem(CLAVE_SIGUIENTE_PASO, JSON.stringify(datos));
@@ -336,6 +358,28 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
         </div>
       </div>
 
+      {derivado ? (
+        <div data-derivacion tabIndex={-1} role="status" className="mt-6 outline-none">
+          <HeartHandshake aria-hidden strokeWidth={1.4} className="size-9 text-bronze-ink" />
+          <h3 className="mt-4 text-xl font-bold text-navy">Gracias por responder</h3>
+          <p className="mt-2 text-[0.95rem] text-slate">
+            {precioConsulta ? `La consulta con LEXPERTISE tiene un valor de ${precioConsulta}. ` : ""}Como en este momento no puedes pagarla, te
+            sugerimos visitar esta fundación, que puede orientarte según tu situación. No guardamos los datos de esta encuesta.
+          </p>
+          <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button type="button" onClick={() => setDerivado(false)} className={cx(buttonClasses("secondary"), "sm:w-auto")}>
+              <ArrowLeft aria-hidden className="size-4" /> Cambiar mi respuesta
+            </button>
+            {fundacionUrl ? (
+              <a href={fundacionUrl} className={buttonClasses("primary")}>
+                Ir a la fundación <ArrowRight aria-hidden className="size-4" />
+              </a>
+            ) : (
+              <span className="text-sm text-slate">Enlace de la fundación pendiente.</span>
+            )}
+          </div>
+        </div>
+      ) : (
       <form
         noValidate
         onSubmit={(e) => {
@@ -356,8 +400,8 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           <legend data-titulo-paso tabIndex={-1} className="text-lg font-bold text-navy outline-none">
             {paso === "consulta" && (preset?.publico ? "¿Sobre qué área es tu consulta?" : "¿Sobre qué es tu consulta?")}
             {paso === "situacion" && "Cuéntanos tu situación"}
-            {paso === "atencion" && (pideFechas ? "Cuéntanos tus preferencias" : "¿Cómo prefieres que te atendamos?")}
-            {paso === "datos" && "¿Cómo te contactamos?"}
+            {paso === "pago" && "La consulta y su valor"}
+            {paso === "datos" && "Tus datos para agendar"}
           </legend>
 
           {paso === "consulta" && (
@@ -447,7 +491,44 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
             </div>
           )}
 
-          {paso === "atencion" && (
+          {paso === "pago" && (
+            <div className="mt-5 grid gap-6">
+              <p className="border-l-2 border-bronze bg-ivory px-4 py-3 text-[0.95rem] text-graphite">
+                {precioConsulta ? (
+                  <>
+                    La consulta jurídica tiene un valor de <strong className="text-navy">{precioConsulta}</strong>. En ella revisamos tu caso y te explicamos las
+                    alternativas, el alcance y los honorarios de cualquier servicio posterior.
+                  </>
+                ) : (
+                  "La consulta jurídica tiene un costo que te informaremos antes de agendarla."
+                )}
+              </p>
+              <Opciones
+                nombre="pago"
+                legend="¿Cómo quieres continuar?"
+                error={err("pago")}
+                errorId={id("e-pago")}
+                denso
+                valor={v.pago}
+                onChange={(x) => set("pago", x as Valores["pago"])}
+                opciones={PAGOS.map((o) => ({ valor: o.valor, etiqueta: o.etiqueta }))}
+              />
+              <Opciones
+                nombre="modalidad"
+                legend="Modalidad preferida"
+                ayuda="Te confirmaremos las modalidades disponibles al agendar."
+                error={err("modalidad")}
+                errorId={id("e-modalidad")}
+                columnas={4}
+                compacto
+                valor={v.modalidad}
+                onChange={(x) => set("modalidad", x as Valores["modalidad"])}
+                opciones={MODALIDADES.map((m) => ({ valor: m.valor, etiqueta: m.etiqueta }))}
+              />
+            </div>
+          )}
+
+          {paso === "datos" && (
             <div className="mt-5 grid gap-5">
               <Campo label="Ciudad" htmlFor={id("ciudad")} error={err("ciudad")} errorId={id("e-ciudad")} ayuda="Ciudad desde la que consultas.">
                 <input
@@ -469,19 +550,6 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                   ))}
                 </datalist>
               </Campo>
-
-              <Opciones
-                nombre="modalidad"
-                legend="Modalidad preferida"
-                ayuda="La firma confirmará las modalidades disponibles."
-                error={err("modalidad")}
-                errorId={id("e-modalidad")}
-                columnas={4}
-                compacto
-                valor={v.modalidad}
-                onChange={(x) => set("modalidad", x as Valores["modalidad"])}
-                opciones={MODALIDADES.map((m) => ({ valor: m.valor, etiqueta: m.etiqueta }))}
-              />
 
               {pideFechas && (
                 <>
@@ -539,26 +607,6 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                 </>
               )}
 
-              <Opciones
-                nombre="preferenciaContacto"
-                legend="¿Cómo prefieres que te contactemos?"
-                error={err("preferenciaContacto")}
-                errorId={id("e-preferencia")}
-                columnas={3}
-                compacto
-                valor={v.preferenciaContacto}
-                onChange={(x) => set("preferenciaContacto", x as Valores["preferenciaContacto"])}
-                opciones={[
-                  { valor: "whatsapp", etiqueta: "WhatsApp" },
-                  { valor: "llamada", etiqueta: "Llamada" },
-                  { valor: "correo", etiqueta: "Correo" },
-                ]}
-              />
-            </div>
-          )}
-
-          {paso === "datos" && (
-            <div className="mt-5 grid gap-5">
               <Campo label="Nombre" htmlFor={id("nombre")} error={err("nombre")} errorId={id("e-nombre")}>
                 <input
                   id={id("nombre")}
@@ -574,7 +622,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                 />
               </Campo>
               <div className="grid gap-5 sm:grid-cols-2">
-                <Campo label="Teléfono" htmlFor={id("telefono")} error={err("telefono")} errorId={id("e-telefono")}>
+                <Campo label="Celular (WhatsApp)" htmlFor={id("telefono")} error={err("telefono")} errorId={id("e-telefono")}>
                   <input
                     id={id("telefono")}
                     data-campo="telefono"
@@ -716,6 +764,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           </button>
         </div>
       </form>
+      )}
     </div>
   );
 }

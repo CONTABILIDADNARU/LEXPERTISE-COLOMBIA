@@ -21,8 +21,8 @@
     "youtube": ""
   },
   "consulta": {
-    "confirmada": false,
-    "precio": "",
+    "confirmada": true,
+    "precio": "$200.000 COP",
     "duracion": "",
     "modalidades": [],
     "condiciones": ""
@@ -32,5 +32,14 @@
     "googleCalendarUrl": "",
     "calendlyUrl": ""
   },
-  "comoNosConocio": ["Instagram", "TikTok", "Google", "Recomendación de un conocido", "Otro"]
+  "fundacion": {
+    "url": "https://innova-escala-corp-cwo0kuf86-fondetrefi-s-projects.vercel.app/"
+  },
+  "comoNosConocio": [
+    "Instagram",
+    "TikTok",
+    "Google",
+    "Recomendación de un conocido",
+    "Otro"
+  ]
 }

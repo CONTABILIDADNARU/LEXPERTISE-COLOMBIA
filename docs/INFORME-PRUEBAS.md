@@ -72,6 +72,17 @@ Cambios: preguntas de etapa, urgencia y modalidad; prioridad automática (alta/m
 
 **Lighthouse (móvil, 12.8.2, simulación):** Inicio 97, landing de divorcio unilateral 97, agendar consulta 98; accesibilidad y buenas prácticas 100; CLS 0; TBT 0–10 ms. El LCP simulado da 2,5–2,6 s, **igual que la versión anterior** medida con la misma herramienta (2,4–2,6 s); el LCP observado en la carga real fue de 58–108 ms. El 0,8–0,9 s de la tabla anterior se midió con otra configuración de Lighthouse, así que las cifras no son comparables. Se probó cargar la fuente del título con `display: "optional"`: dos corridas por página dieron el mismo LCP simulado (2,5–2,6 s), así que se revirtió. Según Lighthouse, lo que pesa en la simulación es la descarga de JavaScript (ahorro estimado de unos 300 ms quitando 27 KiB sin usar) y la hoja de estilos que bloquea el render (unos 150 ms); la fuente no influye. También se probó poner los estilos en línea (`experimental.inlineCss`): empeoró el LCP simulado a 2,6–2,8 s y duplicó el HTML (de 146 a 294 KB), así que se revirtió. Con rendimiento 97–98 y carga real de 0,05–0,13 s, la cifra que importa es el LCP de visitantes reales (Search Console) después de publicar.
 
+## Encuesta de participación con pago (2026-11-17)
+
+| Prueba | Resultado |
+|---|---|
+| API (archivo local y Supabase) | **25/25**: se suman sin respuesta de pago (422), «no puedo pagar» no se registra (422) y «conversar el pago» va a WhatsApp (media) |
+| Base de datos | Columna `pago` guardada; la vista `resumen_embudo` agrupa por pago; 8 registros de prueba borrados |
+| Recorrido «no puedo pagar» (375×812) | La encuesta termina en el paso 3, muestra el valor y el botón «Ir a la fundación»; **ninguna llamada a la API** y no se piden datos |
+| Recorrido «puedo pagar» (375×812) | 3 pasos → `/gracias?ruta=agendar` con «Enviar mi solicitud por WhatsApp» y el resumen guardado en la sesión |
+| Mensaje de WhatsApp (número de prueba, sin guardar) | Incluye valor, referencia, tema, situación, modalidad, pago y la pregunta por fechas |
+| Enlace de la fundación | **Pide iniciar sesión en Vercel** (302): hay que reemplazarlo por la dirección pública |
+
 ## Incidencia durante el despliegue (2026-11-14)
 
 El primer despliegue con la CLI quedó en el entorno «production» del proyecto. En el plan Hobby, la protección estándar no cubría el dominio `lexpertise-web.vercel.app`, que respondió **200 sin sesión durante unos 2 minutos**. Esa compilación no tenía variables de entorno: modo de revisión, `noindex`, robots bloqueando todo y formulario sin almacenamiento (503). Se corrigió extendiendo Vercel Authentication a todos los despliegues; desde entonces todas las URL responden 302.

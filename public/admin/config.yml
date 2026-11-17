@@ -224,6 +224,11 @@ collections:
               - { label: Proveedor, name: proveedor, widget: select, options: [solicitud, google, calendly], hint: "solicitud = el formulario pide fechas posibles · google = agenda de citas de Google Calendar · calendly = Calendly. La agenda se ofrece al terminar el formulario según la prioridad del caso." }
               - { label: Enlace de la agenda de Google Calendar, name: googleCalendarUrl, widget: string, required: false, hint: "Google Calendar → agenda de citas → Compartir → Insertar en el sitio web: copia la dirección https://calendar.google.com/calendar/appointments/schedules/… (también sirve el enlace corto https://calendar.app.google/…, que se abre en otra pestaña)." }
               - { label: URL de Calendly, name: calendlyUrl, widget: string, required: false }
+          - label: Fundación (para quien no puede pagar la consulta)
+            name: fundacion
+            widget: object
+            fields:
+              - { label: Enlace de la fundación, name: url, widget: string, required: false, hint: "Página pública (https) a la que se envía a quien responde que no puede pagar la consulta. Debe abrirse sin iniciar sesión." }
           - { label: Opciones de «¿Dónde nos conociste?», name: comoNosConocio, widget: list }
       - name: whatsapp
         label: WhatsApp
