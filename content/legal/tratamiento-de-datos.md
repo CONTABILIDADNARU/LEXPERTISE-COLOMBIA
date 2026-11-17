@@ -9,7 +9,7 @@ seo:
 notasRevision:
   - "Texto enviado por la firma el 17-nov-2026 (PDF «Política de tratamiento de datos de la información»). Se transcribió completo; el NIT, la ciudad, la dirección y los correos salen de la configuración del sitio."
   - "El PDF dice NIT 900.801.715-9. El RUT dice 901.800.715-9, y ese número cumple el dígito de verificación. El sitio usa el del RUT. La firma debe corregir el PDF."
-  - "El PDF da dos direcciones: Calle 8 A No. 7-30 (portada) y Calle 8 A No. 79-30 (sección 2.5). Mientras la firma no confirme una, la dirección queda marcada como pendiente."
+  - "El PDF da dos direcciones: Calle 8 A No. 7-30 (portada) y Calle 8 A No. 79-30 (sección 2.5). La firma confirmó 7-30 el 17-nov; el texto de la sección 2.5 aún dice 79-30 y debe corregirse en el PDF."
   - "El PDF usa lexpertisea@gmail.com para datos personales y lexpertisesas@gmail.com para cancelaciones. Se usa lexpertisea para datos personales; confirmar que ambos correos son de la firma."
   - "Las secciones 2.9 (videos de vigilancia en la oficina) y 2.11 (finalidades para clientes, proveedores y empleados) describen otros tratamientos. Confirmar que aplican a este sitio."
   - "Revisión jurídica pendiente. La firma lo envió como su texto oficial, pero no hay aprobación de un abogado registrada."

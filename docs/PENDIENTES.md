@@ -6,7 +6,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 
 | # | Pendiente | Dónde se completa |
 |---|---|---|
-| C1 | **Razón social:** LEXPERTISE COLOMBIA S.A.S. **NIT:** 901.800.715-9 (RUT; dígito de verificación válido). **Pendiente de la firma:** el PDF de la política de datos dice 900.801.715-9 y la misma política da dos direcciones (Calle 8 A No. 7-30 y 79-30). Corregir el PDF y confirmar la dirección. | Configuración → Datos de la firma |
+| C1 | **Razón social:** LEXPERTISE COLOMBIA S.A.S. **NIT:** 901.800.715-9 (RUT; dígito de verificación válido). **Dirección:** Calle 8 A No. 7-30, Bogotá (confirmada por la firma el 17-nov). **Pendiente de la firma:** el PDF de la política de datos dice NIT 900.801.715-9 y pone 79-30 en su sección 2.5. Corregir el PDF. | Configuración → Datos de la firma |
 | C2 | Correo general **lexpertisesas@gmail.com** (cancelaciones) y correo de datos personales **lexpertisea@gmail.com** (política de datos): confirmar que ambos son de la firma. Teléfono **+57 301 6515265**. | Configuración → Datos de la firma |
 | C3 | ~~Número oficial de WhatsApp~~: **+57 301 6515265**, configurado el 17-nov. | Hecho |
 | C4 | **Aprobación jurídica** de las 12 páginas de servicio (cada una con sus `notasRevision`) y de «La firma». | Áreas y servicios / Páginas institucionales |
