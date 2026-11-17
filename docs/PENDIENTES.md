@@ -6,8 +6,8 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 
 | # | Pendiente | Dónde se completa |
 |---|---|---|
-| C1 | ~~Razón social y NIT~~: **LEXPERTISE COLOMBIA S.A.S, NIT 901.800.715-9**, tomados del RUT que envió la firma el 17-nov. | Hecho |
-| C2 | Correo oficial (**lexpertisesas@gmail.com**) y teléfono (**+57 301 6515265**) recibidos el 17-nov. Falta un correo exclusivo para datos personales (hoy se usa el general) y la política de tratamiento de datos que la firma va a enviar. | Configuración → Datos de la firma |
+| C1 | **Razón social:** LEXPERTISE COLOMBIA S.A.S. **NIT:** 901.800.715-9 (RUT; dígito de verificación válido). **Pendiente de la firma:** el PDF de la política de datos dice 900.801.715-9 y la misma política da dos direcciones (Calle 8 A No. 7-30 y 79-30). Corregir el PDF y confirmar la dirección. | Configuración → Datos de la firma |
+| C2 | Correo general **lexpertisesas@gmail.com** (cancelaciones) y correo de datos personales **lexpertisea@gmail.com** (política de datos): confirmar que ambos son de la firma. Teléfono **+57 301 6515265**. | Configuración → Datos de la firma |
 | C3 | ~~Número oficial de WhatsApp~~: **+57 301 6515265**, configurado el 17-nov. | Hecho |
 | C4 | **Aprobación jurídica** de las 12 páginas de servicio (cada una con sus `notasRevision`) y de «La firma». | Áreas y servicios / Páginas institucionales |
 | C5 | Aprobación y fecha de vigencia de las 4 políticas legales. | Documentos legales |
@@ -23,7 +23,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A2 | **Sitio anterior (Odoo):** no se encontró el dominio ni páginas indexadas. Si existe, exportar URLs de Search Console y cargar redirecciones 301 antes de cambiar el DNS. |
 | A3 | Modalidades de atención (virtual, presencial, telefónica), ciudades con atención presencial y dirección. |
 | A4 | Tiempo de respuesta comprometido a las solicitudes. |
-| A5 | Consulta: **90 minutos**; el valor **no se publica** (decisión de la firma, 17-nov) y se informa por WhatsApp. Política de cancelación y reprogramación publicada con casilla obligatoria; falta su fecha de vigencia y qué pasa si se cancela con menos de 48 horas hábiles. Faltan los medios y el momento del pago. |
+| A5 | Consulta: **90 minutos**; el valor **no se publica** (decisión de la firma, 17-nov) y se informa por WhatsApp. Política de cancelación y reprogramación **con el texto de la firma** (17-nov), con casilla obligatoria. Falta su fecha de vigencia y qué pasa con cancelaciones o reprogramaciones fuera de plazo. Faltan los medios de pago. |
 | A6 | Perfiles verificados del equipo con fotografías reales. Mientras tanto, por pedido de la firma, /equipo dice de forma general que se cubren todas las áreas. |
 | A7 | Confirmar si la firma presta **asuntos societarios** y un modelo de **acompañamiento recurrente** a empresas. |
 | A8 | Repositorio creado: `segmentamkt/LEXPERTISE-COLOMBIA` (público). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |

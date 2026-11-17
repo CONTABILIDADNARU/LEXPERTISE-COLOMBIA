@@ -61,8 +61,8 @@ export default async function GraciasPage({ searchParams }: Props) {
 
           <div className="mt-8 space-y-3 text-base text-ivory/65">
             <p>
-              Enviar esta solicitud no genera obligaciones ni constituye una relación abogado-cliente. La cita queda confirmada cuando te respondamos
-              con la fecha y la hora. No es necesario que envíes documentos.
+              Enviar esta solicitud no genera obligaciones ni constituye una relación abogado-cliente. La cita queda en firme cuando te respondamos
+              con la fecha y la hora y se verifique el pago total de la consulta. No es necesario que envíes documentos.
             </p>
             {sitio.empresa.horario && (
               <p>

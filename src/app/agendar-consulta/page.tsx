@@ -68,9 +68,10 @@ export default function AgendarPage() {
                   <div>
                     <strong className="text-navy">Cancelación y reprogramación.</strong> Al enviar tu solicitud aceptas nuestra política:
                     <ul className="mt-2 list-disc space-y-1.5 pl-5 text-slate marker:text-bronze">
-                      <li>Si cancelas con más de 48 horas hábiles de antelación, se reembolsa el 90 % del valor pagado (se retiene un 10 % por gastos administrativos, pasarelas de pago y gestión de agenda).</li>
-                      <li>Hay una tolerancia de 15 minutos desde la hora programada, en sala física o virtual.</li>
-                      <li>Si llegas o te conectas dentro de esos 15 minutos, la consulta dura el tiempo restante, sin extensión ni reducción de tarifa.</li>
+                      <li>La fecha y la hora quedan en firme cuando se verifica el pago total de la consulta.</li>
+                      <li>Reprogramación sin costo, una vez, si avisas con más de 24 horas hábiles de antelación; la nueva fecha será dentro de los 30 días siguientes. Máximo dos reprogramaciones.</li>
+                      <li>Cancelación con más de 48 horas hábiles de antelación: reembolso del 90 % del valor pagado (se retiene un 10 % por gastos administrativos, pasarelas de pago y gestión de agenda).</li>
+                      <li>Hay una tolerancia de 15 minutos desde la hora programada, en sala física o virtual. Si llegas dentro de ese tiempo, la consulta dura lo que quedó del tiempo agendado.</li>
                       <li>Pasados los 15 minutos sin presencia ni aviso previo, la cita se da por cancelada por inasistencia; se analiza la razón para evaluar reprogramación o reembolso.</li>
                     </ul>
                     <Link
