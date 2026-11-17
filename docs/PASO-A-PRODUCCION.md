@@ -9,7 +9,7 @@
 
 ## 1. Repositorio
 
-1. Hecho: `https://github.com/segmentamkt/LEXPERTISE-COLOMBIA` (**público** por decisión de la agencia; los textos jurídicos sin aprobar y las notas internas quedan visibles). Dar permiso de escritura solo a las personas autorizadas o transferirlo a una cuenta de LEXPERTISE (si se transfiere, actualizar `repo` en `public/admin/config.yml`).
+1. Hecho: `https://github.com/CONTABILIDADNARU/LEXPERTISE-COLOMBIA`, transferido desde `segmentamkt` el 17-nov-2026 (**público**; los textos jurídicos sin aprobar y las notas internas quedan visibles). `repo` en `public/admin/config.yml` ya apunta ahí. Dar permiso de escritura solo a las personas autorizadas.
 2. Proteger la rama `main` (revisión obligatoria de cambios de código).
 3. Actualizar `base_url` y `site_url` en `public/admin/config.yml` (`repo` ya apunta al repositorio).
 

@@ -26,7 +26,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | A5 | Consulta: **90 minutos**; el valor **no se publica** (decisión de la firma, 17-nov) y se informa por WhatsApp. Política de cancelación y reprogramación **con el texto de la firma** (17-nov), con casilla obligatoria. Falta su fecha de vigencia y qué pasa con cancelaciones o reprogramaciones fuera de plazo. Faltan los medios de pago. |
 | A6 | Perfiles verificados del equipo con fotografías reales. Mientras tanto, por pedido de la firma, /equipo dice de forma general que se cubren todas las áreas. |
 | A7 | Confirmar si la firma presta **asuntos societarios** y un modelo de **acompañamiento recurrente** a empresas. |
-| A8 | Repositorio creado: `segmentamkt/LEXPERTISE-COLOMBIA` (público). Falta: GitHub OAuth App, `base_url`/`site_url` del panel (`public/admin/config.yml`), proteger la rama `main` y decidir si el repositorio pasa a una cuenta de LEXPERTISE. |
+| A8 | Repositorio: `CONTABILIDADNARU/LEXPERTISE-COLOMBIA` (público; transferido desde `segmentamkt` el 17-nov). Proyecto de Vercel: transferencia solicitada a la cuenta nueva (enlace válido 24 horas). Falta: aceptar ambas transferencias, conectar el proyecto de Vercel con el repositorio, GitHub OAuth App y `base_url`/`site_url` del panel (`public/admin/config.yml`), y proteger la rama `main`. |
 | A9 | Límite de envíos global en Vercel (Upstash Redis) para que el límite por IP no dependa de una sola instancia. |
 | A11 | ~~Token para pruebas automáticas~~: ya no hace falta, porque el staging es público desde el 14-nov. Si se vuelve a proteger, lo debe crear una persona del equipo en Vercel. |
 | A10 | Cuentas de medición: GA4 o GTM, Píxel de Meta, Search Console y, si se aprueba, API de Conversiones. |

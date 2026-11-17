@@ -66,10 +66,10 @@ docs/                    Documentación del proyecto
 
 ## Repositorio
 
-`https://github.com/segmentamkt/LEXPERTISE-COLOMBIA` (**público**, rama `main`: cualquiera puede leerlo; solo quienes tengan permiso de escritura pueden modificarlo). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.
+`https://github.com/CONTABILIDADNARU/LEXPERTISE-COLOMBIA` (transferido desde `segmentamkt` el 17-nov-2026; **público**, rama `main`: cualquiera puede leerlo; solo quienes tengan permiso de escritura pueden modificarlo). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.
 
 ```bash
-git clone https://github.com/segmentamkt/LEXPERTISE-COLOMBIA.git
+git clone https://github.com/CONTABILIDADNARU/LEXPERTISE-COLOMBIA.git
 ```
 
 ## Despliegue
