@@ -2,11 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Forum, Manrope } from "next/font/google";
 import "./globals.css";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
+import { Asistente } from "@/components/Asistente";
 import { JsonLd, StagingBanner } from "@/components/blocks";
 import { MobileContactBar } from "@/components/ContactLinks";
 import { CookiePreferences } from "@/components/CookiePreferences";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { construirBaseAsistente } from "@/lib/asistente-base";
 import { IS_PRODUCTION, SITE_URL } from "@/lib/env";
 import { legalServiceJsonLd } from "@/lib/seo";
 import { sitio } from "@/lib/settings";
@@ -31,6 +33,7 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const asistente = construirBaseAsistente();
   return (
     <html lang="es-CO" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
@@ -53,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </main>
         <Footer />
         <MobileContactBar />
+        <Asistente base={asistente.base} enlaces={asistente.enlaces} />
         <CookiePreferences />
         <AnalyticsScripts />
         <JsonLd data={legalServiceJsonLd()} />

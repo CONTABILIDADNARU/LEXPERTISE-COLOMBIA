@@ -29,7 +29,7 @@ export function Footer() {
   const enlace = "text-ivory/75 transition-colors hover:text-ivory";
 
   return (
-    <footer className="bg-ink-950 pb-24 pt-16 text-ivory lg:pb-10">
+    <footer className="bg-ink-950 pb-24 pt-16 text-ivory lg:pb-24">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>

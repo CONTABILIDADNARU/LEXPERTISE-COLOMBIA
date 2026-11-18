@@ -64,6 +64,10 @@ docs/                    Documentación del proyecto
 | Equipo sin perfiles verificados | aviso | la página devuelve 404 y sale del menú |
 | Build con bloqueantes | permitido | **detenido** por `prebuild` |
 
+## Asistente de la página
+
+Botón fijo abajo a la izquierda (`src/components/Asistente.tsx`). Resuelve dudas básicas con lo que el sitio ya publica: las **preguntas frecuentes de la portada**, las páginas de servicio visibles y los datos de contacto (`content/settings`). **No usa IA generativa**, no guarda la conversación y no envía lo que escribe la persona a ningún servidor; no da asesoría jurídica y remite a la consulta o a WhatsApp. Si se cambia una pregunta frecuente o un dato de contacto en el panel, el asistente lo refleja. Las reglas de reconocimiento están en `src/lib/asistente.ts`.
+
 ## Repositorio
 
 `https://github.com/CONTABILIDADNARU/LEXPERTISE-COLOMBIA` (transferido desde `segmentamkt` el 17-nov-2026; **público**, rama `main`: cualquiera puede leerlo; solo quienes tengan permiso de escritura pueden modificarlo). Los archivos `.env*` (salvo `.env.example`), `.vercel/` y `data/` no se versionan.

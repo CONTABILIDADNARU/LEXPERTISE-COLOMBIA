@@ -6,6 +6,7 @@ import { SHOW_REVIEW_MARKS, SITE_ENV } from "@/lib/env";
 import { breadcrumbJsonLd, type Miga } from "@/lib/seo";
 import { sitio } from "@/lib/settings";
 import { AreaIcon } from "./AreaIcon";
+import { TextoConEnlaces } from "./TextoConEnlaces";
 import { Container, cx } from "./ui";
 
 export function JsonLd({ data }: { data: object | null }) {
@@ -95,29 +96,6 @@ export function LegalDisclaimer({ className, dark }: { className?: string; dark?
         dependen de los hechos, los documentos y las normas aplicables. No se garantizan resultados.
       </p>
     </aside>
-  );
-}
-
-/** Texto de una respuesta con enlaces escritos como [texto](/ruta) o [texto](mailto:correo). Solo admite rutas del propio sitio y correos. */
-function TextoConEnlaces({ texto }: { texto: string }) {
-  const partes = texto.split(/(\[[^\]]+\]\((?:\/[^\s)]*|mailto:[^\s)]+)\))/g);
-  return (
-    <>
-      {partes.map((parte, i) => {
-        const m = /^\[([^\]]+)\]\((\/[^\s)]*|mailto:[^\s)]+)\)$/.exec(parte);
-        if (!m) return parte;
-        const clase = "font-semibold text-ink underline decoration-brand underline-offset-4 hover:decoration-2";
-        return m[2].startsWith("/") ? (
-          <Link key={i} href={m[2]} className={clase}>
-            {m[1]}
-          </Link>
-        ) : (
-          <a key={i} href={m[2]} className={clase}>
-            {m[1]}
-          </a>
-        );
-      })}
-    </>
   );
 }
 

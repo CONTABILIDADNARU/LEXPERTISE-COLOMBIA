@@ -1,6 +1,8 @@
+import type { ComponentType, ReactNode } from "react";
 import { Clock, Mail, Phone } from "lucide-react";
 import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { enlaceTelefono, sitio, type WhatsAppContexto } from "@/lib/settings";
+import { InstagramIcon } from "./InstagramIcon";
 import { Pending } from "./Pending";
 import { cx } from "./ui";
 
@@ -10,7 +12,9 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
   // WhatsApp no se lista aquí: se ofrece después del formulario, con el resumen de la solicitud ya escrito.
   void contexto;
   const tel = enlaceTelefono();
-  const filas = [
+  const instagram = sitio.redes.instagram.trim();
+  const usuarioInstagram = instagram ? new URL(instagram).pathname.split("/").filter(Boolean)[0] ?? "" : "";
+  const filas: { icon: ComponentType<{ className?: string; strokeWidth?: number; "aria-hidden"?: boolean }>; label: string; valor: ReactNode; pendiente: string }[] = [
     {
       icon: Phone,
       label: "Teléfono",
@@ -32,6 +36,16 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
       pendiente: "Correo oficial",
     },
     { icon: Clock, label: "Horario de atención", valor: e.horario || null, pendiente: "Horario de atención" },
+    {
+      icon: InstagramIcon,
+      label: "Instagram",
+      valor: usuarioInstagram ? (
+        <a href={instagram} target="_blank" rel="noopener noreferrer" className="underline decoration-brand underline-offset-4">
+          @{usuarioInstagram}
+        </a>
+      ) : null,
+      pendiente: "Instagram",
+    },
   ];
   return (
     <ul className="grid gap-5">
