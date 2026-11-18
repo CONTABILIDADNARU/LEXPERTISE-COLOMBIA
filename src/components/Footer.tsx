@@ -117,8 +117,7 @@ export function Footer() {
         <div className="mt-14 border-t border-ivory/10 pt-8 text-xs leading-relaxed text-ivory/60">
           <p className="max-w-4xl">
             La información publicada en este sitio es de carácter general y no constituye asesoría jurídica ni crea una relación
-            abogado-cliente. Cada asunto requiere el análisis de sus hechos, documentos y normas aplicables. {sitio.marca} no presta
-            servicios de derecho penal.
+            abogado-cliente. Cada asunto requiere el análisis de sus hechos, documentos y normas aplicables.
           </p>
           <p className="mt-4">
             © {new Date().getFullYear()} {sitio.marca}.{SHOW_REVIEW_MARKS && " Colores y triángulo tomados del logotipo enviado por la firma; falta el manual de marca."}

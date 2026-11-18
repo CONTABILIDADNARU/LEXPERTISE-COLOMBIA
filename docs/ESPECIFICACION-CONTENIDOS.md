@@ -21,7 +21,8 @@ detiene el build con un mensaje claro.
    Superintendencia de Industria y Comercio, Ministerio del Trabajo, DIAN, Corte Constitucional).
    Registrar las fuentes consultadas en `fuentes`. Si un punto es dudoso o está en discusión
    (por ejemplo, una demanda de inconstitucionalidad pendiente), anotarlo en `notasRevision`.
-6. **Sin derecho penal:** LEXPERTISE no presta servicios de derecho penal. No ofrecerlos ni sugerirlos.
+6. **Sin derecho penal:** LEXPERTISE no presta servicios de derecho penal. No ofrecerlos ni sugerirlos, y tampoco aclarar en el sitio
+   que no se prestan: la firma lo aclara en la reunión (indicación de la agencia, 18-nov-2026).
 7. **Cobertura:** no afirmar atención presencial en ciudades concretas. Se puede decir
    "en Colombia" de forma general.
 8. **Llamados a la acción:** informativos ("Solicitar información", "Conocer el proceso de consulta").

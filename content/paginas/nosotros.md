@@ -21,7 +21,6 @@ actualizado: "2026-11-17"
 ## Lo que no hacemos
 
 - No prometemos resultados, plazos ni decisiones de autoridades judiciales o administrativas.
-- No prestamos servicios de derecho penal.
 - No resolvemos casos concretos por redes sociales o canales públicos: esa información se revisa en un espacio privado.
 
 ## Quiénes somos

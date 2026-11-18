@@ -73,7 +73,6 @@ export default function ServiciosPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-8 text-sm text-slate">LEXPERTISE COLOMBIA S.A.S no presta servicios de derecho penal.</p>
       </Container>
       <ContactCTA titulo="¿No sabes qué área corresponde a tu asunto?" texto="Cuéntanos de forma general qué ocurre y te orientaremos sobre el área y las alternativas de atención." />
     </>

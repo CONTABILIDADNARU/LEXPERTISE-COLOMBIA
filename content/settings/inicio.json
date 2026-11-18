@@ -16,7 +16,6 @@
     "tituloNo": "Lo que no hacemos",
     "noHacemos": [
       "No prometemos resultados, plazos ni decisiones de autoridades judiciales o administrativas.",
-      "No prestamos servicios de derecho penal.",
       "No resolvemos casos concretos por redes sociales o canales públicos: esa información se revisa en un espacio privado."
     ]
   },
@@ -99,7 +98,7 @@
     "items": [
       {
         "pregunta": "¿Qué asuntos jurídicos atiende LEXPERTISE COLOMBIA S.A.S?",
-        "respuesta": "LEXPERTISE COLOMBIA S.A.S presta servicios en derecho de familia y sucesiones, derecho laboral y seguridad social, derecho civil y contratos, derecho comercial y empresarial, derecho tributario, derecho administrativo, y propiedad intelectual y registro de marcas. La firma no presta servicios de derecho penal.",
+        "respuesta": "LEXPERTISE COLOMBIA S.A.S presta servicios en derecho de familia y sucesiones, derecho laboral y seguridad social, derecho civil y contratos, derecho comercial y empresarial, derecho tributario, derecho administrativo, y propiedad intelectual y registro de marcas.",
         "pendiente": ""
       },
       {

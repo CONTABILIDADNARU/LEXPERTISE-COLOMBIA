@@ -45,7 +45,7 @@ El video solo se carga cuando la persona pulsa reproducir, así no se instalan c
 - Las situaciones de ejemplo se rotulan como **hipotéticas**.
 - Nunca publicar casos, nombres, documentos ni datos de clientes.
 - Citar normas solo de fuentes oficiales (Secretaría del Senado, Función Pública, SUIN, Corte Constitucional, SIC, DIAN).
-- No mencionar servicios de derecho penal.
+- No mencionar servicios de derecho penal, ni siquiera para aclarar que no se prestan: la firma lo aclara en la reunión (indicación de la agencia, 18-nov-2026).
 
 El sistema revisa automáticamente estas expresiones en cada compilación (`npm run check:contenido`).
 

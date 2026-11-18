@@ -41,11 +41,7 @@ La relación profesional solo inicia cuando {{marca}} y tú aceptan por escrito 
 
 Antes de cualquier contratación, {{marca}} te informará por escrito el alcance del servicio y los honorarios. No se cobra ningún servicio que no hayas aceptado previamente.
 
-## 5. Servicios que no ofrecemos
-
-{{marca}} no presta servicios de derecho penal. Si tu solicitud se refiere a un asunto penal, te lo indicaremos para que busques orientación con otro profesional.
-
-## 6. Conducta del usuario
+## 5. Conducta del usuario
 
 Al usar el sitio te comprometes a:
 
@@ -55,21 +51,21 @@ Al usar el sitio te comprometes a:
 - No usar el sitio para fines ilícitos, para enviar mensajes no solicitados ni para suplantar a otras personas.
 - No intentar acceder sin autorización a áreas restringidas, sistemas o datos del sitio, ni introducir código malicioso o afectar su funcionamiento.
 
-## 7. Propiedad intelectual
+## 6. Propiedad intelectual
 
 Los textos, videos, diseños, logotipos y demás contenidos del sitio pertenecen a {{marca}} o a terceros que autorizaron su uso, y están protegidos por las normas colombianas sobre derecho de autor y propiedad industrial.
 
 Puedes consultar el contenido y compartir enlaces a él para uso personal y no comercial. Para reproducirlo, modificarlo o usarlo con fines comerciales necesitas autorización previa y escrita de {{marca}}.
 
-## 8. Enlaces y contenido de terceros
+## 7. Enlaces y contenido de terceros
 
 El sitio puede incluir enlaces a páginas de autoridades u otros terceros, y videos incrustados de plataformas como YouTube, Instagram o TikTok, que solo se cargan cuando pulsas reproducir. {{marca}} no controla esos sitios ni sus políticas, y no responde por su contenido ni por su disponibilidad. Te recomendamos revisar sus condiciones y políticas de privacidad.
 
-## 9. Disponibilidad del sitio
+## 8. Disponibilidad del sitio
 
 {{marca}} puede actualizar, modificar o suspender el sitio o parte de su contenido. Aplicamos medidas razonables para que funcione de forma correcta y segura, pero no podemos garantizar que esté disponible sin interrupciones ni libre de errores en todo momento.
 
-## 10. Responsabilidad
+## 9. Responsabilidad
 
 En la medida en que lo permita la ley colombiana, {{marca}} no responde por:
 
@@ -79,18 +75,18 @@ En la medida en que lo permita la ley colombiana, {{marca}} no responde por:
 
 Nada de lo previsto en estos términos limita los derechos que te reconoce la ley, incluidos, cuando resulten aplicables, los previstos en la Ley 1480 de 2011 (Estatuto del Consumidor), ni excluye la responsabilidad de {{marca}} por dolo o culpa grave.
 
-## 11. Datos personales y cookies
+## 10. Datos personales y cookies
 
 El tratamiento de tus datos personales se rige por la **Política de tratamiento de datos personales** y el **Aviso de privacidad**, y el uso de cookies por la **Política de cookies**, disponibles en el pie de página.
 
-## 12. Cambios a estos términos
+## 11. Cambios a estos términos
 
 {{marca}} puede actualizar estos términos. La versión vigente estará siempre publicada en esta página con su fecha. Los cambios rigen desde su publicación y no afectan las solicitudes enviadas antes.
 
-## 13. Ley aplicable
+## 12. Ley aplicable
 
 Estos términos se rigen por las leyes de la República de Colombia. Cualquier controversia se resolverá ante las autoridades competentes según las normas aplicables.
 
-## 14. Contacto
+## 13. Contacto
 
 Si tienes preguntas sobre estos términos, escríbenos a {{correo}} o comunícate al {{telefono}}.
