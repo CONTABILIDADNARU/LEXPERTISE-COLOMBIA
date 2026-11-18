@@ -34,7 +34,8 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
             <Logo dark />
-            <p className="mt-5 max-w-xs text-sm text-ivory/70">{sitio.descripcion}</p>
+            <p className="mt-5 font-serif text-[0.8rem] uppercase tracking-[0.22em] text-ivory/80">Facta, non verba · Hechos, no palabras</p>
+            <p className="mt-3 max-w-xs text-sm text-ivory/70">{sitio.descripcion}</p>
             <div className="mt-6 space-y-1.5 text-sm text-ivory/80">
               <p>{e.razonSocial || <Pending campo="Razón social" oscuro />}</p>
               <p>{e.nit ? `NIT ${e.nit}` : <Pending campo="NIT" oscuro />}</p>

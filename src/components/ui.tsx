@@ -75,7 +75,7 @@ export function SectionHeading({
 
 type Variante = "primary" | "secondary" | "brand" | "ghost-dark" | "link";
 const VARIANTES: Record<Variante, string> = {
-  primary: "bg-ink text-ivory hover:bg-ink-700 border border-ink",
+  primary: "bg-brand-gradient text-ink-950 border border-transparent hover:brightness-95",
   secondary: "border border-ink/30 text-ink hover:border-ink hover:bg-ink/[0.04]",
   brand: "bg-brand-gradient text-ink-950 border border-transparent hover:brightness-95",
   "ghost-dark": "border border-ivory/35 text-ivory hover:border-ivory hover:bg-ivory/[0.06]",

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display, Manrope } from "next/font/google";
+import { Forum, Manrope } from "next/font/google";
 import "./globals.css";
 import { AnalyticsScripts } from "@/components/AnalyticsScripts";
 import { JsonLd, StagingBanner } from "@/components/blocks";
@@ -11,7 +11,7 @@ import { IS_PRODUCTION, SITE_URL } from "@/lib/env";
 import { legalServiceJsonLd } from "@/lib/seo";
 import { sitio } from "@/lib/settings";
 
-const serif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--font-dm-serif", display: "swap" });
+const serif = Forum({ subsets: ["latin"], weight: "400", variable: "--font-forum", display: "swap" });
 const sans = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b2b36",
+  themeColor: "#4a4c4f",
   width: "device-width",
   initialScale: 1,
 };

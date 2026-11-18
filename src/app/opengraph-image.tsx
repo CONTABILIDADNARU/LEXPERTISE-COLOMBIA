@@ -10,6 +10,8 @@ export const contentType = "image/png";
 export default async function OpengraphImage() {
   const logo = await readFile(join(process.cwd(), "public", "brand", "logo-triangulo.png"));
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
+  // Forum: la tipografía más parecida a las mayúsculas del logotipo (licencia abierta, OFL).
+  const forum = await readFile(join(process.cwd(), "src", "app", "fonts", "Forum-Regular.ttf"));
 
   return new ImageResponse(
     (
@@ -21,28 +23,29 @@ export default async function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "#0B2B36",
-          color: "#F5FAFB",
+          background: "#4A4C4F",
+          color: "#FAFCFC",
+          fontFamily: "Forum",
           backgroundImage:
-            "radial-gradient(900px 420px at 88% -10%, rgba(19,215,214,0.22), rgba(19,215,214,0) 62%), linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
-          backgroundSize: "100% 100%, 72px 72px, 72px 72px",
+            "radial-gradient(900px 420px at 88% -10%, rgba(19,215,214,0.28), rgba(19,215,214,0) 62%), radial-gradient(700px 360px at -6% 108%, rgba(15,195,254,0.16), rgba(15,195,254,0) 60%), linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "100% 100%, 100% 100%, 72px 72px, 72px 72px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={logoSrc} width={96} height={78} alt="" />
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <div style={{ display: "flex", fontSize: 38, letterSpacing: 9 }}>LEXPERTISE</div>
-            <div style={{ display: "flex", fontSize: 15, letterSpacing: 7, color: "#2BDBC9", textTransform: "uppercase" }}>Colombia S.A.S</div>
+            <div style={{ display: "flex", fontSize: 40, letterSpacing: 12 }}>LEXPERTISE</div>
+            <div style={{ display: "flex", fontSize: 17, letterSpacing: 9, color: "rgba(250,252,252,0.78)", textTransform: "uppercase" }}>Colombia S.A.S</div>
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", width: 88, height: 4, backgroundImage: "linear-gradient(90deg, #2BDBC9, #13D7D6, #0FC3FE)" }} />
-          <div style={{ fontSize: 68, lineHeight: 1.08, maxWidth: 900 }}>Cada decisión jurídica merece un análisis cuidadoso.</div>
-          <div style={{ fontSize: 28, color: "rgba(245,250,251,0.72)" }}>Servicios jurídicos para personas y empresas en Colombia</div>
+          <div style={{ fontSize: 70, lineHeight: 1.1, maxWidth: 940 }}>Cada decisión jurídica merece un análisis cuidadoso.</div>
+          <div style={{ fontSize: 28, color: "rgba(250,252,252,0.75)" }}>Servicios jurídicos para personas y empresas en Colombia</div>
         </div>
       </div>
     ),
-    size,
+    { ...size, fonts: [{ name: "Forum", data: forum, style: "normal", weight: 400 }] },
   );
 }

@@ -4,8 +4,8 @@ import { cx } from "./ui";
 
 /**
  * Logotipo de LEXPERTISE COLOMBIA S.A.S: el triángulo del logotipo oficial (imagen con fondo transparente,
- * `public/brand/logo-triangulo.png`) junto al nombre en texto. El nombre se escribe como texto, no como imagen,
- * para que se vea nítido en cualquier pantalla y lo lean los lectores de pantalla.
+ * `public/brand/logo-triangulo.png`) junto al nombre en texto, con las mayúsculas romanas finas y el gris del logotipo.
+ * El nombre se escribe como texto, no como imagen, para que se vea nítido en cualquier pantalla y lo lean los lectores de pantalla.
  */
 export function Logo({ dark, className }: { dark?: boolean; className?: string }) {
   return (
@@ -18,12 +18,9 @@ export function Logo({ dark, className }: { dark?: boolean; className?: string }
         priority
         className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
       />
-      <span className="flex flex-col">
-        <span className={cx("font-serif text-[1.3rem] tracking-[0.16em]", dark ? "text-ivory" : "text-steel")}>LEXPERTISE</span>
-        <span
-          aria-hidden
-          className={cx("mt-1.5 font-sans text-[0.6rem] font-semibold uppercase tracking-[0.42em]", dark ? "text-brand" : "text-brand-ink")}
-        >
+      <span className={cx("flex flex-col font-serif uppercase", dark ? "text-ivory" : "text-steel")}>
+        <span className="text-[1.3rem] tracking-[0.2em]">Lexpertise</span>
+        <span aria-hidden className={cx("mt-1.5 text-[0.66rem] tracking-[0.34em]", dark ? "text-ivory/75" : "text-steel/90")}>
           Colombia S.A.S
         </span>
       </span>

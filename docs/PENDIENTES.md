@@ -53,7 +53,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 
 | # | Mejora |
 |---|---|
-| B1 | Manual de marca oficial. Desde el 18-nov-2026 el sitio usa el triángulo y los colores del logotipo que envió la firma (turquesa, cian, azul cielo y gris); falta confirmar tipografías, versiones del logotipo (horizontal, vertical, fondo oscuro) y usos permitidos. |
+| B1 | Manual de marca oficial. Desde el 18-nov-2026 el sitio usa el triángulo, los colores (turquesa, cian, azul cielo y gris) y la tipografía del logotipo que envió la firma; la firma confirmó que el logotipo es la referencia. La tipografía del logotipo es una aproximación (Forum, licencia abierta): si la firma tiene el archivo de la fuente original, hay que reemplazarla. Faltan las versiones oficiales del logotipo (horizontal, vertical, fondo oscuro). |
 | B2 | Content-Security-Policy con nonce (hoy permite scripts en línea, necesarios para Next.js sin renderizado dinámico). |
 | B3 | Vista previa con estilos del sitio dentro del panel de contenidos. |
 | B4 | Imágenes de Open Graph por página y fotografías institucionales. |

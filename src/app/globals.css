@@ -1,41 +1,43 @@
 @import "tailwindcss";
 
 /*
- * Paleta corporativa de LEXPERTISE COLOMBIA S.A.S, tomada del logotipo (17-nov-2026):
- * degradado turquesa → cian → azul cielo y gris neutro en la tipografía.
- * - brand / brand-cyan / brand-blue: colores del triángulo. Se usan en acentos, líneas y botones;
- *   sobre fondo claro NO sirven para texto (contraste bajo): para eso está brand-ink.
- * - ink: petróleo oscuro derivado del mismo tono, para secciones oscuras, titulares y pie de página.
- * - steel: gris del logotipo.
+ * Paleta y tipografía de LEXPERTISE COLOMBIA S.A.S, tomadas del logotipo (la firma confirmó el 18-nov-2026
+ * que el logotipo es la referencia):
+ * - Degradado turquesa → cian → azul cielo del triángulo: acentos, líneas y botones.
+ *   Sobre fondo claro NO sirve para texto (contraste bajo): para eso está brand-ink, el mismo turquesa oscurecido.
+ * - Gris del nombre en el logotipo (steel) y sus tonos más oscuros (ink) para secciones oscuras y titulares.
+ * - Blanco y grises muy claros de fondo.
+ * - Tipografía: mayúsculas romanas finas del logotipo, aproximadas con Forum (no tenemos el archivo de la fuente original).
+ *   Se usa en titulares y en el nombre; el texto corrido va en Manrope por legibilidad.
  */
 @theme {
-  --color-ink: #0b2b36;
-  --color-ink-950: #061a21;
-  --color-ink-900: #08222b;
-  --color-ink-800: #0f3a47;
-  --color-ink-700: #17505f;
-  --color-graphite: #1c2a30;
-  --color-slate: #4f5a61;
-  --color-steel: #5a5d61;
-  --color-ivory: #f5fafb;
+  --color-ink: #4a4c4f;
+  --color-ink-950: #2f3133;
+  --color-ink-900: #3a3c3f;
+  --color-ink-800: #56595c;
+  --color-ink-700: #686b6f;
+  --color-graphite: #3d3f42;
+  --color-slate: #5a5d61;
+  --color-steel: #575757;
+  --color-ivory: #fafcfc;
   --color-paper: #ffffff;
-  --color-mist: #e4f1f3;
-  --color-line: #d0e1e5;
+  --color-mist: #eef4f5;
+  --color-line: #dce6e8;
   --color-brand: #2bdbc9;
   --color-brand-cyan: #13d7d6;
   --color-brand-blue: #0fc3fe;
-  --color-brand-soft: #bff3ee;
+  --color-brand-soft: #c9f4f0;
   /* Turquesa oscuro para texto sobre fondos claros (contraste ≥ 4.5:1 sobre blanco y sobre mist). */
   --color-brand-ink: #087077;
   --color-danger: #a12b2b;
   --color-success: #2f6b4f;
   --color-pending: #fff1b8;
 
-  --font-serif: var(--font-dm-serif), "Iowan Old Style", Georgia, serif;
+  --font-serif: var(--font-forum), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --radius-card: 0.375rem;
-  --shadow-card: 0 1px 2px rgb(11 43 54 / 0.04), 0 8px 24px -12px rgb(11 43 54 / 0.14);
+  --shadow-card: 0 1px 2px rgb(40 42 45 / 0.04), 0 8px 24px -12px rgb(40 42 45 / 0.14);
 }
 
 /* Degradado del triángulo del logotipo. */
@@ -69,8 +71,8 @@
   h3 {
     font-family: var(--font-serif);
     font-weight: 400;
-    line-height: 1.12;
-    letter-spacing: -0.01em;
+    line-height: 1.15;
+    letter-spacing: 0.005em;
     text-wrap: balance;
   }
   p {
@@ -104,8 +106,8 @@
 .bg-ledger {
   background-color: var(--color-ink);
   background-image:
-    radial-gradient(60rem 28rem at 88% -12%, rgb(19 215 214 / 0.2), transparent 62%),
-    radial-gradient(40rem 22rem at -8% 108%, rgb(15 195 254 / 0.12), transparent 60%),
+    radial-gradient(34rem 16rem at 100% -6%, rgb(19 215 214 / 0.16), transparent 70%),
+    radial-gradient(26rem 14rem at -4% 104%, rgb(15 195 254 / 0.1), transparent 70%),
     linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
   background-size: 72px 72px;
