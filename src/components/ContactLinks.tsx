@@ -8,7 +8,7 @@ import { track } from "@/lib/analytics";
 import { IS_PRODUCTION } from "@/lib/env";
 import { buttonClasses, cx } from "./ui";
 
-type Variante = "primary" | "secondary" | "bronze" | "ghost-dark";
+type Variante = "primary" | "secondary" | "brand" | "ghost-dark";
 
 /**
  * Botón de WhatsApp con mensaje según la página. Si el número oficial no está configurado,
@@ -38,7 +38,7 @@ export function WhatsAppButton({
         className={cx(buttonClasses(variante, className), "cursor-not-allowed opacity-60")}
       >
         <MessageCircle aria-hidden className="size-4" /> {label}
-        <span className="rounded-sm bg-pending px-1 text-[0.65rem] font-bold uppercase text-navy-950">Pendiente</span>
+        <span className="rounded-sm bg-pending px-1 text-[0.65rem] font-bold uppercase text-ink-950">Pendiente</span>
       </span>
     );
   }

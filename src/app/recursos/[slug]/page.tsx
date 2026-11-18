@@ -65,7 +65,7 @@ export default async function RecursoPage({ params }: Props) {
                 ]}
               />
               <Eyebrow className="mt-8">{area?.nombre ?? r.categoria}</Eyebrow>
-              <h1 className="mt-5 text-4xl leading-[1.08] text-navy sm:text-5xl">{r.titulo}</h1>
+              <h1 className="mt-5 text-4xl leading-[1.08] text-ink sm:text-5xl">{r.titulo}</h1>
               {r.preguntaPrincipal && <p className="mt-4 font-serif text-xl text-slate">«{r.preguntaPrincipal}»</p>}
               <p className="mt-5 text-lg text-slate">{r.extracto}</p>
               <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-slate">
@@ -103,7 +103,7 @@ export default async function RecursoPage({ params }: Props) {
               <Prose html={html} />
               {r.faqs.length > 0 && (
                 <div className="mt-12 max-w-[44rem]">
-                  <h2 className="mb-4 text-3xl text-navy">Preguntas frecuentes</h2>
+                  <h2 className="mb-4 text-3xl text-ink">Preguntas frecuentes</h2>
                   <FAQAccordion items={r.faqs} idPrefix={`faq-${r.slug}`} />
                 </div>
               )}
@@ -112,11 +112,11 @@ export default async function RecursoPage({ params }: Props) {
             </div>
             {relacionados.length > 0 && (
               <aside className="self-start border border-line bg-paper p-6 lg:sticky lg:top-24">
-                <p className="eyebrow text-bronze-ink">Servicios relacionados</p>
+                <p className="eyebrow text-brand-ink">Servicios relacionados</p>
                 <ul className="mt-3 divide-y divide-line">
                   {relacionados.map((s) => (
                     <li key={s.slug}>
-                      <Link href={`/${s.slug}`} className="flex items-center justify-between gap-3 py-3 text-[0.95rem] font-medium text-navy hover:underline">
+                      <Link href={`/${s.slug}`} className="flex items-center justify-between gap-3 py-3 text-[0.95rem] font-medium text-ink hover:underline">
                         {s.titulo} <ArrowRight aria-hidden className="size-4 shrink-0" />
                       </Link>
                     </li>

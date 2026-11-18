@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#142235",
+  themeColor: "#0b2b36",
   width: "device-width",
   initialScale: 1,
 };
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="flex min-h-dvh flex-col pb-16 lg:pb-0">
         <a
           href="#contenido"
-          className="sr-only z-[60] bg-navy px-4 py-3 text-ivory focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
+          className="sr-only z-[60] bg-ink px-4 py-3 text-ivory focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
         >
           Saltar al contenido
         </a>

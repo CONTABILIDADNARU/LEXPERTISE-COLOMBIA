@@ -25,11 +25,11 @@ export function Footer() {
     return s && servicioVisible(s);
   });
   const redes = Object.entries(sitio.redes).filter(([, url]) => url);
-  const titulo = "text-xs font-bold uppercase tracking-[0.16em] text-bronze";
+  const titulo = "text-xs font-bold uppercase tracking-[0.16em] text-brand";
   const enlace = "text-ivory/75 transition-colors hover:text-ivory";
 
   return (
-    <footer className="bg-navy-950 pb-24 pt-16 text-ivory lg:pb-10">
+    <footer className="bg-ink-950 pb-24 pt-16 text-ivory lg:pb-10">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
@@ -46,7 +46,6 @@ export function Footer() {
                 </p>
               )}
               {e.telefono && <p>{e.telefono}</p>}
-              {e.direccion && <p>{`${e.direccion}${e.ciudad ? `, ${e.ciudad}` : ""}`}</p>}
             </div>
             {redes.length > 0 && (
               <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm">
@@ -121,7 +120,7 @@ export function Footer() {
             servicios de derecho penal.
           </p>
           <p className="mt-4">
-            © {new Date().getFullYear()} {sitio.marca}.{!IS_PRODUCTION && " Identidad visual provisional, pendiente del manual de marca."}
+            © {new Date().getFullYear()} {sitio.marca}.{!IS_PRODUCTION && " Colores y triángulo tomados del logotipo enviado por la firma; falta el manual de marca."}
           </p>
         </div>
       </Container>

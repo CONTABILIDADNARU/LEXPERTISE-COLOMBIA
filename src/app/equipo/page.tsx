@@ -39,7 +39,7 @@ export default function EquipoPage() {
         {equipo.length === 0 ? (
           <>
             <div className="max-w-2xl">
-              <h2 className="text-3xl text-navy sm:text-4xl">Cubrimos todas las áreas de práctica de la firma.</h2>
+              <h2 className="text-3xl text-ink sm:text-4xl">Cubrimos todas las áreas de práctica de la firma.</h2>
               <p className="mt-4 text-lg text-slate">
                 {sitio.marca} cuenta con profesionales del derecho para cada una de las áreas que encuentras en este sitio, tanto para personas
                 como para empresas.
@@ -63,8 +63,8 @@ export default function EquipoPage() {
                   )}
                 </div>
                 <div className="p-6">
-                  <h2 className="text-2xl text-navy">{m.nombre}</h2>
-                  <p className="mt-1 text-sm font-semibold text-bronze-ink">{m.cargo}</p>
+                  <h2 className="text-2xl text-ink">{m.nombre}</h2>
+                  <p className="mt-1 text-sm font-semibold text-brand-ink">{m.cargo}</p>
                   {m.tarjetaProfesional && <p className="mt-1 text-xs text-slate">T.P. {m.tarjetaProfesional}</p>}
                   {m.perfil && <p className="mt-4 text-[0.95rem] text-slate">{m.perfil}</p>}
                   {m.areas.length > 0 && (

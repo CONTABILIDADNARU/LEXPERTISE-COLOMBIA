@@ -1,16 +1,31 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cx } from "./ui";
 
-/** Logotipo tipográfico provisional hasta recibir el logotipo oficial: «LEXPERTISE» con «Colombia S.A.S» debajo (razón social del RUT). */
+/**
+ * Logotipo de LEXPERTISE COLOMBIA S.A.S: el triángulo del logotipo oficial (imagen con fondo transparente,
+ * `public/brand/logo-triangulo.png`) junto al nombre en texto. El nombre se escribe como texto, no como imagen,
+ * para que se vea nítido en cualquier pantalla y lo lean los lectores de pantalla.
+ */
 export function Logo({ dark, className }: { dark?: boolean; className?: string }) {
   return (
-    <Link href="/" aria-label="LEXPERTISE COLOMBIA S.A.S, ir al inicio" className={cx("group inline-flex flex-col leading-none", className)}>
-      <span className="inline-flex items-baseline gap-2 font-serif text-[1.35rem] tracking-[0.14em]">
-        <span className={dark ? "text-ivory" : "text-navy"}>LEXPERTISE</span>
-        <span aria-hidden className="mb-[3px] inline-block size-1.5 rounded-full bg-bronze transition-transform group-hover:scale-125" />
-      </span>
-      <span aria-hidden className={cx("mt-1.5 font-sans text-[0.62rem] font-semibold uppercase tracking-[0.5em]", dark ? "text-bronze" : "text-bronze-ink")}>
-        Colombia S.A.S
+    <Link href="/" aria-label="LEXPERTISE COLOMBIA S.A.S, ir al inicio" className={cx("group inline-flex items-center gap-3 leading-none", className)}>
+      <Image
+        src="/brand/logo-triangulo.png"
+        alt=""
+        width={480}
+        height={390}
+        priority
+        className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+      />
+      <span className="flex flex-col">
+        <span className={cx("font-serif text-[1.3rem] tracking-[0.16em]", dark ? "text-ivory" : "text-steel")}>LEXPERTISE</span>
+        <span
+          aria-hidden
+          className={cx("mt-1.5 font-sans text-[0.6rem] font-semibold uppercase tracking-[0.42em]", dark ? "text-brand" : "text-brand-ink")}
+        >
+          Colombia S.A.S
+        </span>
       </span>
     </Link>
   );

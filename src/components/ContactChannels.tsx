@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, Phone } from "lucide-react";
 import { IS_PRODUCTION } from "@/lib/env";
 import { enlaceTelefono, sitio, type WhatsAppContexto } from "@/lib/settings";
 import { Pending } from "./Pending";
@@ -15,7 +15,7 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
       icon: Phone,
       label: "Teléfono",
       valor: tel ? (
-        <a href={tel} className="underline decoration-bronze underline-offset-4">
+        <a href={tel} className="underline decoration-brand underline-offset-4">
           {e.telefono}
         </a>
       ) : null,
@@ -25,13 +25,12 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
       icon: Mail,
       label: "Correo",
       valor: e.correo ? (
-        <a href={`mailto:${e.correo}`} className="underline decoration-bronze underline-offset-4">
+        <a href={`mailto:${e.correo}`} className="underline decoration-brand underline-offset-4">
           {e.correo}
         </a>
       ) : null,
       pendiente: "Correo oficial",
     },
-    { icon: MapPin, label: "Dirección", valor: e.direccion ? `${e.direccion}${e.ciudad ? `, ${e.ciudad}` : ""}` : null, pendiente: "Dirección (si hay atención presencial)" },
     { icon: Clock, label: "Horario de atención", valor: e.horario || null, pendiente: "Horario de atención" },
   ];
   return (
@@ -39,10 +38,10 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
       {filas.map(({ icon: Icon, label, valor, pendiente }) =>
         valor || !IS_PRODUCTION ? (
           <li key={label} className={cx("flex gap-4", !valor && "items-center")}>
-            <Icon aria-hidden strokeWidth={1.5} className={cx("mt-0.5 size-5 shrink-0", dark ? "text-bronze" : "text-bronze-ink")} />
+            <Icon aria-hidden strokeWidth={1.5} className={cx("mt-0.5 size-5 shrink-0", dark ? "text-brand" : "text-brand-ink")} />
             <div>
               <p className={cx("text-xs font-bold uppercase tracking-[0.12em]", dark ? "text-ivory/60" : "text-slate")}>{label}</p>
-              <p className={cx("mt-1", dark ? "text-ivory" : "text-navy")}>{valor ?? <Pending campo={pendiente} oscuro={dark} />}</p>
+              <p className={cx("mt-1", dark ? "text-ivory" : "text-ink")}>{valor ?? <Pending campo={pendiente} oscuro={dark} />}</p>
             </div>
           </li>
         ) : null,

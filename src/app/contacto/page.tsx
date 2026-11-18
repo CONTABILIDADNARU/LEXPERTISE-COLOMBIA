@@ -25,7 +25,7 @@ export default function ContactoPage() {
       <Section tono="ivory">
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
           <div>
-            <h2 className="text-3xl text-navy">Canales oficiales</h2>
+            <h2 className="text-3xl text-ink">Canales oficiales</h2>
             <p className="mt-3 text-slate">Usa solo los canales publicados en este sitio. No compartas documentos ni detalles íntimos por redes sociales.</p>
             <div className="mt-8 border-t border-line pt-8">
               <ContactChannels />

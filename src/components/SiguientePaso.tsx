@@ -54,7 +54,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
     .join(" ");
   const whatsappHref = numeroWhatsApp ? `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}` : null;
 
-  const whatsapp = (variante: "bronze" | "ghost-dark", label: string) => (
+  const whatsapp = (variante: "brand" | "ghost-dark", label: string) => (
     <WhatsAppButton href={whatsappHref} contexto="resumen" ubicacion={`gracias_${ruta}`} variante={variante} label={label} />
   );
 
@@ -64,7 +64,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
         titulo="Último paso: envía tu solicitud de cita por WhatsApp."
         texto="El mensaje ya lleva el resumen de tu encuesta. Te responderemos por WhatsApp para confirmar la fecha, la hora y el valor de la consulta."
       >
-        <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("bronze", "Enviar mi solicitud por WhatsApp")}</div>
+        <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("brand", "Enviar mi solicitud por WhatsApp")}</div>
         {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos al celular que dejaste para agendar.</p>}
         {agenda && (
           <div className="mt-8 border-t border-ivory/10 pt-6">
@@ -82,7 +82,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
         titulo="Último paso: escríbenos por WhatsApp."
         texto="El resumen de tu encuesta ya va escrito en el mensaje. Cuéntanos qué forma de pago necesitas o cuál es tu pregunta y te responderemos por ahí."
       >
-        <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("bronze", "Escribir mi pregunta por WhatsApp")}</div>
+        <div className="flex flex-col gap-3 sm:flex-row">{whatsapp("brand", "Escribir mi pregunta por WhatsApp")}</div>
         {!whatsappHref && <p className="mt-3 text-sm text-ivory/65">Mientras tanto, te contactaremos al celular que dejaste.</p>}
         {agenda && (
           <div className="mt-8 border-t border-ivory/10 pt-6">
@@ -105,7 +105,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
       texto="Te dejamos información general que puede servirte. Si podemos ayudarte con tu asunto, te contactaremos por el medio que elegiste."
     >
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Link href="/recursos" className={buttonClasses("bronze")}>
+        <Link href="/recursos" className={buttonClasses("brand")}>
           Ver recursos jurídicos <ArrowRight aria-hidden className="size-4" />
         </Link>
         {whatsapp("ghost-dark", "Tengo una pregunta puntual")}
@@ -116,7 +116,7 @@ export function SiguientePaso({ ruta, referencia, agenda, numeroWhatsApp }: Prop
 
 function Bloque({ titulo, texto, children }: { titulo: string; texto: string; children: React.ReactNode }) {
   return (
-    <section aria-labelledby="siguiente-paso" className="mt-10 border border-ivory/15 bg-navy-800/60 p-6 sm:p-8">
+    <section aria-labelledby="siguiente-paso" className="mt-10 border border-ivory/15 bg-ink-800/60 p-6 sm:p-8">
       <h2 id="siguiente-paso" className="text-2xl text-ivory sm:text-3xl">
         {titulo}
       </h2>
@@ -148,7 +148,7 @@ function Agenda({ agenda, ruta }: { agenda: AgendaReserva | null; ruta: Ruta }) 
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => track("open_calendar", { ubicacion: "gracias", ruta })}
-        className={buttonClasses("bronze")}
+        className={buttonClasses("brand")}
       >
         <CalendarDays aria-hidden className="size-4" /> Abrir la agenda <ExternalLink aria-hidden className="size-4" />
       </a>
@@ -164,7 +164,7 @@ function Agenda({ agenda, ruta }: { agenda: AgendaReserva | null; ruta: Ruta }) 
             setAbierta(true);
             track("open_calendar", { ubicacion: "gracias", ruta });
           }}
-          className={buttonClasses("bronze")}
+          className={buttonClasses("brand")}
         >
           <CalendarDays aria-hidden className="size-4" /> Ver horarios disponibles
         </button>

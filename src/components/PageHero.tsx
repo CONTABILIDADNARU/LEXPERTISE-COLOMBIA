@@ -24,7 +24,7 @@ export function PageHero({
         <div className="max-w-3xl">
           <Breadcrumbs migas={migas} dark={oscuro} />
           {eyebrow && <Eyebrow dark={oscuro} className="mt-8">{eyebrow}</Eyebrow>}
-          <h1 id="titulo-pagina" className={cx("mt-5 text-4xl leading-[1.06] sm:text-5xl lg:text-[3.5rem]", oscuro ? "text-ivory" : "text-navy")}>
+          <h1 id="titulo-pagina" className={cx("mt-5 text-4xl leading-[1.06] sm:text-5xl lg:text-[3.5rem]", oscuro ? "text-ivory" : "text-ink")}>
             {titulo}
           </h1>
           {texto && <p className={cx("mt-6 max-w-2xl text-lg", oscuro ? "text-ivory/75" : "text-slate")}>{texto}</p>}

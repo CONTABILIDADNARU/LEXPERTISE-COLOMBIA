@@ -28,7 +28,6 @@ const VARIABLES: Record<string, { valor: () => string; etiqueta: string }> = {
   marca: { valor: () => sitio.marca, etiqueta: "Marca" },
   razonSocial: { valor: () => sitio.empresa.razonSocial, etiqueta: "Razón social" },
   nit: { valor: () => sitio.empresa.nit, etiqueta: "NIT" },
-  direccion: { valor: () => sitio.empresa.direccion, etiqueta: "Dirección" },
   ciudad: { valor: () => sitio.empresa.ciudad, etiqueta: "Ciudad" },
   correo: { valor: () => sitio.empresa.correo, etiqueta: "Correo de contacto" },
   correoDatos: { valor: () => sitio.empresa.correoDatos || sitio.empresa.correo, etiqueta: "Correo para datos personales" },

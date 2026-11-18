@@ -83,7 +83,7 @@ export default function EmpresasPage() {
         texto="Acompañamiento para propietarios, socios, emprendedores y equipos que necesitan reducir errores contractuales, laborales y operativos."
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="#solicitud" className={buttonClasses("bronze")}>
+          <a href="#solicitud" className={buttonClasses("brand")}>
             Agendar consulta <ArrowRight aria-hidden className="size-4" />
           </a>
         </div>
@@ -94,15 +94,15 @@ export default function EmpresasPage() {
         <div className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {lineas.map(({ titulo, texto, Icon, paginas, pendiente }) => (
             <article key={titulo} className="flex flex-col bg-paper p-7">
-              <Icon aria-hidden strokeWidth={1.4} className="size-7 text-bronze-ink" />
-              <h3 className="mt-6 text-2xl text-navy">{titulo}</h3>
+              <Icon aria-hidden strokeWidth={1.4} className="size-7 text-brand-ink" />
+              <h3 className="mt-6 text-2xl text-ink">{titulo}</h3>
               <p className="mt-3 flex-1 text-[0.95rem] text-slate">{texto}</p>
               {pendiente && <Pending campo={pendiente} className="mt-4 self-start" />}
               {paginas.length > 0 && (
                 <ul className="mt-6 space-y-1.5">
                   {paginas.map((p) => (
                     <li key={p!.slug}>
-                      <Link href={`/${p!.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-navy hover:underline">
+                      <Link href={`/${p!.slug}`} className="inline-flex items-center gap-2 text-sm font-semibold text-ink hover:underline">
                         {p!.titulo} <ArrowRight aria-hidden className="size-3.5" />
                       </Link>
                     </li>

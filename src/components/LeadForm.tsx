@@ -335,7 +335,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
 
   return (
     <div ref={contenedor} className={cx("border border-line bg-paper p-5 text-graphite shadow-[var(--shadow-card)] sm:p-8", className)}>
-      {titulo && <h2 className="text-2xl text-navy sm:text-3xl">{titulo}</h2>}
+      {titulo && <h2 className="text-2xl text-ink sm:text-3xl">{titulo}</h2>}
       {descripcion && <p className="mt-2 text-[0.95rem] text-slate">{descripcion}</p>}
 
       <div className={cx(titulo || descripcion ? "mt-6" : "")}>
@@ -343,11 +343,11 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
           <span>
             Paso {indice + 1} de {total}
           </span>
-          <span className="text-bronze-ink">{NOMBRE_PASO[paso]}</span>
+          <span className="text-brand-ink">{NOMBRE_PASO[paso]}</span>
         </div>
         <div className="mt-2 flex gap-1" aria-hidden>
           {pasos.map((p, i) => (
-            <span key={p} className={cx("h-1 flex-1 transition-colors", i <= indice ? "bg-navy" : "bg-mist")} />
+            <span key={p} className={cx("h-1 flex-1 transition-colors", i <= indice ? "bg-ink" : "bg-mist")} />
           ))}
         </div>
       </div>
@@ -369,7 +369,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
         </div>
 
         <fieldset>
-          <legend data-titulo-paso tabIndex={-1} className="text-lg font-bold text-navy outline-none">
+          <legend data-titulo-paso tabIndex={-1} className="text-lg font-bold text-ink outline-none">
             {paso === "consulta" && (preset?.publico ? "¿Sobre qué área es tu consulta?" : "¿Sobre qué es tu consulta?")}
             {paso === "situacion" && "Cuéntanos tu situación"}
             {paso === "pago" && "La consulta"}
@@ -416,7 +416,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
             <div className="mt-5 grid gap-6">
               {preset?.area && areaActual && (
                 <p className="text-sm text-slate">
-                  Área: <strong className="text-navy">{areaActual.nombre}</strong>
+                  Área: <strong className="text-ink">{areaActual.nombre}</strong>
                 </p>
               )}
               {subcats.length > 0 && (
@@ -465,8 +465,8 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
 
           {paso === "pago" && (
             <div className="mt-5 grid gap-6">
-              <p className="border-l-2 border-bronze bg-ivory px-4 py-3 text-[0.95rem] text-graphite">
-                La consulta jurídica tiene un costo{duracionConsulta ? <> y dura <strong className="text-navy">{duracionConsulta}</strong></> : null}. Te informamos su
+              <p className="border-l-2 border-brand bg-ivory px-4 py-3 text-[0.95rem] text-graphite">
+                La consulta jurídica tiene un costo{duracionConsulta ? <> y dura <strong className="text-ink">{duracionConsulta}</strong></> : null}. Te informamos su
                 valor antes de confirmar la cita. En ella revisamos tu caso y te explicamos las alternativas, el alcance y los honorarios de cualquier
                 servicio posterior.
               </p>
@@ -521,7 +521,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
               {pideFechas && (
                 <>
                   <fieldset>
-                    <legend className="text-sm font-semibold text-navy">Fechas posibles (hora de Colombia)</legend>
+                    <legend className="text-sm font-semibold text-ink">Fechas posibles (hora de Colombia)</legend>
                     <p className="mt-1 text-sm text-slate">Indica hasta tres fechas. No son citas confirmadas: te contactaremos para acordar el horario.</p>
                     <div className="mt-3 grid gap-3 sm:grid-cols-3">
                       {[0, 1, 2].map((i) => (
@@ -657,14 +657,14 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                     onChange={(e) => set("aceptaPoliticaCancelacion", e.target.checked)}
                     aria-invalid={Boolean(err("aceptaPoliticaCancelacion"))}
                     aria-describedby={err("aceptaPoliticaCancelacion") ? id("e-cancelacion") : undefined}
-                    className="mt-1 size-4 shrink-0 accent-navy"
+                    className="mt-1 size-4 shrink-0 accent-ink"
                   />
                   <span>
                     {consent.politicaCancelacion}{" "}
                     <Link
                       href="/politica-de-cancelacion-y-reprogramacion"
                       target="_blank"
-                      className="font-semibold text-navy underline decoration-bronze underline-offset-4"
+                      className="font-semibold text-ink underline decoration-brand underline-offset-4"
                     >
                       Ver política
                     </Link>
@@ -680,11 +680,11 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                     onChange={(e) => set("consentimientoDatos", e.target.checked)}
                     aria-invalid={Boolean(err("consentimientoDatos"))}
                     aria-describedby={err("consentimientoDatos") ? id("e-consent") : undefined}
-                    className="mt-1 size-4 shrink-0 accent-navy"
+                    className="mt-1 size-4 shrink-0 accent-ink"
                   />
                   <span>
                     {consent.tratamientoDatos}{" "}
-                    <Link href="/tratamiento-de-datos" target="_blank" className="font-semibold text-navy underline decoration-bronze underline-offset-4">
+                    <Link href="/tratamiento-de-datos" target="_blank" className="font-semibold text-ink underline decoration-brand underline-offset-4">
                       Ver política
                     </Link>
                     <span className="text-danger"> (obligatorio)</span>
@@ -696,7 +696,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                     type="checkbox"
                     checked={v.consentimientoComercial}
                     onChange={(e) => set("consentimientoComercial", e.target.checked)}
-                    className="mt-1 size-4 shrink-0 accent-navy"
+                    className="mt-1 size-4 shrink-0 accent-ink"
                   />
                   <span>
                     {consent.comunicacionesComerciales} <span className="text-slate">(opcional)</span>
@@ -722,7 +722,7 @@ export function LeadForm({ tipo, areas, preset, consent, comoNosConocio, whatsap
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => track("click_whatsapp", { ubicacion: "error_formulario", contexto: tipo })}
-                  className="mt-2 inline-flex items-center gap-1.5 font-semibold text-navy underline underline-offset-4"
+                  className="mt-2 inline-flex items-center gap-1.5 font-semibold text-ink underline underline-offset-4"
                 >
                   <MessageCircle aria-hidden className="size-4" /> También puedes escribirnos por WhatsApp
                 </a>
@@ -770,8 +770,8 @@ function uuid(): string {
 
 function inputCls(error?: string) {
   return cx(
-    "mt-1.5 block h-12 w-full rounded-[3px] border bg-paper px-3.5 text-base text-graphite transition-colors placeholder:text-slate/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-bronze focus-visible:ring-offset-1",
-    error ? "border-danger" : "border-line hover:border-navy/40 focus:border-navy",
+    "mt-1.5 block h-12 w-full rounded-[3px] border bg-paper px-3.5 text-base text-graphite transition-colors placeholder:text-slate/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1",
+    error ? "border-danger" : "border-line hover:border-ink/40 focus:border-ink",
   );
 }
 
@@ -787,7 +787,7 @@ function MensajeError({ id, children }: { id: string; children: ReactNode }) {
 function Campo({ label, htmlFor, error, errorId, ayuda, children }: { label: string; htmlFor: string; error?: string; errorId?: string; ayuda?: string; children: ReactNode }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="text-sm font-semibold text-navy">
+      <label htmlFor={htmlFor} className="text-sm font-semibold text-ink">
         {label}
       </label>
       {ayuda && <p className="text-xs text-slate">{ayuda}</p>}
@@ -834,8 +834,8 @@ function Opciones({
               className={cx(
                 "relative flex cursor-pointer items-start gap-3 rounded-[3px] border transition-colors",
                 compacto ? "min-h-12 items-center justify-center px-3 py-2 text-center text-sm" : denso ? "px-3.5 py-3 text-[0.95rem]" : "p-4",
-                sel ? "border-navy bg-navy/[0.04] ring-1 ring-navy" : "border-line hover:border-navy/40",
-                "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-bronze",
+                sel ? "border-ink bg-ink/[0.04] ring-1 ring-ink" : "border-line hover:border-ink/40",
+                "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand",
               )}
             >
               <input
@@ -845,10 +845,10 @@ function Opciones({
                 checked={sel}
                 data-campo={i === 0 ? nombre : undefined}
                 onChange={() => onChange(o.valor)}
-                className={cx(compacto ? "sr-only" : "mt-1 size-4 shrink-0 accent-navy")}
+                className={cx(compacto ? "sr-only" : "mt-1 size-4 shrink-0 accent-ink")}
               />
               <span>
-                <span className={cx("block font-semibold", sel ? "text-navy" : "text-graphite")}>{o.etiqueta}</span>
+                <span className={cx("block font-semibold", sel ? "text-ink" : "text-graphite")}>{o.etiqueta}</span>
                 {o.detalle && <span className="mt-0.5 block text-sm text-slate">{o.detalle}</span>}
               </span>
             </label>
@@ -861,7 +861,7 @@ function Opciones({
   if (!legend) return contenido;
   return (
     <fieldset>
-      <legend className="text-sm font-semibold text-navy">{legend}</legend>
+      <legend className="text-sm font-semibold text-ink">{legend}</legend>
       {ayuda && <p className="text-xs text-slate">{ayuda}</p>}
       {contenido}
     </fieldset>

@@ -90,7 +90,6 @@ const sitio = json("settings/sitio.json");
 const e = sitio.empresa;
 const obligatorios = { razonSocial: "Razón social", nit: "NIT", correo: "Correo oficial", correoDatos: "Correo para datos personales", telefono: "Teléfono oficial" };
 for (const [k, label] of Object.entries(obligatorios)) if (!e[k]) add("BLOQUEANTE", `settings/sitio.json: falta ${label}.`);
-if (!e.direccion) add("IMPORTANTE", "settings/sitio.json: falta dirección (necesaria para la política de datos y para indicar si hay atención presencial).");
 if (!e.horario) add("IMPORTANTE", "settings/sitio.json: falta horario de atención.");
 if (!sitio.verificado) add("IMPORTANTE", "settings/sitio.json: datos no marcados como verificados (no se emite marcado LegalService).");
 if (!sitio.consulta.confirmada || !sitio.consulta.duracion) add("INFORMATIVO", "settings/sitio.json: duración de la consulta sin confirmar (no se publica).");

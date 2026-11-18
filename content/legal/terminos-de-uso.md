@@ -93,6 +93,6 @@ Estos términos se rigen por las leyes de la República de Colombia. Cualquier c
 
 ## 14. Contacto
 
-Si tienes preguntas sobre estos términos, escríbenos a {{correo}} o comunícate al {{telefono}}. Dirección: {{direccion}}, {{ciudad}}.
+Si tienes preguntas sobre estos términos, escríbenos a {{correo}} o comunícate al {{telefono}}.
 
 Vigentes desde {{fechaVigencia}}.

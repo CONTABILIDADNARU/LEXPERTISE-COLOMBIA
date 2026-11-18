@@ -6,7 +6,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 
 | # | Pendiente | Dónde se completa |
 |---|---|---|
-| C1 | **Razón social:** LEXPERTISE COLOMBIA S.A.S. **NIT:** 901.800.715-9 (RUT; dígito de verificación válido). **Dirección:** Calle 8 A No. 7-30, Bogotá (confirmada por la firma el 17-nov). **Pendiente de la firma:** el PDF de la política de datos dice NIT 900.801.715-9 y pone 79-30 en su sección 2.5. Corregir el PDF. | Configuración → Datos de la firma |
+| C1 | **Razón social:** LEXPERTISE COLOMBIA S.A.S. **NIT:** 901.800.715-9 (RUT; dígito de verificación válido). **Domicilio:** Bogotá. **Dirección física:** el 18-nov-2026 la agencia pidió que no aparezca en ningún lugar del sitio (se retiró del contacto, el pie, los datos estructurados y las políticas; el campo ya no existe en el panel). Para volver a mostrarla: revertir el commit de ese día. **Pendiente de la firma:** el PDF de la política de datos dice NIT 900.801.715-9 y trae dos números distintos de dirección. Corregir el PDF; revisión jurídica debe confirmar si la política puede omitir la dirección del responsable (Decreto 1377 de 2013, art. 13). | Configuración → Datos de la firma |
 | C2 | Correo general **lexpertisesas@gmail.com** (cancelaciones) y correo de datos personales **lexpertisea@gmail.com** (política de datos): confirmar que ambos son de la firma. Teléfono **+57 301 6515265**. | Configuración → Datos de la firma |
 | C3 | ~~Número oficial de WhatsApp~~: **+57 301 6515265**, configurado el 17-nov. | Hecho |
 | C4 | **Aprobación jurídica** de las 12 páginas de servicio (cada una con sus `notasRevision`) y de «La firma». | Áreas y servicios / Páginas institucionales |
@@ -21,7 +21,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 |---|---|
 | A1 | **CRM:** identificar el CRM real de LEXPERTISE, su API/webhook, etapas, asignación y manejo de duplicados. Configurar `CRM_WEBHOOK_URL/SECRET`. El CRM conectado a esta cuenta no se usó porque no se pudo verificar que sea de la firma. |
 | A2 | **Sitio anterior (Odoo):** no se encontró el dominio ni páginas indexadas. Si existe, exportar URLs de Search Console y cargar redirecciones 301 antes de cambiar el DNS. |
-| A3 | Modalidades de atención (virtual, presencial, telefónica), ciudades con atención presencial y dirección. |
+| A3 | Modalidades de atención (virtual, presencial, telefónica) y ciudades con atención presencial. La dirección no se publica. |
 | A4 | Tiempo de respuesta comprometido a las solicitudes. |
 | A5 | Consulta: **90 minutos**; el valor **no se publica** (decisión de la firma, 17-nov) y se informa por WhatsApp. Política de cancelación y reprogramación **con el texto de la firma** (17-nov), con casilla obligatoria. Falta su fecha de vigencia y qué pasa con cancelaciones o reprogramaciones fuera de plazo. Faltan los medios de pago. |
 | A6 | Perfiles verificados del equipo con fotografías reales. Mientras tanto, por pedido de la firma, /equipo dice de forma general que se cubren todas las áreas. |
@@ -53,7 +53,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 
 | # | Mejora |
 |---|---|
-| B1 | Manual de marca, logotipo y paleta oficial (hoy la identidad es provisional). |
+| B1 | Manual de marca oficial. Desde el 18-nov-2026 el sitio usa el triángulo y los colores del logotipo que envió la firma (turquesa, cian, azul cielo y gris); falta confirmar tipografías, versiones del logotipo (horizontal, vertical, fondo oscuro) y usos permitidos. |
 | B2 | Content-Security-Policy con nonce (hoy permite scripts en línea, necesarios para Next.js sin renderizado dinámico). |
 | B3 | Vista previa con estilos del sitio dentro del panel de contenidos. |
 | B4 | Imágenes de Open Graph por página y fotografías institucionales. |

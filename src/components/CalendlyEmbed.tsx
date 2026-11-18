@@ -27,8 +27,8 @@ export function CalendlyEmbed({ url }: { url: string }) {
   if (!activo) {
     return (
       <div className="border border-line bg-paper p-8">
-        <CalendarDays aria-hidden strokeWidth={1.4} className="size-8 text-bronze-ink" />
-        <h2 className="mt-5 text-2xl text-navy">Consulta los horarios disponibles</h2>
+        <CalendarDays aria-hidden strokeWidth={1.4} className="size-8 text-brand-ink" />
+        <h2 className="mt-5 text-2xl text-ink">Consulta los horarios disponibles</h2>
         <p className="mt-2 text-slate">La agenda la presta Calendly, un servicio externo que usa sus propias cookies.</p>
         <button type="button" onClick={() => setActivo(true)} className={`${buttonClasses("primary")} mt-6`}>
           Ver horarios disponibles

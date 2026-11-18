@@ -173,7 +173,7 @@ collections:
       - *seo
       - *notas
       - *revision
-      - { label: Contenido, name: body, widget: markdown, hint: "Variables disponibles: {{marca}} {{razonSocial}} {{nit}} {{direccion}} {{ciudad}} {{correo}} {{correoDatos}} {{telefono}} {{sitioUrl}} {{fechaVigencia}}" }
+      - { label: Contenido, name: body, widget: markdown, hint: "Variables disponibles: {{marca}} {{razonSocial}} {{nit}} {{ciudad}} {{correo}} {{correoDatos}} {{telefono}} {{sitioUrl}} {{fechaVigencia}}" }
 
   - name: configuracion
     label: Configuración del sitio
@@ -192,7 +192,6 @@ collections:
             fields:
               - { label: Razón social, name: razonSocial, widget: string, required: false }
               - { label: NIT, name: nit, widget: string, required: false }
-              - { label: Dirección, name: direccion, widget: string, required: false }
               - { label: Ciudad, name: ciudad, widget: string, required: false }
               - { label: Correo de contacto, name: correo, widget: string, required: false }
               - { label: Correo para datos personales, name: correoDatos, widget: string, required: false }

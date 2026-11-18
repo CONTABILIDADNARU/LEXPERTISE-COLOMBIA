@@ -107,7 +107,7 @@ export default async function ServicioPage({ params }: Props) {
               <Breadcrumbs migas={migasDe(s)} dark />
             </div>
             <div className={cx("mt-8 items-center gap-4", esLanding ? "hidden sm:flex" : "flex")}>
-              <span className="inline-flex size-12 items-center justify-center border border-bronze/60 text-bronze">
+              <span className="inline-flex size-12 items-center justify-center border border-brand/60 text-brand">
                 <AreaIcon slug={s.slug} area={s.area} className="size-6" />
               </span>
               <Eyebrow dark>{area?.nombre ?? "Servicios jurídicos"}</Eyebrow>
@@ -124,7 +124,7 @@ export default async function ServicioPage({ params }: Props) {
               </div>
             ) : (
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a href="#solicitud" className={buttonClasses("bronze")}>
+                <a href="#solicitud" className={buttonClasses("brand")}>
                   Agendar consulta <ArrowRight aria-hidden className="size-4" />
                 </a>
               </div>
@@ -154,7 +154,7 @@ export default async function ServicioPage({ params }: Props) {
           </div>
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="border border-line bg-paper p-6">
-              <p className="eyebrow text-bronze-ink">¿Necesitas revisar tu caso?</p>
+              <p className="eyebrow text-brand-ink">¿Necesitas revisar tu caso?</p>
               <p className="mt-3 text-[0.95rem] text-slate">Cuéntanos el asunto de forma general y te informamos las alternativas de atención.</p>
               <div className="mt-5 grid gap-2">
                 <a href="#solicitud" className={buttonClasses("primary", "min-h-11 text-sm")}>
@@ -164,11 +164,11 @@ export default async function ServicioPage({ params }: Props) {
             </div>
             {relacionados.length > 0 && (
               <nav aria-label="Temas relacionados" className="mt-6 border border-line bg-paper p-6">
-                <p className="eyebrow text-bronze-ink">Relacionado</p>
+                <p className="eyebrow text-brand-ink">Relacionado</p>
                 <ul className="mt-3 divide-y divide-line">
                   {relacionados.map((r) => (
                     <li key={r.slug}>
-                      <Link href={`/${r.slug}`} className="flex items-center justify-between gap-3 py-3 text-[0.95rem] font-medium text-navy hover:underline">
+                      <Link href={`/${r.slug}`} className="flex items-center justify-between gap-3 py-3 text-[0.95rem] font-medium text-ink hover:underline">
                         {r.titulo} <ArrowRight aria-hidden className="size-4 shrink-0" />
                       </Link>
                     </li>
@@ -183,7 +183,7 @@ export default async function ServicioPage({ params }: Props) {
       {/* Subpáginas del área */}
       {hijos.length > 0 && (
         <Section tono="paper">
-          <h2 className="text-3xl text-navy sm:text-4xl">Servicios dentro de esta área</h2>
+          <h2 className="text-3xl text-ink sm:text-4xl">Servicios dentro de esta área</h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {hijos.map((h) => (
               <ServiceCard key={h.slug} servicio={h} />
@@ -196,7 +196,7 @@ export default async function ServicioPage({ params }: Props) {
       {s.pasos.length > 0 && (
         <Section tono={hijos.length ? "ivory" : "paper"} labelledBy="pasos-titulo">
           <Eyebrow>Cómo se aborda</Eyebrow>
-          <h2 id="pasos-titulo" className="mt-4 text-3xl text-navy sm:text-4xl">
+          <h2 id="pasos-titulo" className="mt-4 text-3xl text-ink sm:text-4xl">
             {esLanding || s.tipo === "servicio" ? "Procedimiento general" : "Cómo trabajamos en esta área"}
           </h2>
           <div className="mt-10">
@@ -218,7 +218,7 @@ export default async function ServicioPage({ params }: Props) {
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
               <Eyebrow>Preguntas frecuentes</Eyebrow>
-              <h2 id="faq-servicio" className="mt-4 text-3xl text-navy sm:text-4xl">
+              <h2 id="faq-servicio" className="mt-4 text-3xl text-ink sm:text-4xl">
                 Dudas habituales sobre {s.titulo.toLowerCase()}
               </h2>
               <LegalDisclaimer className="mt-8" />
@@ -239,7 +239,7 @@ export default async function ServicioPage({ params }: Props) {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a href="#solicitud" className={buttonClasses("bronze")}>
+              <a href="#solicitud" className={buttonClasses("brand")}>
                 <FileText aria-hidden className="size-4" /> Agendar consulta
               </a>
             </div>

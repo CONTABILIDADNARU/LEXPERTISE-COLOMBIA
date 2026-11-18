@@ -65,9 +65,7 @@ export function legalServiceJsonLd() {
     ...(e.telefono ? { telephone: e.telefono } : {}),
     ...(e.correo ? { email: e.correo } : {}),
     ...(e.nit ? { taxID: e.nit } : {}),
-    ...(e.direccion
-      ? { address: { "@type": "PostalAddress", streetAddress: e.direccion, addressLocality: e.ciudad, addressCountry: "CO" } }
-      : {}),
+    ...(e.ciudad ? { address: { "@type": "PostalAddress", addressLocality: e.ciudad, addressCountry: "CO" } } : {}),
     areaServed: { "@type": "Country", name: "Colombia" },
     ...(redes.length ? { sameAs: redes } : {}),
   };

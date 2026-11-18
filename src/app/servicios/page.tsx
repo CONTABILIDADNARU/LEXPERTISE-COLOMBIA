@@ -40,11 +40,11 @@ export default function ServiciosPage() {
           {grupos.map(({ area, principal, servicios }) => (
             <li key={area.key} className="grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-12">
               <div className="flex gap-5">
-                <span className="inline-flex size-12 shrink-0 items-center justify-center border border-bronze/60 text-navy">
+                <span className="inline-flex size-12 shrink-0 items-center justify-center border border-brand/60 text-ink">
                   <AreaIcon area={area.key} className="size-6" />
                 </span>
                 <div>
-                  <h2 className="text-2xl text-navy sm:text-3xl">
+                  <h2 className="text-2xl text-ink sm:text-3xl">
                     <Link href={`/${principal!.slug}`} className="hover:underline">
                       {area.nombre}
                     </Link>
@@ -52,19 +52,19 @@ export default function ServiciosPage() {
                   <p className="mt-2 text-[0.95rem] text-slate">{principal!.resumen}</p>
                   <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate">
                     {area.publicos.map((p) => (p === "persona" ? "Personas" : "Empresas")).join(" · ")}
-                    {!IS_PRODUCTION && principal!.estado !== "activo" && <span className="ml-2 bg-pending px-1 text-navy-950">Por confirmar</span>}
+                    {!IS_PRODUCTION && principal!.estado !== "activo" && <span className="ml-2 bg-pending px-1 text-ink-950">Por confirmar</span>}
                   </p>
                 </div>
               </div>
               <ul className="grid content-start gap-1">
                 <li>
-                  <Link href={`/${principal!.slug}`} className="group flex items-center justify-between gap-4 py-2 font-semibold text-navy">
+                  <Link href={`/${principal!.slug}`} className="group flex items-center justify-between gap-4 py-2 font-semibold text-ink">
                     Información del área <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </li>
                 {servicios.map((s) => (
                   <li key={s.slug}>
-                    <Link href={`/${s.slug}`} className="group flex items-center justify-between gap-4 border-t border-line/70 py-2 text-navy">
+                    <Link href={`/${s.slug}`} className="group flex items-center justify-between gap-4 border-t border-line/70 py-2 text-ink">
                       {s.titulo} <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </li>

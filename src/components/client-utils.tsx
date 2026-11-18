@@ -54,7 +54,7 @@ export function VideoEmbed({ plataforma, url, titulo }: { plataforma: string; ur
   if (!embed) return null;
   const ratio = embed.vertical ? "aspect-[9/16] max-w-sm" : "aspect-video";
   return (
-    <figure className={`relative w-full overflow-hidden bg-navy ${ratio}`}>
+    <figure className={`relative w-full overflow-hidden bg-ink ${ratio}`}>
       {activo ? (
         <iframe
           src={embed.src}
@@ -70,7 +70,7 @@ export function VideoEmbed({ plataforma, url, titulo }: { plataforma: string; ur
           onClick={() => setActivo(true)}
           className="bg-ledger absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center text-ivory"
         >
-          <span className="inline-flex size-16 items-center justify-center rounded-full border border-bronze text-bronze">
+          <span className="inline-flex size-16 items-center justify-center rounded-full border border-brand text-brand">
             <Play aria-hidden className="ml-1 size-7" />
           </span>
           <span className="font-serif text-xl">{titulo}</span>

@@ -32,7 +32,7 @@ export default function PersonasPage() {
         texto="Información y servicios en asuntos familiares, laborales, civiles y sucesorales. Antes de recomendar una alternativa, revisamos los hechos, los documentos y las fechas de tu caso."
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="#solicitud" className={buttonClasses("bronze")}>
+          <a href="#solicitud" className={buttonClasses("brand")}>
             Agendar consulta <ArrowRight aria-hidden className="size-4" />
           </a>
         </div>

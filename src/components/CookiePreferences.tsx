@@ -67,14 +67,14 @@ export function CookiePreferences() {
       aria-labelledby={titulo}
       className="fixed inset-x-3 bottom-[4.75rem] z-50 mx-auto max-h-[70dvh] max-w-xl overflow-y-auto rounded-[var(--radius-card)] border border-line bg-paper p-4 sm:p-5 text-graphite shadow-[0_20px_50px_-20px_rgb(12_22_36/0.45)] sm:inset-x-6 lg:bottom-6 lg:left-6 lg:right-auto"
     >
-      <h2 id={titulo} className="font-sans text-base font-bold text-navy">
+      <h2 id={titulo} className="font-sans text-base font-bold text-ink">
         Preferencias de cookies
       </h2>
       {!panel ? (
         <p className="mt-2 text-sm text-slate">
           Usamos cookies necesarias. Si lo autorizas, guardaremos el origen de tu visita y usaremos herramientas de Google y Meta,
           que pueden tratar datos para fines propios y fuera de Colombia. Puedes cambiarlo cuando quieras. Ver{" "}
-          <Link href="/politica-de-cookies" className="underline decoration-bronze underline-offset-4">
+          <Link href="/politica-de-cookies" className="underline decoration-brand underline-offset-4">
             política de cookies
           </Link>
           .
@@ -83,28 +83,28 @@ export function CookiePreferences() {
         <fieldset className="mt-3 space-y-3 text-sm">
           <legend className="sr-only">Categorías de cookies</legend>
           <label className="flex items-start gap-3">
-            <input type="checkbox" checked disabled className="mt-1 size-4 accent-navy" />
+            <input type="checkbox" checked disabled className="mt-1 size-4 accent-ink" />
             <span>
-              <strong className="text-navy">Necesarias.</strong> Guardan tus preferencias y protegen los formularios. Siempre activas.
+              <strong className="text-ink">Necesarias.</strong> Guardan tus preferencias y protegen los formularios. Siempre activas.
             </span>
           </label>
           <label className="flex items-start gap-3">
-            <input type="checkbox" checked={funcional} onChange={(e) => setFuncional(e.target.checked)} className="mt-1 size-4 accent-navy" />
+            <input type="checkbox" checked={funcional} onChange={(e) => setFuncional(e.target.checked)} className="mt-1 size-4 accent-ink" />
             <span>
-              <strong className="text-navy">Funcionales.</strong> Recordar el origen de tu visita (campaña o sitio de referencia) para
+              <strong className="text-ink">Funcionales.</strong> Recordar el origen de tu visita (campaña o sitio de referencia) para
               asociarlo a una solicitud que envíes.
             </span>
           </label>
           <label className="flex items-start gap-3">
-            <input type="checkbox" checked={analitica} onChange={(e) => setAnalitica(e.target.checked)} className="mt-1 size-4 accent-navy" />
+            <input type="checkbox" checked={analitica} onChange={(e) => setAnalitica(e.target.checked)} className="mt-1 size-4 accent-ink" />
             <span>
-              <strong className="text-navy">Analítica.</strong> Google Analytics: visitas y uso del sitio, de forma agregada.
+              <strong className="text-ink">Analítica.</strong> Google Analytics: visitas y uso del sitio, de forma agregada.
             </span>
           </label>
           <label className="flex items-start gap-3">
-            <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1 size-4 accent-navy" />
+            <input type="checkbox" checked={marketing} onChange={(e) => setMarketing(e.target.checked)} className="mt-1 size-4 accent-ink" />
             <span>
-              <strong className="text-navy">Publicidad.</strong> Píxel de Meta: medir campañas en Facebook e Instagram.
+              <strong className="text-ink">Publicidad.</strong> Píxel de Meta: medir campañas en Facebook e Instagram.
             </span>
           </label>
         </fieldset>

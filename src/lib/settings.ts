@@ -13,7 +13,6 @@ const SitioSchema = z.object({
   empresa: z.object({
     razonSocial: str,
     nit: str,
-    direccion: str,
     ciudad: str,
     correo: str,
     correoDatos: str,

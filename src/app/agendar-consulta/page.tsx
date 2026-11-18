@@ -34,40 +34,40 @@ export default function AgendarPage() {
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16">
           <aside className="space-y-8">
             <div>
-              <h2 className="text-3xl text-navy">Antes de solicitar</h2>
+              <h2 className="text-3xl text-ink">Antes de solicitar</h2>
               <ul className="mt-6 space-y-5 text-[0.95rem]">
                 <li className="flex gap-3">
-                  <CalendarDays aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                  <CalendarDays aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-brand-ink" />
                   {agenda ? (
                     <span>
-                      <strong className="text-navy">Primero, unas preguntas breves.</strong> Nos permiten preparar tu consulta. Al terminar, según tu caso, eliges la
+                      <strong className="text-ink">Primero, unas preguntas breves.</strong> Nos permiten preparar tu consulta. Al terminar, según tu caso, eliges la
                       fecha y la hora en la agenda o nos escribes tu pregunta.
                     </span>
                   ) : (
                     <span>
-                      <strong className="text-navy">Es una solicitud, no una cita confirmada.</strong> La fecha y la hora se acuerdan contigo después de revisar la
+                      <strong className="text-ink">Es una solicitud, no una cita confirmada.</strong> La fecha y la hora se acuerdan contigo después de revisar la
                       disponibilidad.
                     </span>
                   )}
                 </li>
                 <li className="flex gap-3">
-                  <Clock aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                  <Clock aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-brand-ink" />
                   <span>
-                    <strong className="text-navy">Duración y valor.</strong> {duracion ? `La consulta dura ${duracion}. ` : ""}Su valor se informa antes de
+                    <strong className="text-ink">Duración y valor.</strong> {duracion ? `La consulta dura ${duracion}. ` : ""}Su valor se informa antes de
                     confirmar la cita. {consulta.condiciones}
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <ShieldCheck aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                  <ShieldCheck aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-brand-ink" />
                   <span>
-                    <strong className="text-navy">Sin documentos en esta etapa.</strong> Si son necesarios, te indicaremos cómo enviarlos por un canal adecuado.
+                    <strong className="text-ink">Sin documentos en esta etapa.</strong> Si son necesarios, te indicaremos cómo enviarlos por un canal adecuado.
                   </span>
                 </li>
                 <li className="flex gap-3">
-                  <CircleHelp aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                  <CircleHelp aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-brand-ink" />
                   <div>
-                    <strong className="text-navy">Cancelación y reprogramación.</strong> Al enviar tu solicitud aceptas nuestra política:
-                    <ul className="mt-2 list-disc space-y-1.5 pl-5 text-slate marker:text-bronze">
+                    <strong className="text-ink">Cancelación y reprogramación.</strong> Al enviar tu solicitud aceptas nuestra política:
+                    <ul className="mt-2 list-disc space-y-1.5 pl-5 text-slate marker:text-brand-ink">
                       <li>La fecha y la hora quedan en firme cuando se verifica el pago total de la consulta.</li>
                       <li>Reprogramación sin costo, una vez, si avisas con más de 24 horas hábiles de antelación; la nueva fecha será dentro de los 30 días siguientes. Máximo dos reprogramaciones.</li>
                       <li>Cancelación con más de 48 horas hábiles de antelación: reembolso del 90 % del valor pagado (se retiene un 10 % por gastos administrativos, pasarelas de pago y gestión de agenda).</li>
@@ -76,7 +76,7 @@ export default function AgendarPage() {
                     </ul>
                     <Link
                       href="/politica-de-cancelacion-y-reprogramacion"
-                      className="mt-2 inline-block font-semibold text-navy underline decoration-bronze underline-offset-4"
+                      className="mt-2 inline-block font-semibold text-ink underline decoration-brand underline-offset-4"
                     >
                       Ver la política completa
                     </Link>
@@ -84,9 +84,9 @@ export default function AgendarPage() {
                 </li>
                 {sitio.empresa.horario && (
                   <li className="flex gap-3">
-                    <MessageCircle aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-bronze-ink" />
+                    <MessageCircle aria-hidden strokeWidth={1.5} className="mt-0.5 size-5 shrink-0 text-brand-ink" />
                     <span>
-                      <strong className="text-navy">Horario de recepción.</strong> {sitio.empresa.horario.replace(/\.$/, "")}. Las solicitudes enviadas fuera de este horario se
+                      <strong className="text-ink">Horario de recepción.</strong> {sitio.empresa.horario.replace(/\.$/, "")}. Las solicitudes enviadas fuera de este horario se
                       entienden recibidas a primera hora del día hábil siguiente.
                     </span>
                   </li>

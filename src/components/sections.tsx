@@ -87,7 +87,7 @@ export function ContactCTA({
           <ol className="mt-8 max-w-md space-y-3 text-[0.95rem] text-ivory/80">
             {pasosAgenda().map((p, i) => (
               <li key={p} className="flex gap-3">
-                <span className="font-serif text-bronze">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-serif text-brand">{String(i + 1).padStart(2, "0")}</span>
                 {p}
               </li>
             ))}

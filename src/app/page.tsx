@@ -37,7 +37,7 @@ export default function InicioPage() {
             </h1>
             <p className="mt-6 max-w-xl text-lg text-ivory/75 sm:text-xl">{inicio.hero.subtitulo}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/agendar-consulta" variante="bronze" flecha>
+              <ButtonLink href="/agendar-consulta" variante="brand" flecha>
                 {inicio.hero.ctaPrimario}
               </ButtonLink>
               <ButtonLink href="/servicios" variante="ghost-dark">
@@ -48,19 +48,19 @@ export default function InicioPage() {
 
           {/* «Lo que puedes esperar / Lo que no hacemos» (pedido de la firma: visible al inicio de la página). */}
           <div className="animate-rise-delay relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
-            <div aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rotate-[2.5deg] border border-ivory/10 bg-navy-800" />
-            <div aria-hidden className="absolute inset-0 translate-x-2 translate-y-2 rotate-[1deg] border border-ivory/10 bg-navy-700/70" />
+            <div aria-hidden className="absolute inset-0 translate-x-4 translate-y-4 rotate-[2.5deg] border border-ivory/10 bg-ink-800" />
+            <div aria-hidden className="absolute inset-0 translate-x-2 translate-y-2 rotate-[1deg] border border-ivory/10 bg-ink-700/70" />
             <div className="relative bg-ivory p-7 text-graphite shadow-[0_30px_60px_-30px_rgb(0_0_0/0.6)] sm:p-8">
-              <h2 className="eyebrow text-bronze-ink">{inicio.compromisos.titulo}</h2>
+              <h2 className="eyebrow text-brand-ink">{inicio.compromisos.titulo}</h2>
               <ul className="mt-4 space-y-3">
                 {inicio.compromisos.esperar.map((t) => (
-                  <li key={t} className="flex gap-3 text-[0.95rem] text-navy">
-                    <Check aria-hidden strokeWidth={2} className="mt-1 size-4 shrink-0 text-bronze-ink" />
+                  <li key={t} className="flex gap-3 text-[0.95rem] text-ink">
+                    <Check aria-hidden strokeWidth={2} className="mt-1 size-4 shrink-0 text-brand-ink" />
                     {t}
                   </li>
                 ))}
               </ul>
-              <h2 className="eyebrow mt-6 border-t border-line pt-5 text-bronze-ink">{inicio.compromisos.tituloNo}</h2>
+              <h2 className="eyebrow mt-6 border-t border-line pt-5 text-brand-ink">{inicio.compromisos.tituloNo}</h2>
               <ul className="mt-4 space-y-3">
                 {inicio.compromisos.noHacemos.map((t) => (
                   <li key={t} className="flex gap-3 text-[0.95rem] text-slate">
@@ -85,14 +85,14 @@ export default function InicioPage() {
             <Link
               key={href}
               href={href}
-              className="group flex flex-col justify-between border border-line bg-ivory p-8 transition-colors hover:border-navy sm:p-10"
+              className="group flex flex-col justify-between border border-line bg-ivory p-8 transition-colors hover:border-ink sm:p-10"
             >
               <div>
-                <Icon aria-hidden strokeWidth={1.3} className="size-9 text-bronze-ink" />
-                <h3 className="mt-8 text-3xl text-navy sm:text-4xl">{titulo}</h3>
+                <Icon aria-hidden strokeWidth={1.3} className="size-9 text-brand-ink" />
+                <h3 className="mt-8 text-3xl text-ink sm:text-4xl">{titulo}</h3>
                 <p className="mt-4 max-w-md text-slate">{texto}</p>
               </div>
-              <span className="mt-10 inline-flex items-center gap-2 font-semibold text-navy">
+              <span className="mt-10 inline-flex items-center gap-2 font-semibold text-ink">
                 {cta} <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-1" />
               </span>
             </Link>
@@ -114,9 +114,9 @@ export default function InicioPage() {
           ))}
           <Link
             href="/agendar-consulta"
-            className="group flex flex-col justify-between bg-navy p-6 text-ivory transition-colors hover:bg-navy-700 sm:p-7"
+            className="group flex flex-col justify-between bg-ink p-6 text-ivory transition-colors hover:bg-ink-700 sm:p-7"
           >
-            <CircleHelp aria-hidden strokeWidth={1.3} className="size-8 text-bronze" />
+            <CircleHelp aria-hidden strokeWidth={1.3} className="size-8 text-brand" />
             <div className="mt-8">
               <h3 className="text-2xl">¿No sabes qué área corresponde?</h3>
               <p className="mt-3 text-[0.95rem] text-ivory/70">Cuéntanos el asunto de forma general y te orientamos.</p>
@@ -145,10 +145,10 @@ export default function InicioPage() {
               <li key={d.href}>
                 <Link href={d.href} className="group grid gap-2 py-6 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8">
                   <div>
-                    <h3 className="text-2xl text-navy transition-colors group-hover:text-navy-700">{d.titulo}</h3>
+                    <h3 className="text-2xl text-ink transition-colors group-hover:text-ink-700">{d.titulo}</h3>
                     <p className="mt-1.5 text-[0.95rem] text-slate">{d.texto}</p>
                   </div>
-                  <span className="inline-flex size-11 items-center justify-center border border-line text-navy transition-colors group-hover:border-navy group-hover:bg-navy group-hover:text-ivory">
+                  <span className="inline-flex size-11 items-center justify-center border border-line text-ink transition-colors group-hover:border-ink group-hover:bg-ink group-hover:text-ivory">
                     <ArrowRight aria-hidden className="size-4" />
                     <span className="sr-only">Ver {d.titulo}</span>
                   </span>

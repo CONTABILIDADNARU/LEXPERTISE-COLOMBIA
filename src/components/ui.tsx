@@ -40,8 +40,8 @@ export function Section({
 
 export function Eyebrow({ children, dark, className }: { children: ReactNode; dark?: boolean; className?: string }) {
   return (
-    <p className={cx("eyebrow flex items-center gap-3", dark ? "text-bronze" : "text-bronze-ink", className)}>
-      <span aria-hidden className={cx("h-px w-8", dark ? "bg-bronze" : "bg-bronze-ink")} />
+    <p className={cx("eyebrow flex items-center gap-3", dark ? "text-brand" : "text-brand-ink", className)}>
+      <span aria-hidden className="h-[2px] w-8 bg-brand-gradient" />
       {children}
     </p>
   );
@@ -65,7 +65,7 @@ export function SectionHeading({
   return (
     <div className={cx("max-w-2xl", className)}>
       {eyebrow && <Eyebrow dark={dark}>{eyebrow}</Eyebrow>}
-      <h2 id={id} className={cx("mt-4 text-3xl sm:text-4xl lg:text-[2.75rem]", dark ? "text-ivory" : "text-navy")}>
+      <h2 id={id} className={cx("mt-4 text-3xl sm:text-4xl lg:text-[2.75rem]", dark ? "text-ivory" : "text-ink")}>
         {title}
       </h2>
       {text && <p className={cx("mt-4 text-base sm:text-lg", dark ? "text-ivory/75" : "text-slate")}>{text}</p>}
@@ -73,13 +73,13 @@ export function SectionHeading({
   );
 }
 
-type Variante = "primary" | "secondary" | "bronze" | "ghost-dark" | "link";
+type Variante = "primary" | "secondary" | "brand" | "ghost-dark" | "link";
 const VARIANTES: Record<Variante, string> = {
-  primary: "bg-navy text-ivory hover:bg-navy-700 border border-navy",
-  secondary: "border border-navy/30 text-navy hover:border-navy hover:bg-navy/[0.04]",
-  bronze: "bg-bronze text-navy-950 hover:bg-bronze-soft border border-bronze",
+  primary: "bg-ink text-ivory hover:bg-ink-700 border border-ink",
+  secondary: "border border-ink/30 text-ink hover:border-ink hover:bg-ink/[0.04]",
+  brand: "bg-brand-gradient text-ink-950 border border-transparent hover:brightness-95",
   "ghost-dark": "border border-ivory/35 text-ivory hover:border-ivory hover:bg-ivory/[0.06]",
-  link: "text-navy underline decoration-bronze underline-offset-4 hover:decoration-2 px-0",
+  link: "text-ink underline decoration-brand underline-offset-4 hover:decoration-2 px-0",
 };
 
 export function buttonClasses(variante: Variante = "primary", className?: string) {

@@ -34,7 +34,7 @@ export default async function GraciasPage({ searchParams }: Props) {
     <section className="bg-ledger text-ivory">
       <Container className="py-16 sm:py-24">
         <div className={ruta ? "max-w-3xl" : "max-w-2xl"}>
-          <CircleCheck aria-hidden strokeWidth={1.3} className="size-12 text-bronze" />
+          <CircleCheck aria-hidden strokeWidth={1.3} className="size-12 text-brand" />
           <h1 className="mt-6 text-4xl sm:text-5xl">{agendamiento && !ruta ? "Recibimos tu solicitud de consulta." : "Recibimos tu solicitud."}</h1>
           {referencia && (
             <p className="mt-6 inline-block border border-ivory/20 px-4 py-2 text-sm">
@@ -87,7 +87,7 @@ export default async function GraciasPage({ searchParams }: Props) {
           ) : (
             <>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href="/" variante="bronze">
+                <ButtonLink href="/" variante="brand">
                   Volver al inicio
                 </ButtonLink>
                 <ButtonLink href="/recursos" variante="ghost-dark">

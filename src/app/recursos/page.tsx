@@ -31,7 +31,7 @@ export default function RecursosPage() {
       />
       {categorias.map((cat, i) => (
         <Section key={cat.key} tono={i % 2 ? "paper" : "ivory"} labelledBy={`cat-${cat.key}`} className="py-14 sm:py-16 lg:py-20">
-          <h2 id={`cat-${cat.key}`} className="text-3xl text-navy">
+          <h2 id={`cat-${cat.key}`} className="text-3xl text-ink">
             {cat.nombre}
           </h2>
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">

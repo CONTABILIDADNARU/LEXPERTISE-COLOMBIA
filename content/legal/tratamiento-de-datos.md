@@ -7,9 +7,9 @@ seo:
   title: "Política de tratamiento de datos de la información"
   description: "Cómo LEXPERTISE COLOMBIA S.A.S. trata tus datos personales, para qué los usa, cuáles son tus derechos y cómo presentar consultas o reclamos."
 notasRevision:
-  - "Texto enviado por la firma el 17-nov-2026 (PDF «Política de tratamiento de datos de la información»). Se transcribió completo; el NIT, la ciudad, la dirección y los correos salen de la configuración del sitio."
+  - "Texto enviado por la firma el 17-nov-2026 (PDF «Política de tratamiento de datos de la información»). Se transcribió completo; el NIT, la ciudad y los correos salen de la configuración del sitio."
   - "El PDF dice NIT 900.801.715-9. El RUT dice 901.800.715-9, y ese número cumple el dígito de verificación. El sitio usa el del RUT. La firma debe corregir el PDF."
-  - "El PDF da dos direcciones: Calle 8 A No. 7-30 (portada) y Calle 8 A No. 79-30 (sección 2.5). La firma confirmó 7-30 el 17-nov; el texto de la sección 2.5 aún dice 79-30 y debe corregirse en el PDF."
+  - "18-nov-2026: por indicación de la agencia se retiró la dirección física de todo el sitio, también de esta política (el PDF de la firma la trae en la portada y en la sección 2.5, con dos números distintos). Esta política solo identifica a la firma con su domicilio (ciudad), correo y teléfono. Revisión jurídica: confirmar si la norma de datos (Decreto 1377 de 2013, art. 13) exige además la dirección del responsable. Si la exige, hay que volver a incluirla en el PDF y en esta página."
   - "El PDF usa lexpertisea@gmail.com para datos personales y lexpertisesas@gmail.com para cancelaciones. Se usa lexpertisea para datos personales; confirmar que ambos correos son de la firma."
   - "Las secciones 2.9 (videos de vigilancia en la oficina) y 2.11 (finalidades para clientes, proveedores y empleados) describen otros tratamientos. Confirmar que aplican a este sitio."
   - "Revisión jurídica pendiente. La firma lo envió como su texto oficial, pero no hay aprobación de un abogado registrada."
@@ -19,7 +19,7 @@ revision:
   fecha: ""
 ---
 
-{{razonSocial}}, identificada con NIT {{nit}}, domiciliada en {{ciudad}}, con dirección física en {{direccion}}, dirección electrónica {{correoDatos}} y número de teléfono {{telefono}} (en adelante, la «Firma»), pone en conocimiento de los titulares de los datos personales que sus datos serán tratados por la Firma de acuerdo con la presente política de tratamiento de la información (la «Política»). Lo hace en cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y las normas que los sustituyan o modifiquen.
+{{razonSocial}}, identificada con NIT {{nit}}, domiciliada en {{ciudad}}, con dirección electrónica {{correoDatos}} y número de teléfono {{telefono}} (en adelante, la «Firma»), pone en conocimiento de los titulares de los datos personales que sus datos serán tratados por la Firma de acuerdo con la presente política de tratamiento de la información (la «Política»). Lo hace en cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 y las normas que los sustituyan o modifiquen.
 
 El propósito principal de esta Política es informar a los titulares de los datos personales sobre los derechos que les asisten, los canales, procedimientos y mecanismos dispuestos por la Firma para ejercerlos, quiénes están autorizados dentro de la Firma para atender consultas, preguntas, quejas y reclamos, y el alcance y la finalidad del tratamiento al que serán sometidos los datos personales, en caso de que el titular otorgue su autorización expresa, previa e informada.
 
@@ -121,7 +121,6 @@ La Firma ha designado la gestión del área administrativa para recibir y atende
 
 Datos de contacto del servicio al cliente:
 
-- **Dirección física:** {{direccion}}
 - **Dirección electrónica:** {{correoDatos}}
 - **Teléfono:** {{telefono}}
 - **Cargo de la persona de contacto:** Asesor Administrativo

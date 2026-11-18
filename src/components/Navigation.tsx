@@ -28,8 +28,8 @@ export function DesktopNav({ items }: { items: NavItem[] }) {
                 aria-current={actual ? "page" : undefined}
                 className={cx(
                   "relative whitespace-nowrap py-2 text-[0.9rem] font-medium transition-colors",
-                  actual ? "text-navy" : "text-slate hover:text-navy",
-                  "after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-bronze after:transition-transform",
+                  actual ? "text-ink" : "text-slate hover:text-ink",
+                  "after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform",
                   actual ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100",
                 )}
               >
@@ -94,7 +94,7 @@ export function MobileMenu({ items }: { items: NavItem[] }) {
         aria-expanded={abierto}
         aria-controls="menu-movil"
         onClick={() => setAbierto((v) => !v)}
-        className="inline-flex size-11 items-center justify-center rounded-[3px] border border-navy/20 text-navy"
+        className="inline-flex size-11 items-center justify-center rounded-[3px] border border-ink/20 text-ink"
       >
         {abierto ? <X aria-hidden className="size-5" /> : <Menu aria-hidden className="size-5" />}
         <span className="sr-only">{abierto ? "Cerrar menú" : "Abrir menú"}</span>
@@ -117,10 +117,10 @@ export function MobileMenu({ items }: { items: NavItem[] }) {
                   <Link
                     href={it.href}
                     aria-current={activo(pathname, it.href) ? "page" : undefined}
-                    className="flex items-center justify-between py-4 font-serif text-2xl text-navy"
+                    className="flex items-center justify-between py-4 font-serif text-2xl text-ink"
                   >
                     {it.label}
-                    {activo(pathname, it.href) && <span aria-hidden className="size-1.5 rounded-full bg-bronze" />}
+                    {activo(pathname, it.href) && <span aria-hidden className="size-1.5 rounded-full bg-brand" />}
                   </Link>
                 </li>
               ))}

@@ -38,11 +38,11 @@ export default async function NosotrosPage() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
           <Prose html={html} />
           <aside className="self-start border border-line bg-paper p-6">
-            <h2 className="eyebrow text-bronze-ink">Información institucional</h2>
+            <h2 className="eyebrow text-brand-ink">Información institucional</h2>
             <dl className="mt-4 space-y-4 text-sm">
               {datos.map((d) => (
                 <div key={d.etiqueta}>
-                  <dt className="font-semibold text-navy">{d.etiqueta}</dt>
+                  <dt className="font-semibold text-ink">{d.etiqueta}</dt>
                   <dd className="mt-0.5 text-slate">{d.valor || <Pending campo={d.pendiente} />}</dd>
                 </div>
               ))}
