@@ -6,6 +6,13 @@ export const SITE_ENV: SiteEnv = raw === "production" || raw === "staging" ? raw
 /** Producción: el sitio público final. Staging/desarrollo: entorno de revisión, no indexable. */
 export const IS_PRODUCTION = SITE_ENV === "production";
 
+/**
+ * Marcas internas de revisión: avisos amarillos «Pendiente», «Borrador» y «Por confirmar», y notas para el equipo.
+ * Apagadas por defecto, también en staging: el sitio se ve limpio. Solo se encienden en una copia de trabajo
+ * con NEXT_PUBLIC_REVIEW_MARKS=1, y nunca en producción.
+ */
+export const SHOW_REVIEW_MARKS = !IS_PRODUCTION && process.env.NEXT_PUBLIC_REVIEW_MARKS === "1";
+
 const urlVercel = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : "";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || urlVercel || "http://localhost:3000").replace(/\/$/, "");
 

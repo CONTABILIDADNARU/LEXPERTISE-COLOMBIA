@@ -1,7 +1,7 @@
 ---
 titulo: "Términos de uso del sitio web"
 slug: terminos-de-uso
-version: "1.0-borrador"
+version: "1.0"
 vigenteDesde: ""
 seo:
   title: "Términos de uso del sitio web"
@@ -94,5 +94,3 @@ Estos términos se rigen por las leyes de la República de Colombia. Cualquier c
 ## 14. Contacto
 
 Si tienes preguntas sobre estos términos, escríbenos a {{correo}} o comunícate al {{telefono}}.
-
-Vigentes desde {{fechaVigencia}}.

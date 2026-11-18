@@ -1,12 +1,12 @@
-import { IS_PRODUCTION } from "@/lib/env";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { cx } from "./ui";
 
 /**
  * Marcador visible para datos que LEXPERTISE aún no ha confirmado.
- * Solo aparece en el entorno de revisión; en producción no se renderiza nada.
+ * Apagado por defecto: solo se muestra con NEXT_PUBLIC_REVIEW_MARKS=1 fuera de producción.
  */
 export function Pending({ campo, className, oscuro }: { campo: string; className?: string; oscuro?: boolean }) {
-  if (IS_PRODUCTION) return null;
+  if (!SHOW_REVIEW_MARKS) return null;
   return (
     <mark
       data-pendiente={campo}

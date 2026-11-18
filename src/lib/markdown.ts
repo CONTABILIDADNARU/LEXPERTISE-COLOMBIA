@@ -5,7 +5,7 @@ import remarkRehype from "remark-rehype";
 import rehypeSanitize from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
-import { IS_PRODUCTION, SITE_URL } from "./env";
+import { SHOW_REVIEW_MARKS, SITE_URL } from "./env";
 import { sitio } from "./settings";
 
 /**
@@ -37,14 +37,14 @@ const VARIABLES: Record<string, { valor: () => string; etiqueta: string }> = {
 };
 
 /**
- * Reemplaza {{variables}} con los datos oficiales configurados. Mientras falten, deja un marcador
- * visible en revisión. En producción el build se bloquea antes (scripts/check-contenido.mjs --estricto).
+ * Reemplaza {{variables}} con los datos oficiales configurados. Si falta alguno, no deja nada visible
+ * (solo con NEXT_PUBLIC_REVIEW_MARKS=1 aparece un marcador). En producción el build se bloquea antes (scripts/check-contenido.mjs --estricto).
  */
 export function reemplazarVariables(texto: string, extra: Record<string, string> = {}): string {
   return texto.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, clave: string) => {
     const valor = extra[clave] ?? VARIABLES[clave]?.valor() ?? "";
     if (valor) return valor;
     const etiqueta = VARIABLES[clave]?.etiqueta ?? clave;
-    return IS_PRODUCTION ? "" : `**[PENDIENTE: ${etiqueta}]**`;
+    return SHOW_REVIEW_MARKS ? `**[PENDIENTE: ${etiqueta}]**` : "";
   });
 }

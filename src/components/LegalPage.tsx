@@ -3,6 +3,7 @@ import { Prose, ReviewBanner, formatoFecha } from "./blocks";
 import { PageHero } from "./PageHero";
 import { Pending } from "./Pending";
 import { Container } from "./ui";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { getDocumentoLegal } from "@/lib/content";
 import { renderMarkdown, reemplazarVariables } from "@/lib/markdown";
 import { buildMetadata } from "@/lib/seo";
@@ -29,7 +30,14 @@ export async function LegalPage({ slug }: { slug: string }) {
         titulo={d.titulo}
       >
         <p className="mt-5 text-sm text-slate">
-          Versión {d.version} · Vigente desde: {d.vigenteDesde ? formatoFecha(d.vigenteDesde) : <Pending campo="Fecha de vigencia" />}
+          Versión {d.version}
+          {d.vigenteDesde && <> · Vigente desde: {formatoFecha(d.vigenteDesde)}</>}
+          {!d.vigenteDesde && SHOW_REVIEW_MARKS && (
+            <>
+              {" · Vigente desde: "}
+              <Pending campo="Fecha de vigencia" />
+            </>
+          )}
         </p>
       </PageHero>
       <Container className="py-12 sm:py-16">

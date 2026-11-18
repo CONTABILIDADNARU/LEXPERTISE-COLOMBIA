@@ -1,7 +1,7 @@
 ---
 titulo: "Política de cookies"
 slug: politica-de-cookies
-version: "1.0-borrador"
+version: "1.0"
 vigenteDesde: ""
 seo:
   title: "Política de cookies y almacenamiento local"
@@ -93,5 +93,3 @@ Cuando la información obtenida con estas tecnologías se asocia a una persona i
 ## Cambios a esta política
 
 Actualizaremos esta política cuando cambien las cookies o herramientas que usa el sitio. Si se incorpora una nueva categoría, te pediremos de nuevo tu consentimiento.
-
-Vigente desde {{fechaVigencia}}.

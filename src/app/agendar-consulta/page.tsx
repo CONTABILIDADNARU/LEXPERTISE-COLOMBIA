@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { CalendarDays, CircleHelp, Clock, MessageCircle, ShieldCheck } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
-import { Pending } from "@/components/Pending";
 import { DESCRIPCION_FORMULARIO, TITULO_FORMULARIO, LeadFormServer } from "@/components/sections";
 import { Section } from "@/components/ui";
 import { buildMetadata } from "@/lib/seo";
-import { agendaReserva, duracionConsulta, sitio } from "@/lib/settings";
+import { agendaReserva, duracionConsulta, enlaceTelefono, enlaceWhatsApp, sitio } from "@/lib/settings";
 
 export const metadata = buildMetadata({
   title: "Solicitar una consulta jurídica",
@@ -14,11 +13,18 @@ export const metadata = buildMetadata({
   path: "/agendar-consulta",
 });
 
+/** «a, b y c» */
+function listaConY(items: string[]) {
+  return items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} y ${items[items.length - 1]}`;
+}
+
 export default function AgendarPage() {
   const { consulta } = sitio;
   // Todo pasa por el formulario: la agenda en línea (si existe) se ofrece al terminar, en /gracias.
   const agenda = agendaReserva();
   const duracion = duracionConsulta();
+  // Las modalidades son los mismos canales de atención que ya publica el sitio; solo se listan los que tienen dato.
+  const canales = listaConY([enlaceWhatsApp("agendar") ? "WhatsApp" : "", enlaceTelefono() ? "teléfono" : "", sitio.empresa.correo ? "correo electrónico" : ""].filter(Boolean));
   return (
     <>
       <PageHero
@@ -95,9 +101,11 @@ export default function AgendarPage() {
             </div>
             {consulta.modalidades.length > 0 ? (
               <p className="text-sm text-slate">Modalidades disponibles: {consulta.modalidades.join(", ")}.</p>
-            ) : (
-              <Pending campo="Modalidades de atención disponibles" />
-            )}
+            ) : canales ? (
+              <p className="text-sm text-slate">
+                <strong className="text-ink">Canales de atención.</strong> {canales}. La modalidad de la consulta se confirma al agendar.
+              </p>
+            ) : null}
           </aside>
           <div id="solicitud" className="scroll-mt-24">
             <LeadFormServer

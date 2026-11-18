@@ -5,14 +5,12 @@ import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { CalendarCheck, MessageCircle, Phone } from "lucide-react";
 import { track } from "@/lib/analytics";
-import { IS_PRODUCTION } from "@/lib/env";
-import { buttonClasses, cx } from "./ui";
+import { buttonClasses } from "./ui";
 
 type Variante = "primary" | "secondary" | "brand" | "ghost-dark";
 
 /**
- * Botón de WhatsApp con mensaje según la página. Si el número oficial no está configurado,
- * en revisión muestra un botón deshabilitado con aviso; en producción no se muestra.
+ * Botón de WhatsApp con mensaje según la página. Si el número oficial no está configurado, no se muestra.
  */
 export function WhatsAppButton({
   href,
@@ -29,19 +27,7 @@ export function WhatsAppButton({
   label?: string;
   className?: string;
 }) {
-  if (!href) {
-    if (IS_PRODUCTION) return null;
-    return (
-      <span
-        aria-disabled="true"
-        title="Número oficial de WhatsApp pendiente de confirmar"
-        className={cx(buttonClasses(variante, className), "cursor-not-allowed opacity-60")}
-      >
-        <MessageCircle aria-hidden className="size-4" /> {label}
-        <span className="rounded-sm bg-pending px-1 text-[0.65rem] font-bold uppercase text-ink-950">Pendiente</span>
-      </span>
-    );
-  }
+  if (!href) return null;
   return (
     <a
       href={href}

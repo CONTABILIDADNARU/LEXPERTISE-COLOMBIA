@@ -1,7 +1,7 @@
 ---
 titulo: "Aviso de privacidad"
 slug: politica-de-privacidad
-version: "1.0-borrador"
+version: "1.0"
 vigenteDesde: ""
 seo:
   title: "Aviso de privacidad y uso de tus datos personales"
@@ -67,5 +67,3 @@ Para ejercer estos derechos, escribe a {{correoDatos}}.
 La Política de tratamiento de datos personales está publicada en {{sitioUrl}} y enlazada en el pie de página. También puedes pedir una copia a {{correoDatos}}.
 
 Si hacemos cambios sustanciales a la política o a este aviso, los publicaremos en el sitio antes de aplicarlos. Si el cambio se refiere a la finalidad del tratamiento, te pediremos una nueva autorización.
-
-Vigente desde {{fechaVigencia}}.

@@ -1,4 +1,8 @@
-# Pendientes reales (actualizado 2026-11-17)
+# Pendientes reales (actualizado 2026-11-18)
+
+> Desde el 18-nov-2026 el sitio no muestra avisos amarillos ni textos de «pendiente» (decisión de la agencia: el sitio debe verse funcional).
+> Lo pendiente sigue vigente, pero solo se consulta aquí o en una copia de trabajo con `NEXT_PUBLIC_REVIEW_MARKS=1`.
+> En producción, lo que no tiene aprobación jurídica sigue sin publicarse.
 
 Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **Crítico** = bloquea la salida a producción (el build de producción se detiene).
 
@@ -10,7 +14,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 | C2 | Correo general **lexpertisesas@gmail.com** (cancelaciones) y correo de datos personales **lexpertisea@gmail.com** (política de datos): confirmar que ambos son de la firma. Teléfono **+57 301 6515265**. | Configuración → Datos de la firma |
 | C3 | ~~Número oficial de WhatsApp~~: **+57 301 6515265**, configurado el 17-nov. | Hecho |
 | C4 | **Aprobación jurídica** de las 12 páginas de servicio (cada una con sus `notasRevision`) y de «La firma». | Áreas y servicios / Páginas institucionales |
-| C5 | Aprobación y fecha de vigencia de las 4 políticas legales. | Documentos legales |
+| C5 | Aprobación y fecha de vigencia de las 4 políticas legales. Mientras no haya fecha, el sitio no muestra «Vigente desde» (privacidad, cookies y términos). | Documentos legales |
 | C6 | Almacenamiento de producción: proyecto Supabase **dedicado** de LEXPERTISE + migración `001_solicitudes.sql`. El staging usa un esquema aislado dentro de «Segmenta web» por el límite de 2 proyectos gratuitos. | Supabase + variables de entorno |
 | C8 | Cuenta o plan de Vercel apto para uso comercial (el staging está en el plan Hobby del equipo Segmenta). | Decisión de la firma/agencia |
 | C7 | Dominio definitivo, URL de producción y autorización expresa para publicar. | Decisión de la firma |
@@ -21,7 +25,7 @@ Listado vivo: `npm run check:contenido` lo recalcula a partir del contenido. **C
 |---|---|
 | A1 | **CRM:** identificar el CRM real de LEXPERTISE, su API/webhook, etapas, asignación y manejo de duplicados. Configurar `CRM_WEBHOOK_URL/SECRET`. El CRM conectado a esta cuenta no se usó porque no se pudo verificar que sea de la firma. |
 | A2 | **Sitio anterior (Odoo):** no se encontró el dominio ni páginas indexadas. Si existe, exportar URLs de Search Console y cargar redirecciones 301 antes de cambiar el DNS. |
-| A3 | Modalidades de atención (virtual, presencial, telefónica) y ciudades con atención presencial. La dirección no se publica. |
+| A3 | Modalidades de atención. El 18-nov la agencia indicó que son los mismos canales de contacto: el sitio dice «WhatsApp, teléfono y correo electrónico» y que la modalidad de la consulta se confirma al agendar. Falta que la firma confirme si atiende de forma presencial o virtual y en qué ciudades. La dirección no se publica. |
 | A4 | Tiempo de respuesta comprometido a las solicitudes. |
 | A5 | Consulta: **90 minutos**; el valor **no se publica** (decisión de la firma, 17-nov) y se informa por WhatsApp. Política de cancelación y reprogramación **con el texto de la firma** (17-nov), con casilla obligatoria. Falta su fecha de vigencia y qué pasa con cancelaciones o reprogramaciones fuera de plazo. Faltan los medios de pago. |
 | A6 | Perfiles verificados del equipo con fotografías reales. Mientras tanto, por pedido de la firma, /equipo dice de forma general que se cubren todas las áreas. |

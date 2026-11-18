@@ -6,7 +6,7 @@ import { Pending } from "@/components/Pending";
 import { ContactCTA } from "@/components/sections";
 import { buttonClasses, Section, SectionHeading } from "@/components/ui";
 import { getServicio, servicioVisible } from "@/lib/content";
-import { IS_PRODUCTION } from "@/lib/env";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -69,7 +69,7 @@ export default function EmpresasPage() {
   const lineas = LINEAS.map((l) => ({
     ...l,
     paginas: l.enlaces.map((slug) => getServicio(slug)).filter((s) => s && servicioVisible(s)),
-  })).filter((l) => (l.pendiente ? !IS_PRODUCTION : l.paginas.length > 0));
+  })).filter((l) => (l.pendiente ? SHOW_REVIEW_MARKS : l.paginas.length > 0));
 
   return (
     <>
@@ -112,7 +112,7 @@ export default function EmpresasPage() {
             </article>
           ))}
         </div>
-        {!IS_PRODUCTION && (
+        {SHOW_REVIEW_MARKS && (
           <p className="mt-6 text-sm text-slate">
             <Pending campo="Modelo de acompañamiento recurrente (solo si la firma lo confirma)" />
           </p>

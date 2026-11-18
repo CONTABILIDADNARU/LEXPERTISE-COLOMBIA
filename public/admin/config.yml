@@ -289,7 +289,7 @@ collections:
             widget: object
             fields:
               - { label: Título, name: titulo, widget: string }
-              - { label: Preguntas, name: items, widget: list, fields: [{ label: Pregunta, name: pregunta, widget: string }, { label: Respuesta (solo datos verificados), name: respuesta, widget: text }, { label: Dato pendiente de confirmar, name: pendiente, widget: string, required: false }] }
+              - { label: Preguntas, name: items, widget: list, fields: [{ label: Pregunta, name: pregunta, widget: string }, { label: Respuesta (solo datos verificados), name: respuesta, widget: text, hint: "Para enlazar una página del sitio escribe [texto](/ruta), por ejemplo [Contacto](/contacto)." }, { label: Dato pendiente de confirmar, name: pendiente, widget: string, required: false }] }
           - { label: Contacto final, name: contacto, widget: object, fields: [{ label: Título, name: titulo, widget: string }, { label: Texto, name: texto, widget: text }] }
       - name: consentimientos
         label: Textos de autorización (versionados)

@@ -96,7 +96,7 @@ El receptor (webhook del CRM o un orquestador como Make, Zapier o n8n) debe veri
 - Es la persona quien envía el mensaje desde su WhatsApp. Para que el aviso llegue solo, sin que la persona lo envíe, haría falta la API de WhatsApp Business o un orquestador conectado al CRM.
 - Los mensajes por contexto de `whatsapp.json` quedan para el aviso de error del formulario (si el servidor no responde).
 - **Aviso automático a la firma (17-nov-2026):** cada solicitud registrada dispara desde el servidor un mensaje de WhatsApp al número de la firma, aunque la persona no pulse el botón de `/gracias`. Usa la WhatsApp Business Platform (Cloud API) y una plantilla aprobada por Meta (`solicitud_web_nueva`, 5 variables de texto: referencia, área, prioridad, nombre y teléfono). **Hoy está desactivado**: se activa al definir `WHATSAPP_TOKEN` y `WHATSAPP_SENDER_ID` en Vercel (ver `.env.example`). El número que envía debe ser distinto del que recibe (301 6515265). Si el envío falla, la solicitud queda guardada igual y el servidor lo anota en el registro (`aviso WhatsApp a la firma: error`).
-- Sin número: en revisión se muestra un botón deshabilitado «Pendiente»; en producción no se muestra y la página indica que el equipo contactará por el medio elegido.
+- Sin número: el botón no se muestra y la página indica que el equipo contactará por el medio elegido.
 
 ## 5. Medición y publicidad
 

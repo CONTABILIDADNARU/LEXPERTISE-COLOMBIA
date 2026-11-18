@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AREAS } from "@/lib/areas";
 import { getServicio, servicioVisible } from "@/lib/content";
-import { IS_PRODUCTION } from "@/lib/env";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { sitio } from "@/lib/settings";
 import { getNavItems } from "./Header";
 import { Logo } from "./Logo";
@@ -121,7 +121,7 @@ export function Footer() {
             servicios de derecho penal.
           </p>
           <p className="mt-4">
-            © {new Date().getFullYear()} {sitio.marca}.{!IS_PRODUCTION && " Colores y triángulo tomados del logotipo enviado por la firma; falta el manual de marca."}
+            © {new Date().getFullYear()} {sitio.marca}.{SHOW_REVIEW_MARKS && " Colores y triángulo tomados del logotipo enviado por la firma; falta el manual de marca."}
           </p>
         </div>
       </Container>

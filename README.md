@@ -58,9 +58,9 @@ docs/                    Documentación del proyecto
 | | development / staging | production |
 |---|---|---|
 | Indexación | `noindex` (meta + cabecera + robots.txt bloquea todo) | indexable, sitemap en robots.txt |
-| Marcadores «Pendiente» | visibles | ocultos |
-| Páginas sin aprobación jurídica | visibles con aviso de borrador | **no se publican** |
-| Artículos en borrador | visibles con aviso | solo `publicado` |
+| Marcas internas de revisión («Pendiente», «Borrador», «Por confirmar») | ocultas; se encienden solo con `NEXT_PUBLIC_REVIEW_MARKS=1` | ocultas |
+| Páginas sin aprobación jurídica | visibles, sin aviso | **no se publican** |
+| Artículos en borrador | visibles, sin aviso | solo `publicado` |
 | Equipo sin perfiles verificados | aviso | la página devuelve 404 y sale del menú |
 | Build con bloqueantes | permitido | **detenido** por `prebuild` |
 

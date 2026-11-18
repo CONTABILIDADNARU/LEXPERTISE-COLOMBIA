@@ -1,10 +1,10 @@
 import { Clock, Mail, Phone } from "lucide-react";
-import { IS_PRODUCTION } from "@/lib/env";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { enlaceTelefono, sitio, type WhatsAppContexto } from "@/lib/settings";
 import { Pending } from "./Pending";
 import { cx } from "./ui";
 
-/** Lista de canales oficiales. Solo muestra datos confirmados; los faltantes quedan marcados en revisión. */
+/** Lista de canales oficiales. Solo muestra datos confirmados; los faltantes no se muestran. */
 export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean; contexto?: WhatsAppContexto }) {
   const e = sitio.empresa;
   // WhatsApp no se lista aquí: se ofrece después del formulario, con el resumen de la solicitud ya escrito.
@@ -36,7 +36,7 @@ export function ContactChannels({ dark, contexto = "general" }: { dark?: boolean
   return (
     <ul className="grid gap-5">
       {filas.map(({ icon: Icon, label, valor, pendiente }) =>
-        valor || !IS_PRODUCTION ? (
+        valor || SHOW_REVIEW_MARKS ? (
           <li key={label} className={cx("flex gap-4", !valor && "items-center")}>
             <Icon aria-hidden strokeWidth={1.5} className={cx("mt-0.5 size-5 shrink-0", dark ? "text-brand" : "text-brand-ink")} />
             <div>

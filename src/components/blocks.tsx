@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, ChevronDown, Info, ListChecks, TriangleAlert } from "lucide-react";
 import type { Recurso, Servicio } from "@/lib/content";
 import { getArea } from "@/lib/areas";
-import { IS_PRODUCTION, SITE_ENV } from "@/lib/env";
+import { SHOW_REVIEW_MARKS, SITE_ENV } from "@/lib/env";
 import { breadcrumbJsonLd, type Miga } from "@/lib/seo";
 import { sitio } from "@/lib/settings";
 import { AreaIcon } from "./AreaIcon";
@@ -14,7 +14,7 @@ export function JsonLd({ data }: { data: object | null }) {
 }
 
 export function StagingBanner() {
-  if (IS_PRODUCTION) return null;
+  if (!SHOW_REVIEW_MARKS) return null;
   return (
     <div role="note" className="bg-pending px-4 py-1.5 text-center text-[0.75rem] font-semibold text-ink-950">
       Entorno de revisión ({SITE_ENV}) · no indexable · los textos marcados como «Pendiente» requieren confirmación de {sitio.marca}
@@ -55,9 +55,9 @@ export function Breadcrumbs({ migas, dark }: { migas: Miga[]; dark?: boolean }) 
   );
 }
 
-/** Aviso de revisión jurídica pendiente (solo en el entorno de revisión). */
+/** Aviso de revisión jurídica pendiente (apagado por defecto; ver SHOW_REVIEW_MARKS). */
 export function ReviewBanner({ estado, notas, tipo = "página" }: { estado: string; notas?: string[]; tipo?: string }) {
-  if (IS_PRODUCTION || estado === "aprobado" || estado === "publicado") return null;
+  if (!SHOW_REVIEW_MARKS || estado === "aprobado" || estado === "publicado") return null;
   return (
     <div className="border-b border-amber-300 bg-pending/70">
       <Container className="py-3 text-sm text-ink-950">
@@ -98,6 +98,29 @@ export function LegalDisclaimer({ className, dark }: { className?: string; dark?
   );
 }
 
+/** Texto de una respuesta con enlaces escritos como [texto](/ruta) o [texto](mailto:correo). Solo admite rutas del propio sitio y correos. */
+function TextoConEnlaces({ texto }: { texto: string }) {
+  const partes = texto.split(/(\[[^\]]+\]\((?:\/[^\s)]*|mailto:[^\s)]+)\))/g);
+  return (
+    <>
+      {partes.map((parte, i) => {
+        const m = /^\[([^\]]+)\]\((\/[^\s)]*|mailto:[^\s)]+)\)$/.exec(parte);
+        if (!m) return parte;
+        const clase = "font-semibold text-ink underline decoration-brand underline-offset-4 hover:decoration-2";
+        return m[2].startsWith("/") ? (
+          <Link key={i} href={m[2]} className={clase}>
+            {m[1]}
+          </Link>
+        ) : (
+          <a key={i} href={m[2]} className={clase}>
+            {m[1]}
+          </a>
+        );
+      })}
+    </>
+  );
+}
+
 export function FAQAccordion({ items, idPrefix = "faq" }: { items: { pregunta: string; respuesta: string; pendiente?: string }[]; idPrefix?: string }) {
   return (
     <div className="divide-y divide-line border-y border-line">
@@ -108,8 +131,10 @@ export function FAQAccordion({ items, idPrefix = "faq" }: { items: { pregunta: s
             <ChevronDown aria-hidden className="mt-1 size-5 shrink-0 text-brand-ink transition-transform duration-200 group-open:rotate-180" />
           </summary>
           <div className="max-w-3xl pb-6 pr-8 text-slate">
-            <p>{f.respuesta}</p>
-            {f.pendiente && !IS_PRODUCTION && (
+            <p>
+              <TextoConEnlaces texto={f.respuesta} />
+            </p>
+            {f.pendiente && SHOW_REVIEW_MARKS && (
               <p className="mt-2">
                 <mark className="rounded-sm bg-pending px-1.5 py-0.5 text-[0.7rem] font-bold uppercase text-ink-950">
                   Pendiente · {f.pendiente}
@@ -144,7 +169,7 @@ export function ProcessSteps({ pasos, dark, nota }: { pasos: { titulo: string; t
 }
 
 export function ServiceCard({ servicio, compacta }: { servicio: Servicio; compacta?: boolean }) {
-  const pendiente = !IS_PRODUCTION && servicio.estado !== "activo";
+  const pendiente = SHOW_REVIEW_MARKS && servicio.estado !== "activo";
   return (
     <article className="group relative flex h-full flex-col border border-line bg-paper p-6 transition-[border-color,box-shadow] duration-200 hover:border-ink/40 hover:shadow-[var(--shadow-card)] sm:p-7">
       <div className="flex items-start justify-between gap-4">
@@ -185,7 +210,7 @@ export function ArticleCard({ recurso }: { recurso: Recurso }) {
         </span>
         <ArrowUpRight aria-hidden className="size-4 text-ink transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
       </div>
-      {!IS_PRODUCTION && recurso.estado !== "publicado" && (
+      {SHOW_REVIEW_MARKS && recurso.estado !== "publicado" && (
         <span className="absolute right-4 top-4 rounded-sm bg-pending px-1.5 py-0.5 text-[0.65rem] font-bold uppercase text-ink-950">{recurso.estado}</span>
       )}
     </article>

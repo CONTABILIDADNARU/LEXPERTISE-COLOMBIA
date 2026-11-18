@@ -6,7 +6,7 @@ import { ContactCTA } from "@/components/sections";
 import { Container } from "@/components/ui";
 import { AREAS } from "@/lib/areas";
 import { getServicio, getServiciosVisibles, servicioVisible } from "@/lib/content";
-import { IS_PRODUCTION } from "@/lib/env";
+import { SHOW_REVIEW_MARKS } from "@/lib/env";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -52,7 +52,7 @@ export default function ServiciosPage() {
                   <p className="mt-2 text-[0.95rem] text-slate">{principal!.resumen}</p>
                   <p className="mt-3 text-xs font-semibold uppercase tracking-[0.12em] text-slate">
                     {area.publicos.map((p) => (p === "persona" ? "Personas" : "Empresas")).join(" · ")}
-                    {!IS_PRODUCTION && principal!.estado !== "activo" && <span className="ml-2 bg-pending px-1 text-ink-950">Por confirmar</span>}
+                    {SHOW_REVIEW_MARKS && principal!.estado !== "activo" && <span className="ml-2 bg-pending px-1 text-ink-950">Por confirmar</span>}
                   </p>
                 </div>
               </div>

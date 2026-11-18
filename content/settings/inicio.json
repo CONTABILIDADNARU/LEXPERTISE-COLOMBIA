@@ -125,17 +125,17 @@
       {
         "pregunta": "¿Qué ocurre después de enviar mi solicitud?",
         "respuesta": "Un integrante del equipo revisa tu solicitud y te responde por WhatsApp para confirmar la fecha, la hora y el valor de la consulta. La cita queda en firme cuando se verifica el pago total. Atendemos solicitudes de lunes a viernes, de 8:00 a.m. a 5:00 p.m.; las que llegan fuera de ese horario se entienden recibidas a primera hora del día hábil siguiente. Enviar una solicitud no genera obligaciones ni constituye una relación abogado-cliente.",
-        "pendiente": "Tiempo de respuesta comprometido por la firma"
+        "pendiente": ""
       },
       {
         "pregunta": "¿La información que comparto es confidencial?",
-        "respuesta": "Los datos que envías se tratan conforme a la Política de Tratamiento de Datos Personales. Te pedimos no incluir detalles íntimos ni documentos en los formularios generales: esa información se aborda en la consulta, por un canal adecuado.",
+        "respuesta": "Los datos que envías se tratan conforme a la política de tratamiento de datos de LEXPERTISE COLOMBIA S.A.S, que puedes consultar completa en este sitio: [Política de tratamiento de datos](/tratamiento-de-datos). Te pedimos no incluir detalles íntimos ni documentos en los formularios generales: esa información se aborda en la consulta, por un canal adecuado.",
         "pendiente": ""
       },
       {
         "pregunta": "¿Cuáles son las modalidades de atención?",
-        "respuesta": "Las modalidades disponibles se informan al momento de programar la consulta.",
-        "pendiente": "Modalidades de atención confirmadas (virtual, presencial, telefónica) y ciudades"
+        "respuesta": "Atendemos por los mismos canales de contacto del sitio: WhatsApp, teléfono y correo electrónico, de lunes a viernes, de 8:00 a.m. a 5:00 p.m. Encuentras los datos de cada uno en la página de [Contacto](/contacto). La modalidad de la consulta se confirma al programarla.",
+        "pendiente": ""
       }
     ]
   },
